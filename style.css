@@ -835,3 +835,49 @@ body {
         display: none !important;
     }
 }
+
+/* Info Tooltips */
+.info-tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.info-icon {
+    font-size: 1.1rem;
+    color: var(--accent-primary);
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    user-select: none;
+}
+
+.info-icon:hover {
+    opacity: 1;
+}
+
+.info-tooltip .tooltip-text {
+    visibility: hidden;
+    width: 260px;
+    background-color: var(--text-primary);
+    color: #ffffff;
+    text-align: left;
+    border-radius: 8px;
+    padding: 10px 12px;
+    position: absolute;
+    z-index: 1010; /* Above Leaflet controls */
+    top: 125%;
+    right: 0;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-family: var(--font-main);
+    font-size: 0.75rem;
+    font-weight: normal;
+    line-height: 1.4;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    pointer-events: none;
+}
+
+.info-tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
