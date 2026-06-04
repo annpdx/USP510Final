@@ -345,8 +345,8 @@ function selectCounty(countyName, jumpToProfileView = false) {
             const tempLayer = L.geoJSON(feature);
             const bounds = tempLayer.getBounds();
 
-            if (accessMap) accessMap.fitBounds(bounds, { padding: [40, 40] });
-            if (explorerMap) explorerMap.fitBounds(bounds, { padding: [40, 40] });
+            if (accessMap) accessMap.fitBounds(bounds, { padding: [40, 40], maxZoom: 8 });
+            if (explorerMap) explorerMap.fitBounds(bounds, { padding: [40, 40], maxZoom: 8 });
         }
     }
 
@@ -824,6 +824,7 @@ function initChart() {
                 {
                     label: 'Urban Counties (Density > 100/sq mi)',
                     data: urbanData,
+                    order: 3,
                     backgroundColor: 'rgba(108, 140, 191, 0.7)',
                     borderColor: 'rgba(108, 140, 191, 1)',
                     borderWidth: 1.5,
@@ -833,6 +834,7 @@ function initChart() {
                 {
                     label: 'Rural Counties (Density 10 - 100/sq mi)',
                     data: ruralData,
+                    order: 2,
                     backgroundColor: 'rgba(90, 167, 167, 0.7)',
                     borderColor: 'rgba(90, 167, 167, 1)',
                     borderWidth: 1.5,
@@ -842,6 +844,7 @@ function initChart() {
                 {
                     label: 'Remote Counties (Density < 10/sq mi)',
                     data: remoteData,
+                    order: 1,
                     backgroundColor: 'rgba(231, 111, 81, 0.7)',
                     borderColor: 'rgba(231, 111, 81, 1)',
                     borderWidth: 1.5,
@@ -867,7 +870,7 @@ function initChart() {
                 },
                 tooltip: {
                     callbacks: {
-                        label: function(context) {
+                        label: function (context) {
                             const raw = context.raw;
                             return ` ${raw.county} County (Need: ${raw.x}, Access: ${raw.y}, Pop: ${raw.pop.toLocaleString()})`;
                         }
@@ -887,6 +890,7 @@ function initChart() {
                     },
                     min: 0,
                     max: 100,
+                    reverse: true,
                     grid: {
                         color: 'rgba(90, 167, 167, 0.1)'
                     }
@@ -903,7 +907,6 @@ function initChart() {
                     },
                     min: 0,
                     max: 100,
-                    reverse: true,
                     grid: {
                         color: 'rgba(90, 167, 167, 0.1)'
                     }
@@ -922,191 +925,191 @@ function initChart() {
     });
 }
 
-        // ── Indicator Explorer view logic ────────────────────────────────────
-        function initExplorer() {
-        const sectionSelect = document.getElementById('explorer-section-select');
-        const variableSelect = document.getElementById('explorer-variable-select');
+// ── Indicator Explorer view logic ────────────────────────────────────
+function initExplorer() {
+    const sectionSelect = document.getElementById('explorer-section-select');
+    const variableSelect = document.getElementById('explorer-variable-select');
 
-        explorerMap = L.map('explorer-map').setView([44.0, -120.5], 6);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; CartoDB'
-        }).addTo(explorerMap);
+    explorerMap = L.map('explorer-map').setView([44.0, -120.5], 6);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; CartoDB'
+    }).addTo(explorerMap);
 
-        sectionSelect.addEventListener('change', (e) => {
-            populateExplorerVariables(e.target.value);
-        });
+    sectionSelect.addEventListener('change', (e) => {
+        populateExplorerVariables(e.target.value);
+    });
 
-        variableSelect.addEventListener('change', () => {
-            renderExplorerMapLayer();
-        });
+    variableSelect.addEventListener('change', () => {
+        renderExplorerMapLayer();
+    });
 
-        populateExplorerVariables('access');
-    }
+    populateExplorerVariables('access');
+}
 
 function populateExplorerVariables(sectionKey) {
-            const select = document.getElementById('explorer-variable-select');
-            select.innerHTML = '';
+    const select = document.getElementById('explorer-variable-select');
+    select.innerHTML = '';
 
-            // Filter variables belonging to selected section
-            const matchingVars = Object.entries(variableMetadata).filter(([key, meta]) => meta.section === sectionKey);
+    // Filter variables belonging to selected section
+    const matchingVars = Object.entries(variableMetadata).filter(([key, meta]) => meta.section === sectionKey);
 
-            matchingVars.forEach(([key, meta]) => {
-                const option = document.createElement('option');
-                option.value = key;
-                option.textContent = meta.name;
-                select.appendChild(option);
-            });
+    matchingVars.forEach(([key, meta]) => {
+        const option = document.createElement('option');
+        option.value = key;
+        option.textContent = meta.name;
+        select.appendChild(option);
+    });
 
-            renderExplorerMapLayer();
-        }
+    renderExplorerMapLayer();
+}
 
 function renderExplorerMapLayer() {
-            const varKey = document.getElementById('explorer-variable-select').value;
-            const meta = variableMetadata[varKey];
-            if (!meta) return;
+    const varKey = document.getElementById('explorer-variable-select').value;
+    const meta = variableMetadata[varKey];
+    if (!meta) return;
 
-            // Compute summary stats dynamically
-            let values = [];
-            let minVal = Infinity, maxVal = -Infinity;
-            let minCounty = '', maxCounty = '';
+    // Compute summary stats dynamically
+    let values = [];
+    let minVal = Infinity, maxVal = -Infinity;
+    let minCounty = '', maxCounty = '';
 
-            countyData.forEach(c => {
+    countyData.forEach(c => {
+        let val;
+        if (varKey === 'access') {
+            val = c.scores.access;
+        } else if (varKey.startsWith('need_')) {
+            // Allows mapping and analyzing the summary score of any section (e.g. Socioeconomic summary)
+            val = c.scores.sections[varKey];
+        } else {
+            val = c.variables[varKey];
+        }
+
+        values.push(val);
+
+        if (val < minVal) {
+            minVal = val;
+            minCounty = c.name;
+        }
+        if (val > maxVal) {
+            maxVal = val;
+            maxCounty = c.name;
+        }
+    });
+
+    const sum = values.reduce((s, v) => s + v, 0);
+    const avg = (sum / values.length).toFixed(2);
+
+    const sortedVals = [...values].sort((a, b) => a - b);
+    const mid = Math.floor(sortedVals.length / 2);
+    const median = sortedVals.length % 2 !== 0 ? sortedVals[mid] : ((sortedVals[mid - 1] + sortedVals[mid]) / 2).toFixed(2);
+
+    document.getElementById('exp-stat-avg').textContent = `${avg}${meta.unit}`;
+    document.getElementById('exp-stat-median').textContent = `${median}${meta.unit}`;
+    document.getElementById('exp-stat-min').innerHTML = `${minVal}${meta.unit} <span style="font-size:0.75rem; font-weight:normal; display:block;">(${minCounty} County)</span>`;
+    document.getElementById('exp-stat-max').innerHTML = `${maxVal}${meta.unit} <span style="font-size:0.75rem; font-weight:normal; display:block;">(${maxCounty} County)</span>`;
+
+    document.getElementById('explorer-map-title').textContent = `Oregon Spatial Distribution: ${meta.name}`;
+
+    // Color Scale based on variable polarity
+    const isAccessVar = meta.section === 'access' || meta.reverse;
+    const getColorScale = (val) => {
+        let pct = (val - minVal) / (maxVal - minVal);
+        if (isNaN(pct)) pct = 0.5;
+
+        if (isAccessVar) {
+            // Green scale for positive outcomes (higher = better)
+            return pct > 0.8 ? '#005a32' :
+                pct > 0.6 ? '#238b45' :
+                    pct > 0.4 ? '#41ab5d' :
+                        pct > 0.2 ? '#74c476' :
+                            '#c7e9c0';
+        } else {
+            // Orange/Red scale for risk/disease/vulnerability outcomes (higher = worse/higher need)
+            return pct > 0.8 ? '#800026' :
+                pct > 0.6 ? '#BD0026' :
+                    pct > 0.4 ? '#E31A1C' :
+                        pct > 0.2 ? '#FC4E2A' :
+                            '#FEB24C';
+        }
+    };
+
+    if (explorerGeojsonLayer) {
+        explorerMap.removeLayer(explorerGeojsonLayer);
+    }
+
+    if (typeof countyGeoJSON !== 'undefined') {
+        explorerGeojsonLayer = L.geoJSON(countyGeoJSON, {
+            style: function (feature) {
+                const name = feature.properties.NAME;
+                const county = countyData.find(c => c.name === name);
+                const isSelected = name === currentSelectedCounty;
+
+                let val;
+                if (county) {
+                    if (varKey === 'access') {
+                        val = county.scores.access;
+                    } else if (varKey.startsWith('need_')) {
+                        val = county.scores.sections[varKey];
+                    } else {
+                        val = county.variables[varKey];
+                    }
+                }
+
+                return {
+                    fillColor: county ? getColorScale(val) : '#cccccc',
+                    color: isSelected ? '#1e293b' : '#ffffff',
+                    weight: isSelected ? 3.5 : 1.5,
+                    opacity: 1,
+                    fillOpacity: 0.8
+                };
+            },
+            onEachFeature: function (feature, layer) {
+                const name = feature.properties.NAME;
+                const county = countyData.find(c => c.name === name);
+                if (!county) return;
+
                 let val;
                 if (varKey === 'access') {
-                    val = c.scores.access;
+                    val = county.scores.access;
                 } else if (varKey.startsWith('need_')) {
-                    // Allows mapping and analyzing the summary score of any section (e.g. Socioeconomic summary)
-                    val = c.scores.sections[varKey];
+                    val = county.scores.sections[varKey];
                 } else {
-                    val = c.variables[varKey];
+                    val = county.variables[varKey];
                 }
 
-                values.push(val);
+                const medVal = varKey.startsWith('need_') || varKey === 'access' ? '50.0' : statewideMedians[varKey];
 
-                if (val < minVal) {
-                    minVal = val;
-                    minCounty = c.name;
-                }
-                if (val > maxVal) {
-                    maxVal = val;
-                    maxCounty = c.name;
-                }
-            });
-
-            const sum = values.reduce((s, v) => s + v, 0);
-            const avg = (sum / values.length).toFixed(2);
-
-            const sortedVals = [...values].sort((a, b) => a - b);
-            const mid = Math.floor(sortedVals.length / 2);
-            const median = sortedVals.length % 2 !== 0 ? sortedVals[mid] : ((sortedVals[mid - 1] + sortedVals[mid]) / 2).toFixed(2);
-
-            document.getElementById('exp-stat-avg').textContent = `${avg}${meta.unit}`;
-            document.getElementById('exp-stat-median').textContent = `${median}${meta.unit}`;
-            document.getElementById('exp-stat-min').innerHTML = `${minVal}${meta.unit} <span style="font-size:0.75rem; font-weight:normal; display:block;">(${minCounty} County)</span>`;
-            document.getElementById('exp-stat-max').innerHTML = `${maxVal}${meta.unit} <span style="font-size:0.75rem; font-weight:normal; display:block;">(${maxCounty} County)</span>`;
-
-            document.getElementById('explorer-map-title').textContent = `Oregon Spatial Distribution: ${meta.name}`;
-
-            // Color Scale based on variable polarity
-            const isAccessVar = meta.section === 'access' || meta.reverse;
-            const getColorScale = (val) => {
-                let pct = (val - minVal) / (maxVal - minVal);
-                if (isNaN(pct)) pct = 0.5;
-
-                if (isAccessVar) {
-                    // Green scale for positive outcomes (higher = better)
-                    return pct > 0.8 ? '#005a32' :
-                        pct > 0.6 ? '#238b45' :
-                            pct > 0.4 ? '#41ab5d' :
-                                pct > 0.2 ? '#74c476' :
-                                    '#c7e9c0';
-                } else {
-                    // Orange/Red scale for risk/disease/vulnerability outcomes (higher = worse/higher need)
-                    return pct > 0.8 ? '#800026' :
-                        pct > 0.6 ? '#BD0026' :
-                            pct > 0.4 ? '#E31A1C' :
-                                pct > 0.2 ? '#FC4E2A' :
-                                    '#FEB24C';
-                }
-            };
-
-            if (explorerGeojsonLayer) {
-                explorerMap.removeLayer(explorerGeojsonLayer);
+                layer.bindTooltip(`<b>${county.name} County</b><br>${meta.name}: <strong>${val}${meta.unit}</strong><br>Statewide Median: ${medVal}${meta.unit}<br><br><em>Click to select</em>`);
+                layer.on('click', () => {
+                    selectCounty(county.name, false);
+                });
             }
+        }).addTo(explorerMap);
 
-            if (typeof countyGeoJSON !== 'undefined') {
-                explorerGeojsonLayer = L.geoJSON(countyGeoJSON, {
-                    style: function (feature) {
-                        const name = feature.properties.NAME;
-                        const county = countyData.find(c => c.name === name);
-                        const isSelected = name === currentSelectedCounty;
+        // Highlight active county in explorer map
+        if (currentSelectedCounty && currentSelectedCounty !== 'statewide') {
+            highlightCountyInLayer(explorerGeojsonLayer, currentSelectedCounty);
+        }
+    }
 
-                        let val;
-                        if (county) {
-                            if (varKey === 'access') {
-                                val = county.scores.access;
-                            } else if (varKey.startsWith('need_')) {
-                                val = county.scores.sections[varKey];
-                            } else {
-                                val = county.variables[varKey];
-                            }
-                        }
+    // Draw explorer legend dynamically
+    const legendContainer = document.getElementById('explorer-legend');
+    legendContainer.innerHTML = '';
 
-                        return {
-                            fillColor: county ? getColorScale(val) : '#cccccc',
-                            color: isSelected ? '#1e293b' : '#ffffff',
-                            weight: isSelected ? 3.5 : 1.5,
-                            opacity: 1,
-                            fillOpacity: 0.8
-                        };
-                    },
-                    onEachFeature: function (feature, layer) {
-                        const name = feature.properties.NAME;
-                        const county = countyData.find(c => c.name === name);
-                        if (!county) return;
+    let legendHtml = `<h4>${meta.name} (${meta.unit || 'Score'})</h4>`;
 
-                        let val;
-                        if (varKey === 'access') {
-                            val = county.scores.access;
-                        } else if (varKey.startsWith('need_')) {
-                            val = county.scores.sections[varKey];
-                        } else {
-                            val = county.variables[varKey];
-                        }
+    const step = (maxVal - minVal) / 5;
+    for (let i = 0; i < 5; i++) {
+        const lower = minVal + i * step;
+        const colorVal = lower + step / 2;
+        const colorStr = getColorScale(colorVal);
 
-                        const medVal = varKey.startsWith('need_') || varKey === 'access' ? '50.0' : statewideMedians[varKey];
-
-                        layer.bindTooltip(`<b>${county.name} County</b><br>${meta.name}: <strong>${val}${meta.unit}</strong><br>Statewide Median: ${medVal}${meta.unit}<br><br><em>Click to select</em>`);
-                        layer.on('click', () => {
-                            selectCounty(county.name, false);
-                        });
-                    }
-                }).addTo(explorerMap);
-
-                // Highlight active county in explorer map
-                if (currentSelectedCounty && currentSelectedCounty !== 'statewide') {
-                    highlightCountyInLayer(explorerGeojsonLayer, currentSelectedCounty);
-                }
-            }
-
-            // Draw explorer legend dynamically
-            const legendContainer = document.getElementById('explorer-legend');
-            legendContainer.innerHTML = '';
-
-            let legendHtml = `<h4>${meta.name} (${meta.unit || 'Score'})</h4>`;
-
-            const step = (maxVal - minVal) / 5;
-            for (let i = 0; i < 5; i++) {
-                const lower = minVal + i * step;
-                const colorVal = lower + step / 2;
-                const colorStr = getColorScale(colorVal);
-
-                legendHtml += `
+        legendHtml += `
             <div class="legend-item">
                 <div class="legend-color" style="background:${colorStr}"></div>
                 <span>${lower.toFixed(1)}${meta.unit}</span>
             </div>
         `;
-            }
-            legendContainer.innerHTML = legendHtml;
-        }
+    }
+    legendContainer.innerHTML = legendHtml;
+}
