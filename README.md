@@ -21,6 +21,7 @@ Final Project/
 ├── Documentation/
 │   └── Data Science Project.pdf            # Original project requirements & guidelines
 │
+├── .gitignore                              # Git ignore file for python environment, caches and OS files
 ├── build_data_js.py                        # Python data engineering & pipeline script
 ├── index.html                              # Front-end HTML5 layout & components
 ├── style.css                               # Custom stylesheet (Glassmorphism design system)
@@ -67,6 +68,10 @@ Since the front-end is built using vanilla web technologies (HTML, CSS, JavaScri
 python -m http.server 8000
 ```
 Then navigate to `http://localhost:8000` in your web browser.
+
+**Interactive Correlation Chart Features:**
+* **Hover tooltips:** Hovering over any bubble reveals the county's name, population, and specific access/need scores.
+* **Click to Inspect:** Clicking a bubble on the *Access vs. Need Correlation Analysis* chart automatically selects that county across all maps and navigates you straight to its **Detailed County Profile** tab.
 
 ---
 
