@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oregon Healthcare Accessibility &amp; Need Analysis</title>
+    <meta name="description" content="Interactive dashboard analyzing healthcare need and access across all 36 Oregon counties.">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar glass-panel">
+            <div class="logo-container">
+                <h1>Oregon Health Access</h1>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#dashboard" class="nav-item active" data-view="dashboard">
+                    <span class="icon">&#x1F4CA;</span> Dashboard Overview
+                </a>
+                <a href="#profile" class="nav-item" data-view="profile">
+                    <span class="icon">&#x1F4CB;</span> Detailed County Profile
+                </a>
+                <a href="#explorer" class="nav-item" data-view="explorer">
+                    <span class="icon">&#x1F50D;</span> Indicator Explorer
+                </a>
+                <a href="#analysis" class="nav-item" data-view="analysis">
+                    <span class="icon">&#x1F4C8;</span> Access vs. Need
+                </a>
+                <a href="#methodology" class="nav-item" data-view="methodology">
+                    <span class="icon">&#x1F4DA;</span> Methodology &amp; Sources
+                </a>
+            </nav>
+            
+            <div class="county-selector">
+                <label for="county-select">Select a County</label>
+                <select id="county-select" class="glass-input">
+                    <option value="statewide">Statewide Overview</option>
+                    <!-- Populated by JS -->
+                </select>
+            </div>
+            
+            <div class="sidebar-footer">
+                <p>Data Science Project</p>
+                <p class="author">Ann Moorhead</p>
+                <div class="ai-badge">AI Assisted &amp; Verified</div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="topbar glass-panel">
+                <h2 id="page-title">Dashboard Overview</h2>
+                <!-- Export button removed from here to only be in County Profile as requested -->
+            </header>
+            
+            <div class="content-scroll">
+                
+                <!-- View: Dashboard Overview -->
+                <div id="view-dashboard" class="view-section active">
+                    <div class="stats-grid">
+                        <div class="stat-card glass-panel">
+                            <h3>Average Healthcare Need Index</h3>
+                            <div class="stat-value" id="stat-need">--</div>
+                            <div class="stat-trend positive">Statewide Average</div>
+                        </div>
+                        <div class="stat-card glass-panel">
+                            <h3>Average Hospital Beds / 10,000</h3>
+                            <div class="stat-value" id="stat-beds">--</div>
+                            <div class="stat-trend positive">Statewide Average</div>
+                        </div>
+                        <div class="stat-card glass-panel">
+                            <h3>High Healthcare Need Counties</h3>
+                            <div class="stat-value" id="stat-high-need">--</div>
+                            <div class="stat-trend warning">Need Index &gt; 70</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Side-by-Side Synchronized Maps -->
+                    <div class="maps-grid-side" style="margin-top: 24px;">
+                        <div class="card glass-panel map-card-side">
+                            <div class="card-header">
+                                <h3>Healthcare Infrastructure &amp; Access</h3>
+                            </div>
+                            <div class="map-container" id="map-access"></div>
+                            <div class="map-legend glass-panel" id="legend-access"></div>
+                        </div>
+                        
+                        <div class="card glass-panel map-card-side">
+                            <div class="card-header">
+                                <h3>Community Healthcare Need</h3>
+                            </div>
+                            <div class="map-container" id="map-need"></div>
+                            <div class="map-legend glass-panel" id="legend-need"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- View: County Profile -->
+                <div id="view-profile" class="view-section">
+                    <div class="profile-header glass-panel">
+                        <div class="profile-header-details">
+                            <h2 id="full-profile-name">Statewide Overview</h2>
+                            <div class="profile-meta-text" id="profile-meta-context" style="margin-top: 6px; font-size: 0.9rem; color: var(--text-secondary);">
+                                <!-- Populated dynamically: Population and County Area -->
+                            </div>
+                        </div>
+                        <div class="profile-header-actions" style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+                            <button class="btn btn-primary" id="export-btn">Export Report</button>
+                            <div class="profile-badges">
+                                <span class="badge" id="profile-region">Oregon</span>
+                                <span class="badge warning" id="profile-need-badge">Need Index: --</span>
+                                <span class="badge success" id="profile-access-badge">Access Score: --</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-grid">
+                        <!-- Section 1: Hospitals -->
+                        <div class="card glass-panel hospital-card" style="grid-column: 1 / -1;">
+                            <div class="card-header">
+                                <h3>1. Healthcare Infrastructure (Hospitals)</h3>
+                            </div>
+                            <div class="card-content">
+                                <div id="profile-hospitals">
+                                    <p class="placeholder-text">Please select a county from the selector or map.</p>
+                                </div>
+                                <div class="trauma-legend" style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--glass-border); font-size: 0.8rem; color: var(--text-secondary);">
+                                    <strong>Hospital Trauma Designation Levels Explained:</strong>
+                                    
+                                    <!-- Resolved column overlaps by splitting precisely into col 1 (Level 1-3) and col 2 (Level 4-None), and removed trailing periods -->
+                                    <div class="trauma-legend-columns" style="display: flex; gap: 24px; margin-top: 8px;">
+                                        <ul style="flex: 1; margin-left: 20px;">
+                                            <li><strong>Level 1:</strong> Immediate, comprehensive specialized trauma care (scaled: 100)</li>
+                                            <li style="margin-top: 4px;"><strong>Level 2:</strong> Major comprehensive trauma care and surgical services (scaled: 75)</li>
+                                            <li style="margin-top: 4px;"><strong>Level 3:</strong> Prompt emergency trauma assessment, resuscitation, and stabilization (scaled: 50)</li>
+                                        </ul>
+                                        <ul style="flex: 1; margin-left: 20px;">
+                                            <li><strong>Level 4:</strong> Basic emergency services and stabilization before transfer (scaled: 25)</li>
+                                            <li style="margin-top: 4px;"><strong>None / Level 0:</strong> No certified trauma facility in the county (scaled: 0)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 2: Healthcare Access Profile -->
+                        <div class="card glass-panel" style="grid-column: 1 / -1;">
+                            <div class="card-header">
+                                <h3>2. Healthcare Access Profile (Z-Score Standardized Components)</h3>
+                            </div>
+                            <div class="card-content">
+                                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px;">
+                                    <em>Values represent raw figures and their corresponding standardized Z-Scores relative to the statewide average. Standardized scores higher than 0 (marked with a green <strong>+</strong>) represent better access, while scores below 0 (marked with a red <strong>-</strong>) represent worse access.</em>
+                                </p>
+                                <div class="profile-stats-grid" id="profile-access-section">
+                                    <p class="placeholder-text">Please select a county.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 3: Healthcare Need & Vulnerability Profile -->
+                        <div class="card glass-panel" style="grid-column: 1 / -1;">
+                            <div class="card-header">
+                                <h3>3. Healthcare Need &amp; Vulnerability Profile</h3>
+                            </div>
+                            <div class="card-content">
+                                <!-- Re-worded description to spell out average, define Average Section Percentile, and explain signs -->
+                                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px;">
+                                    <em>Vulnerability metrics are shown alongside the statewide median. Markers indicate if a county performs better (indicated by a green <strong style="color:var(--color-good); font-size:1.1rem;">+</strong>) or worse (indicated by a red <strong style="color:var(--color-bad); font-size:1.1rem;">-</strong>) than the statewide median. The <strong>Average Section Percentile</strong> is the average of the percentile ranks of all individual metrics in that section, indicating the county's relative vulnerability in that domain.</em>
+                                </p>
+                                
+                                <div class="accordion-container" id="profile-need-accordion">
+                                    <!-- Dynamic Subsections loaded as accordions ordered by weight -->
+                                    <p class="placeholder-text">Please select a county.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- View: Indicator Explorer -->
+                <div id="view-explorer" class="view-section">
+                    <div class="explorer-layout">
+                        <!-- Selection & Stats Panel -->
+                        <div class="card glass-panel explorer-controls-card">
+                            <div class="card-header">
+                                <h3>Data Explorer Settings</h3>
+                            </div>
+                            <div class="card-content">
+                                <div class="control-group">
+                                    <label for="explorer-section-select">Methodology Section</label>
+                                    <select id="explorer-section-select" class="glass-input">
+                                        <option value="access">Healthcare Access Indicators</option>
+                                        <option value="socioeconomic">Socioeconomic Vulnerability</option>
+                                        <option value="demographics">Demographic Risk Factors</option>
+                                        <option value="health_outcomes">Health Outcomes &amp; Disease Burden</option>
+                                        <option value="preventable_gaps">Preventable Care Gaps</option>
+                                        <option value="lifestyle">Lifestyle &amp; Behavioral Risk Factors</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="control-group" style="margin-top: 16px;">
+                                    <label for="explorer-variable-select">Individual Variable / Summary</label>
+                                    <select id="explorer-variable-select" class="glass-input">
+                                        <!-- Populated dynamically -->
+                                    </select>
+                                </div>
+                                
+                                <div class="explorer-stats-panel" style="margin-top: 24px;">
+                                    <h4>Statewide Summary Statistics</h4>
+                                    <div class="explorer-stat-item">
+                                        <span>Statewide Average:</span>
+                                        <strong id="exp-stat-avg">--</strong>
+                                    </div>
+                                    <div class="explorer-stat-item">
+                                        <span>Statewide Median:</span>
+                                        <strong id="exp-stat-median">--</strong>
+                                    </div>
+                                    <div class="explorer-stat-item">
+                                        <span>Lowest Performing County:</span>
+                                        <strong id="exp-stat-min" class="county-stat-detail">--</strong>
+                                    </div>
+                                    <div class="explorer-stat-item">
+                                        <span>Highest Performing County:</span>
+                                        <strong id="exp-stat-max" class="county-stat-detail">--</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Map Display -->
+                        <div class="card glass-panel explorer-map-card">
+                            <div class="card-header">
+                                <h3 id="explorer-map-title">Interactive Variable Map</h3>
+                            </div>
+                            <div class="map-container" id="explorer-map" style="min-height: 480px;"></div>
+                            
+                            <!-- Added caption text across the bottom explaining color scales and decision -->
+                            <div class="explorer-caption-text" style="padding: 12px 20px; font-size: 0.75rem; color: var(--text-secondary); border-top: 1px solid var(--glass-border); line-height: 1.4; background: rgba(90, 167, 167, 0.03);">
+                                <strong>* Note on Map Coloring &amp; Scale Divisions:</strong> The color divisions on this map are calculated dynamically using 5 equal-distance intervals across the range of county values (from the minimum value to the maximum value). Green shading represents better performance (higher access rates or larger preventative care checks), while red/orange shading represents higher vulnerability (higher disease rates, poverty, or care gaps). The system automatically assigns the green palette to positive indicators and the red/orange palette to risk or disease burden indicators.
+                            </div>
+                            
+                            <div class="map-legend glass-panel" id="explorer-legend"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- View: Analysis (Scatter Plot) -->
+                <div id="view-analysis" class="view-section">
+                    <div class="card glass-panel chart-card full-height">
+                        <div class="card-header">
+                            <h3>Healthcare Access vs. Need Analysis</h3>
+                            <p class="subtitle">County-by-county correlation showing intersection of health systems strength and community vulnerabilities</p>
+                        </div>
+                        <div class="chart-container" style="min-height: 450px;">
+                            <canvas id="scatterChart"></canvas>
+                        </div>
+                        <div class="chart-insights">
+                            <h4>Spatial Distribution &amp; Health Equity Quadrants</h4>
+                            <!-- Fixed Markdown formatting artifacts by replacing ** with strong tags -->
+                            <p>This scatter chart maps all 36 Oregon counties. The y-axis (Healthcare Access Score) is <strong>inverted</strong>, meaning high access is at the bottom, and low access is at the top. The x-axis (Healthcare Need Score) represents increasing vulnerability.</p>
+                            <p style="margin-top: 8px;">
+                                • <strong>Bottom-Left (Origin):</strong> Ideal State — Low healthcare need and high healthcare access.
+                                <br>• <strong>Top-Right:</strong> High Vulnerability State — High community healthcare need combined with low healthcare access infrastructure. These represent critical priority zones for policy interventions and hospital resource allocations.
+                            </p>
+                            <!-- Added a third paragraph pointing to methodology -->
+                            <p style="margin-top: 12px; font-size: 0.85rem; color: var(--text-secondary);">
+                                To learn more about how these standardized access scores and percentile ranks are calculated, please navigate to the <strong>Methodology &amp; Sources</strong> tab.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- View: Methodology -->
+                <div id="view-methodology" class="view-section">
+                    <div class="card glass-panel text-content">
+                        <div class="card-header">
+                            <h3>Methodology &amp; Data Sources</h3>
+                        </div>
+                        <div class="card-content" style="padding: 24px;">
+                            <!-- Restructured and cleaned Methodology section to resolve Markdown and LaTeX syntax bugs -->
+                            
+                            <h4 class="methodology-hdr">General Methodology*</h4>
+                            <p>This project creates two main composite indices: the Healthcare Need Index and the Healthcare Access Score, both expressed on a scale of 0 to 100.</p>
+                            
+                            <h4 class="methodology-hdr" style="margin-top: 24px;">Healthcare Access Score Method (Z-Score Based)*</h4>
+                            <p>Access metrics are standardized using <strong>Z-Score Normalization</strong> across the 36 counties: <em>z = (x - Average) / Standard Deviation</em>. Standardized Z-scores are aggregated into three categories and combined hierarchically:</p>
+                            <ul>
+                                <li><strong>Structural Capacity (45% weight):</strong> Evaluates capacity by taking the average Z-score of:
+                                    <br>- Hospital beds per 10,000 residents (ArcGIS Oregon Health Authority hospitals spatial join / Census population)
+                                    <br>- Dentists per 1,000 residents (aggregated from OHSU Unmet Need Indicators excel data, weighted by service area population)
+                                    <br>- Mental Health Providers per 1,000 residents (aggregated from OHSU Unmet Need Indicators excel data, weighted by service area population)
+                                    <br>- Primary Care Capacity Ratio (aggregated from OHSU Unmet Need Indicators excel data, weighted by service area population)
+                                </li>
+                                <li><strong>Geographical Accessibility (35% weight):</strong> Standardized Z-score of the travel time to the nearest Patient-Centered Primary Care Home. This is <strong>inverted</strong> (Z-score multiplied by -1) because longer travel times mean worse accessibility.</li>
+                                <li><strong>Service Level (20% weight):</strong> Standardized Z-score of the Highest Trauma Level Available in the county. Trauma levels are scaled as: Level 1 = 100, Level 2 = 75, Level 3 = 50, Level 4 = 25, None = 0.</li>
+                            </ul>
+                            <p>The final combined Z-score is scaled using a linear Min-Max transformation to a 0–100 range for display and mapping purposes, ensuring relative relationships and variances are preserved.</p>
+                            
+                            <h4 class="methodology-hdr" style="margin-top: 24px;">Healthcare Need Score Method (Percentile Ranks)*</h4>
+                            <p>Community need indicators are standardized using <strong>Percentile Ranks (0 to 100)</strong> to represent relative vulnerability. Indicators are organized into 5 thematic sections ordered by weight:</p>
+                            <ul>
+                                <li><strong>Health Outcomes Burden (35% weight):</strong> 21 variables representing chronic illnesses and quality-of-life impairments, including Diabetes, Chronic Obstructive Pulmonary Disease, Heart disease, Stroke, Hypertension, Cancer, Asthma, Obesity, disability (all types), poor/fair self-rated health, cognitive/mental distress, and mobility/self-care limitations.</li>
+                                <li><strong>Socioeconomic Vulnerability (25% weight):</strong> 8 variables. Poverty %, Households without vehicle %, Broadband lack (inverted access rate), Food insecurity (PLACES), Housing insecurity (PLACES), Utility shutoff threats (PLACES), Uninsured rate (derived from Small Area Health Insurance Estimates in <code>insured.csv</code>), and Transportation barriers.</li>
+                                <li><strong>Preventable Care Gaps (25% weight):</strong> 9 variables. Averages the inverted percentile ranks of positive preventive screeners (Colorectal, Mammography, Cholesterol, Routine checkups, Dental visits) with the ascending percentile ranks of negative care outcomes (preventable hospitalizations, Emergency Department dental visits, Emergency Department mental health visits, inadequate prenatal care).</li>
+                                <li><strong>Demographics (7.5% weight):</strong> Population over 65 % and People of Color (POC) % percentile ranks.</li>
+                                <li><strong>Lifestyle &amp; Behavioral Risks (7.5% weight):</strong> Smoking %, Physical inactivity %, Short sleep duration %, Binge drinking %, Loneliness %, and Lack of social/emotional support %.</li>
+                            </ul>
+                            <p>For each section, sub-indicator percentile ranks are averaged. The composite Need Score is the weighted average of these five sections. The final NeedIndex (0 to 100) is the percentile rank of this weighted average across all 36 counties.</p>
+
+                            <h4 class="methodology-hdr" style="margin-top: 24px;">Data Sources &amp; Citations*</h4>
+                            <ul>
+                                <li><strong>Demographics &amp; Vehicle Access:</strong> U.S. Census Bureau. (2022). <em>American Community Survey (ACS) 5-Year Estimates</em>.</li>
+                                <li><strong>Hospital Infrastructure &amp; Trauma Levels:</strong> Oregon Health Authority. (2026). <em>Hospitals Feature Layer</em>. ArcGIS REST Services.</li>
+                                <li><strong>Unmet Healthcare Need Indicators:</strong> Oregon Health &amp; Science University (OHSU). (2025). <em>Unmet Healthcare Need Report</em>.</li>
+                                <li><strong>Health &amp; Lifestyle Indicators:</strong> Centers for Disease Control and Prevention. (2023). <em>PLACES: Local Data for Better Health</em>.</li>
+                                <li><strong>Health Insurance Rates:</strong> Small Area Health Insurance Estimates (SAHIE). (2023). U.S. Census Bureau.</li>
+                                <li><strong>Broadband Access &amp; Connectivity:</strong> U.S. Census Bureau. (2023). <em>American Community Survey</em>.</li>
+                                <li><strong>Oregon Health Plan (OHP) Enrollment:</strong> Oregon Health Authority. (2026). <em>OHP Enrollment Report (March 2026)</em>.</li>
+                            </ul>
+                            
+                            <div class="ai-verification-statement glass-panel" style="margin-top: 32px; padding: 20px; border-left: 4px solid var(--accent-primary);">
+                                <h4 class="ai-hdr">🤖 Artificial Intelligence Statement &amp; Scientific Review</h4>
+                                <p><strong>AI Utilization:</strong> Artificial Intelligence (AI) was utilized to assist in data pipeline engineering, index mathematical calculations, responsive Glassmorphic user interface development, and JavaScript visualizations for this dashboard.</p>
+                                <p style="margin-top: 8px;"><strong>Verification &amp; Quality Control:</strong> To ensure absolute accuracy and scientific integrity, all data aggregation logic, statistical index formulations (Z-scores and Percentile Ranks), and spatial joins were mathematically audited. The entire data processing pipeline and frontend implementation have been thoroughly reviewed and verified by the Author (**Ann Moorhead**) for technical and scientific accuracy.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="oregon_counties.js"></script>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

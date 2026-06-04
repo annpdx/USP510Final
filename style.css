@@ -1,0 +1,837 @@
+:root {
+    /* Color Palette - Premium Mint/Teal Theme */
+    --bg-primary: #f4f8f7; /* Very light mint background */
+    --bg-secondary: #ffffff;
+    --text-primary: #1e293b; /* Dark slate for high contrast */
+    --text-secondary: #475569; /* Medium slate */
+    --accent-primary: #5AA7A7; /* Teal */
+    --accent-secondary: #6C8CBF; /* Muted Blue */
+    --accent-tertiary: #BAC94A; /* Yellow-Green */
+    
+    --success: #5AA7A7; /* Teal for success/good */
+    --warning: #E2D36B; /* Yellow for moderate */
+    --danger: #e76f51; /* Coral for bad/high need */
+    
+    --color-good: #5AA7A7; /* Teal */
+    --color-bad: #e76f51; /* Coral */
+    
+    /* Light Glassmorphism */
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(90, 167, 167, 0.2);
+    --glass-shadow: 0 8px 32px 0 rgba(108, 140, 191, 0.15);
+    
+    /* Typography */
+    --font-main: 'Inter', sans-serif;
+    --font-heading: 'Outfit', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow: hidden;
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(90, 167, 167, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(108, 140, 191, 0.15) 0px, transparent 50%);
+}
+
+.app-container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Glassmorphism Utilities */
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: var(--glass-shadow);
+}
+
+/* Sidebar */
+.sidebar {
+    width: 280px;
+    margin: 16px;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    z-index: 10;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+    border-bottom: 2px solid var(--glass-border);
+    padding-bottom: 16px;
+}
+
+.logo-container h1 {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--accent-primary);
+    letter-spacing: -0.5px;
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 40px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.nav-item:hover {
+    background: rgba(90, 167, 167, 0.1);
+    color: var(--accent-primary);
+}
+
+.nav-item.active {
+    background: rgba(90, 167, 167, 0.15);
+    color: var(--accent-primary);
+    font-weight: 600;
+    border-left: 4px solid var(--accent-primary);
+}
+
+.county-selector {
+    margin-top: auto;
+    margin-bottom: 16px;
+}
+
+.county-selector label {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.glass-input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-family: inherit;
+    outline: none;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+}
+
+.glass-input:focus {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(90, 167, 167, 0.2);
+}
+
+.sidebar-footer {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-align: center;
+    border-top: 1px solid var(--glass-border);
+    padding-top: 16px;
+}
+
+.author {
+    color: var(--text-primary);
+    font-weight: 700;
+    margin-top: 4px;
+    font-size: 0.85rem;
+}
+
+.ai-badge {
+    display: inline-block;
+    background: rgba(90, 167, 167, 0.12);
+    color: var(--accent-primary);
+    padding: 3px 8px;
+    border-radius: 99px;
+    font-weight: 600;
+    margin-top: 6px;
+    font-size: 0.7rem;
+    border: 1px solid rgba(90, 167, 167, 0.25);
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 16px 16px 16px 0;
+    overflow: hidden;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    margin-bottom: 20px;
+}
+
+.topbar h2 {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: white;
+    box-shadow: 0 4px 14px rgba(90, 167, 167, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(90, 167, 167, 0.45);
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 0.825rem;
+    background: rgba(90, 167, 167, 0.1);
+    color: var(--text-primary);
+}
+
+.btn-sm:hover, .btn-sm.btn-active {
+    background: var(--accent-primary);
+    color: white;
+}
+
+.content-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 8px;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--glass-border);
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(90, 167, 167, 0.4);
+}
+
+/* View Sections */
+.view-section {
+    display: none;
+    animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.view-section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.stat-card h3 {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+.stat-value {
+    font-family: var(--font-heading);
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin-bottom: 6px;
+    color: var(--accent-primary);
+    letter-spacing: -0.5px;
+}
+
+.stat-trend {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.positive { color: var(--accent-primary); }
+.negative { color: var(--accent-secondary); }
+.warning { color: var(--danger); }
+
+/* Side-by-side Maps Layout */
+.maps-grid-side {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.map-card-side {
+    min-height: 480px;
+    position: relative;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.card-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.card-header h3 {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.map-container {
+    flex: 1;
+    width: 100%;
+    min-height: 380px;
+    z-index: 1;
+}
+
+.map-legend {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    padding: 12px;
+    z-index: 1000;
+    font-size: 0.75rem;
+    border-radius: 8px;
+    max-width: 160px;
+}
+
+.map-legend h4 {
+    font-weight: 700;
+    margin-bottom: 6px;
+    font-size: 0.75rem;
+    color: var(--text-primary);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+/* County Profile View */
+.profile-header {
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile-header h2 {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--accent-primary);
+}
+
+.profile-badges {
+    display: flex;
+    gap: 12px;
+}
+
+.profile-badges .badge {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+    font-weight: 700;
+    border-radius: 6px;
+}
+
+.badge {
+    background: rgba(108, 140, 191, 0.12);
+    color: var(--accent-secondary);
+    border: 1px solid rgba(108, 140, 191, 0.2);
+}
+
+.profile-badges .warning {
+    background: rgba(231, 111, 81, 0.12);
+    color: var(--danger);
+    border: 1px solid rgba(231, 111, 81, 0.2);
+}
+
+.profile-badges .success {
+    background: rgba(90, 167, 167, 0.12);
+    color: var(--accent-primary);
+    border: 1px solid rgba(90, 167, 167, 0.2);
+}
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.card-content {
+    padding: 20px;
+}
+
+/* Hospital Item Styling */
+.hospital-item {
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+}
+
+.hospital-item h4 {
+    color: var(--accent-primary);
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.hospital-details {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 16px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* Stats Cards in County Profile */
+.profile-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.profile-stat {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.stat-num-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.stat-num {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.stat-meta {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+/* Good/Bad Indicators matching theme */
+.indicator-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px;
+}
+
+.theme-good-dot {
+    color: var(--color-good);
+}
+
+.theme-bad-dot {
+    color: var(--color-bad);
+}
+
+.status-badge {
+    font-size: 0.85rem;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.status-good {
+    background: rgba(90, 167, 167, 0.12);
+    color: var(--color-good);
+    border: 1px solid rgba(90, 167, 167, 0.2);
+}
+
+.status-bad {
+    background: rgba(231, 111, 81, 0.12);
+    color: var(--color-bad);
+    border: 1px solid rgba(231, 111, 81, 0.2);
+}
+
+/* Accordion Container for Need Sections */
+.accordion-item {
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.4);
+    transition: all 0.3s;
+}
+
+.accordion-item:hover {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.accordion-header {
+    padding: 16px 20px;
+    background: rgba(90, 167, 167, 0.05);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.accordion-header h4 {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.accordion-header .accordion-icon {
+    transition: transform 0.3s;
+    font-size: 0.8rem;
+    color: var(--accent-primary);
+}
+
+.accordion-item.active .accordion-icon {
+    transform: rotate(180deg);
+}
+
+.accordion-content {
+    display: none;
+    padding: 20px;
+    background: #ffffff;
+    border-top: 1px solid var(--glass-border);
+}
+
+.accordion-item.active .accordion-content {
+    display: block;
+}
+
+/* Variable Table in Accordion */
+.metric-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.metric-table th {
+    text-align: left;
+    padding: 8px 12px;
+    border-bottom: 2px solid var(--glass-border);
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.metric-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(90, 167, 167, 0.06);
+    color: var(--text-primary);
+}
+
+.metric-table tr:hover {
+    background: rgba(90, 167, 167, 0.03);
+}
+
+/* Placeholder Text */
+.placeholder-text {
+    color: var(--text-secondary);
+    font-style: italic;
+    text-align: center;
+    padding: 40px 0;
+}
+
+/* Indicator Explorer View Layout */
+.explorer-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 20px;
+}
+
+.explorer-controls-card {
+    height: fit-content;
+}
+
+.control-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+}
+
+.explorer-stats-panel {
+    background: rgba(90, 167, 167, 0.06);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    padding: 16px;
+}
+
+.explorer-stats-panel h4 {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--accent-primary);
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 6px;
+}
+
+.explorer-stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 0.825rem;
+    color: var(--text-secondary);
+}
+
+.explorer-stat-item:last-child {
+    margin-bottom: 0;
+}
+
+.explorer-stat-item strong {
+    color: var(--text-primary);
+    font-size: 0.9rem;
+}
+
+.county-stat-detail {
+    font-weight: 700 !important;
+    text-align: right;
+}
+
+/* Access and Need Scatter Plot view */
+.chart-insights {
+    border-top: 1px solid var(--glass-border);
+    padding: 16px 20px;
+}
+
+.chart-insights h4 {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--accent-primary);
+    margin-bottom: 6px;
+}
+
+.chart-insights p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* Leaflet Customizations for Mint Theme */
+.leaflet-container {
+    background: #e2e8f0 !important;
+}
+
+.leaflet-popup-content-wrapper {
+    background: rgba(255, 255, 255, 0.98) !important;
+    backdrop-filter: blur(8px);
+    color: var(--text-primary) !important;
+    border: 1px solid var(--glass-border);
+    border-radius: 8px !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+}
+
+.leaflet-popup-tip {
+    background: rgba(255, 255, 255, 0.98) !important;
+}
+
+/* Methodology styles */
+.methodology-hdr {
+    font-family: var(--font-heading) !important;
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    color: var(--text-primary) !important;
+    margin-bottom: 8px !important;
+}
+
+.ai-hdr {
+    font-family: var(--font-heading) !important;
+    font-size: 1.2rem !important;
+    font-weight: 700 !important;
+    color: var(--accent-primary) !important;
+    margin-bottom: 8px !important;
+}
+
+/* Indented list items for methodology */
+.text-content ul {
+    margin-left: 40px !important;
+    margin-bottom: 24px !important;
+    color: var(--text-secondary);
+}
+
+/* Printable PDF Media Block */
+@media print {
+    /* Hide navigation sidebars, headers, maps controls and extra charts */
+    .sidebar, 
+    .topbar, 
+    .nav-menu, 
+    .county-selector, 
+    .sidebar-footer,
+    .header-actions,
+    .stats-grid,
+    .maps-grid-side,
+    .explorer-layout,
+    .chart-card,
+    .text-content,
+    .trauma-legend,
+    .explorer-caption-text,
+    .view-section:not(#view-profile) {
+        display: none !important;
+    }
+    
+    /* Make the county profile fill the whole screen for high quality layout */
+    .main-content {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+    }
+    
+    body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        background-image: none !important;
+    }
+    
+    .content-scroll {
+        overflow: visible !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    #view-profile.view-section {
+        display: block !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+    
+    .glass-panel {
+        background: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        border-radius: 8px !important;
+    }
+    
+    /* Ensure all accordion sections are expanded and printed */
+    .accordion-content {
+        display: block !important;
+        padding: 10px 0 !important;
+        border: none !important;
+    }
+    
+    .accordion-item {
+        background: #ffffff !important;
+        border: none !important;
+        margin-bottom: 24px !important;
+        page-break-inside: avoid;
+    }
+    
+    .accordion-header {
+        background: none !important;
+        border-bottom: 2px solid #000000 !important;
+        padding: 8px 0 !important;
+    }
+    
+    .accordion-icon {
+        display: none !important;
+    }
+    
+    .metric-table th {
+        border-bottom: 1px solid #000000 !important;
+    }
+    
+    .profile-header {
+        border-bottom: 2px solid #000000 !important;
+        margin-bottom: 24px !important;
+        padding: 12px 0 !important;
+    }
+    
+    #export-btn {
+        display: none !important;
+    }
+}

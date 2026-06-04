@@ -1,0 +1,53 @@
+﻿Air Pollution - Particulate Matter for Oregon by County
+"All Races (includes Hispanic/Latino), Both Sexes, All Ages, 2020"
+
+Sorted by Percent
+
+County,FIPS,Micrograms per cubic meter (PM2.5)(1)
+"Oregon",41000,12.1
+"United States",00000,7.3
+"Clackamas County",41005,30.4
+"Marion County",41047,24.9
+"Linn County",41043,21.0
+"Klamath County",41035,19.7
+"Douglas County",41019,19.3
+"Jefferson County",41031,18.4
+"Wasco County",41065,16.8
+"Crook County",41013,16.2
+"Deschutes County",41017,15.8
+"Jackson County",41029,15.6
+"Hood River County",41027,15.5
+"Sherman County",41055,15.1
+"Lane County",41039,15.0
+"Umatilla County",41059,14.7
+"Josephine County",41033,14.5
+"Gilliam County",41021,14.0
+"Yamhill County",41071,12.7
+"Polk County",41053,12.1
+"Morrow County",41049,12.0
+"Harney County",41025,11.9
+"Wheeler County",41069,11.6
+"Benton County",41003,11.4
+"Washington County",41067,11.1
+"Multnomah County",41051,10.7
+"Malheur County",41045,10.6
+"Columbia County",41009,10.1
+"Coos County",41011,9.9
+"Baker County",41001,9.8
+"Union County",41061,9.8
+"Curry County",41015,9.5
+"Lincoln County",41041,8.9
+"Wallowa County",41063,8.8
+"Grant County",41023,8.2
+"Tillamook County",41057,7.9
+"Lake County",41037,7.8
+"Clatsop County",41007,7.4
+
+Suggested Citation:
+HDPulse: An Ecosystem of Minority Health and Health Disparities Resources. National Institute on Minority Health and Health Disparities. Created 5/7/2026. Available from https://hdpulse.nimhd.nih.gov
+
+Notes:
+Source: National Environmental Public Health Tracking Network [ https://ephtracking.cdc.gov/DataExplorer/ ] from the CDC.
+Average daily density of fine particulate matter in micrograms per cubic meter (PM2.5).
+
+NA: Some data are not available or suppressed due to insufficient counts.

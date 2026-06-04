@@ -1,0 +1,53 @@
+﻿"Insurance (Percent insured in demographic group, all income levels)"
+Oregon by County
+"All Races (includes Hispanic/Latino), Both Sexes, Ages 18-64, 2023"
+Sorted by Value
+
+County,FIPS,Insured (Percent),Insured (People),Rank within US (of 3133 counties)
+"United States",00000,89.0,175852264,"N/A"
+"Oregon",41000,91.9,2344505,"16 of 51"
+"Marion County",41047,86.8,174447,"2,020"
+"Malheur County",41045,87.3,13457,"1,925"
+"Morrow County",41049,87.4,5957,"1,902"
+"Hood River County",41027,88.2,12485,"1,755"
+"Umatilla County",41059,88.3,38366,"1,736"
+"Lake County",41037,89.0,3610,"1,613"
+"Wasco County",41065,89.2,13218,"1,569"
+"Grant County",41023,90.3,3229,"1,308"
+"Lincoln County",41041,90.3,23541,"1,308"
+"Jackson County",41029,90.6,111466,"1,245"
+"Curry County",41015,90.7,10267,"1,220"
+"Harney County",41025,90.8,3537,"1,189"
+"Tillamook County",41057,90.9,13104,"1,162"
+"Wallowa County",41063,90.9,3556,"1,162"
+"Jefferson County",41031,91.0,11901,"1,145"
+"Josephine County",41033,91.1,42403,"1,105"
+"Coos County",41011,91.3,31324,"1,045"
+"Gilliam County",41021,91.3,928,"1,045"
+"Klamath County",41035,91.3,34845,"1,045"
+"Yamhill County",41071,91.5,56358,"997"
+"Clatsop County",41007,91.7,21221,"939"
+"Lane County",41039,91.7,211515,"939"
+"Union County",41061,91.7,13222,"939"
+"Wheeler County",41069,91.7,645,"939"
+"Linn County",41043,91.8,70829,"899"
+"Baker County",41001,92.0,7872,"840"
+"Douglas County",41019,92.5,56211,"690"
+"Polk County",41053,92.5,48412,"690"
+"Deschutes County",41017,92.7,116386,"625"
+"Sherman County",41055,92.7,953,"625"
+"Columbia County",41009,92.8,29760,"593"
+"Crook County",41013,92.8,13742,"593"
+"Washington County",41067,92.9,356211,"555"
+"Multnomah County",41051,93.0,495050,"522"
+"Benton County",41003,93.7,56223,"314"
+"Clackamas County",41005,94.0,238254,"243"
+
+Suggested Citation:
+HDPulse: An Ecosystem of Minority Health and Health Disparities Resources. National Institute on Minority Health and Health Disparities. Created 5/28/2026. Available from https://hdpulse.nimhd.nih.gov
+
+Notes:
+"NA: Data not available [http://hdpulse.nimhd.nih.gov/data/datanotavailable.html] for this combination of geography, cancer site, age, and race/ethnicity."
+Source: Demographic data provided by the Census Bureau (http://www.census.gov/) & Small Area Health Insurance Estimates (https://www.census.gov/programs-surveys/sahie.html).
+The race categorization for this statistic does not include individuals who responded with two more races.
+"For more information about Insurance (Percent insured in demographic group, all income levels), see the dictionary at http://hdpulse.nimhd.nih.gov/dictionary.php#insurance."

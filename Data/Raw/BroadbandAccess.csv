@@ -1,0 +1,54 @@
+﻿Broadband Access for Oregon by County
+"All Races (includes Hispanic/Latino), Both Sexes, All Ages, 2019-2023"
+
+Sorted by Percent
+
+County,FIPS,Percent(1)
+"Oregon",41000,92
+"United States",00000,90
+"Washington County",41067,95
+"Benton County",41003,93
+"Clackamas County",41005,93
+"Deschutes County",41017,93
+"Multnomah County",41051,93
+"Columbia County",41009,92
+"Hood River County",41027,92
+"Yamhill County",41071,92
+"Clatsop County",41007,91
+"Lane County",41039,91
+"Lincoln County",41041,91
+"Marion County",41047,91
+"Curry County",41015,90
+"Jackson County",41029,90
+"Josephine County",41033,90
+"Linn County",41043,90
+"Polk County",41053,90
+"Coos County",41011,89
+"Crook County",41013,89
+"Jefferson County",41031,89
+"Tillamook County",41057,89
+"Baker County",41001,88
+"Gilliam County",41021,88
+"Wasco County",41065,88
+"Douglas County",41019,87
+"Malheur County",41045,87
+"Morrow County",41049,87
+"Klamath County",41035,85
+"Umatilla County",41059,85
+"Sherman County",41055,83
+"Union County",41061,83
+"Grant County",41023,82
+"Wallowa County",41063,82
+"Wheeler County",41069,80
+"Harney County",41025,79
+"Lake County",41037,71
+
+Suggested Citation:
+HDPulse: An Ecosystem of Minority Health and Health Disparities Resources. National Institute on Minority Health and Health Disparities. Created 5/7/2026. Available from https://hdpulse.nimhd.nih.gov
+
+Notes:
+Source: Data provided by the Census Bureau [ https://www.census.gov/ ] and the American Community Survey [ https://www.census.gov/acs/www/ ].
+
+For more information on broadband access see the dictionary [ https://hdpulse.nimhd.nih.gov/dictionary.php?#broadband ].
+
+NA: Some data are not available or suppressed due to insufficient counts.
