@@ -765,7 +765,21 @@ body {
     }
     
     /* Make the county profile fill the whole screen for high quality layout */
+    html, body {
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+    .app-container {
+        height: auto !important;
+        overflow: visible !important;
+        display: block !important;
+    }
+
     .main-content {
+        height: auto !important;
+        overflow: visible !important;
+        display: block !important;
         padding: 0 !important;
         margin: 0 !important;
         width: 100% !important;
@@ -778,6 +792,7 @@ body {
     }
     
     .content-scroll {
+        height: auto !important;
         overflow: visible !important;
         padding: 0 !important;
         margin: 0 !important;
