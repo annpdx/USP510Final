@@ -215,6 +215,10 @@ def build_dashboard_data():
     print("Calculating Access Scores (Z-score based)...")
     final_df['BedsPer10k'] = (final_df['Beds'] / final_df['Total Population'] * 10000).round(1)
     
+    # Calculate Hospital Count from the spatial join result 'Hospitals'
+    final_df['HospitalCount'] = final_df['Hospitals'].apply(len)
+    final_df['HospitalsPerSqMile'] = final_df['HospitalCount'] / final_df['Area (sq miles)']
+    
     def z_score(series, invert=False):
         mean = series.mean()
         std = series.std(ddof=1)
@@ -235,9 +239,11 @@ def build_dashboard_data():
     final_df['trauma_scaled'] = final_df['HighestTraumaLevel'].map(trauma_map)
     final_df['z_service'] = z_score(final_df['trauma_scaled'])
     
-    # 3. Geographical Accessibility ( travel time )
-    # Inverted because longer travel time = worse access
-    final_df['z_geo'] = z_score(final_df['Travel Time to Nearest PCPCH'], invert=True)
+    # 3. Geographical Accessibility ( travel time and hospital density )
+    # Inverted travel time and positive hospitals per square mile
+    z_travel = z_score(final_df['Travel Time to Nearest PCPCH'], invert=True)
+    z_hosp_density = z_score(final_df['HospitalsPerSqMile'])
+    final_df['z_geo'] = (z_travel + z_hosp_density) / 2.0
     
     # Composite Z-score
     final_df['access_z'] = 0.45 * final_df['z_structural'] + 0.35 * final_df['z_geo'] + 0.20 * final_df['z_service']
@@ -331,6 +337,7 @@ def build_dashboard_data():
         'mental_health_providers_per_1k': 'Mental Health Providers per 1,000',
         'primary_care_capacity': 'Primary Care  Capacity Ratio',
         'travel_time_pcpch': 'Travel Time to Nearest PCPCH',
+        'hospitals_per_sq_mile': 'HospitalsPerSqMile',
         'highest_trauma_level': 'HighestTraumaLevel',
         # Socioeconomic
         'poverty_pct': '% Poverty',

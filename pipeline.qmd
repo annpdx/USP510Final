@@ -253,9 +253,6 @@ final_df = pd.merge(final_df, unmet_county, on='County', how='left')
 final_df = pd.merge(final_df, insured_df[['County', 'Uninsured']], on='County', how='left')
 final_df = pd.merge(final_df, health_pivot, on='County', how='left')
 final_df = pd.merge(final_df, hosp_agg, on='County', how='left')
-final_df = pd.merge(final_df, ohp_county, on='County', how='left')
-
-
 
 final_df['Beds'] = final_df['Beds'].fillna(0)
 final_df['HighestTraumaLevel'] = final_df['HighestTraumaLevel'].fillna(0)
@@ -265,12 +262,7 @@ final_df['Hospitals'] = final_df['Hospitals'].fillna('').apply(lambda x: x if is
 numeric_cols = final_df.select_dtypes(include=[np.number]).columns
 for col in numeric_cols:
     final_df[col] = final_df[col].fillna(final_df[col].median())
-    
-final_df['OHP_Total'] = final_df['OHP_Total'].fillna(0)
-final_df['OHPEnrollment'] = (final_df['OHP_Total'] / final_df['Total Population'] * 100).round(2)
 ```
-
-
 
 ---
 
@@ -285,11 +277,15 @@ $$z = \frac{x - \mu}{\sigma}$$
 
 Aggregated variables:
 * **Structural Capacity (45%):** Average Z-score of beds/10k, dentists/1k, mental health providers/1k, primary care capacity.
-* **Geographical Accessibility (35%):** Inverted Z-score of PCPCH travel times.
+* **Geographical Accessibility (35%):** Average Z-score of travel times (inverted) and hospitals per square mile.
 * **Service Level (20%):** Standardized trauma level.
 
 ```{python}
 final_df['BedsPer10k'] = (final_df['Beds'] / final_df['Total Population'] * 10000).round(1)
+
+# Calculate Hospital Density
+final_df['HospitalCount'] = final_df['Hospitals'].apply(len)
+final_df['HospitalsPerSqMile'] = final_df['HospitalCount'] / final_df['Area (sq miles)']
 
 def z_score(series, invert=False):
     mean = series.mean()
@@ -311,8 +307,10 @@ trauma_map = {1: 100, 2: 75, 3: 50, 4: 25, 0: 0}
 final_df['trauma_scaled'] = final_df['HighestTraumaLevel'].map(trauma_map)
 final_df['z_service'] = z_score(final_df['trauma_scaled'])
 
-# 3. Geo (Inverted)
-final_df['z_geo'] = z_score(final_df['Travel Time to Nearest PCPCH'], invert=True)
+# 3. Geo (Combined travel time and hospital density)
+z_travel = z_score(final_df['Travel Time to Nearest PCPCH'], invert=True)
+z_hosp_density = z_score(final_df['HospitalsPerSqMile'])
+final_df['z_geo'] = (z_travel + z_hosp_density) / 2.0
 
 # Composite Z-score and Min-Max scaling
 final_df['access_z'] = 0.45 * final_df['z_structural'] + 0.35 * final_df['z_geo'] + 0.20 * final_df['z_service']

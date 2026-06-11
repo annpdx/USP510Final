@@ -7,6 +7,7 @@ const variableMetadata = {
     'mental_health_providers_per_1k': { name: 'Mental Health Providers per 1,000 residents', unit: ' providers', section: 'access', reverse: false },
     'primary_care_capacity': { name: 'Primary Care Capacity Ratio', unit: '', section: 'access', reverse: false },
     'travel_time_pcpch': { name: 'Travel Time to Patient-Centered Primary Care Home', unit: ' minutes', section: 'access', reverse: true },
+    'hospitals_per_sq_mile': { name: 'Hospitals per Square Mile', unit: ' /sq mi', section: 'access', reverse: false },
     'highest_trauma_level': { name: 'Highest Trauma Designation Level Available', unit: ' Level', section: 'access', reverse: false },
 
     // Socioeconomic Vulnerability

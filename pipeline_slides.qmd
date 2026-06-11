@@ -214,11 +214,17 @@ hosp_gdf = gpd.GeoDataFrame(hosp_records, crs="EPSG:4326")
 # Spatial join: assign each hospital to its county polygon
 hosp_with_county = gpd.sjoin(hosp_gdf, counties_gdf, how="inner", predicate="within")
 
-# Aggregate total beds and highest trauma level per county
+# Aggregate total beds, hospitals list, and highest trauma level per county
+county_hospitals = hosp_with_county.groupby('NAME').apply(
+    lambda x: x[['Name', 'Beds', 'Trauma_Level']].to_dict('records'),
+    include_groups=False
+).reset_index().rename(columns={'NAME': 'County', 0: 'Hospitals'})
+
 hosp_agg = hosp_with_county.groupby('NAME').agg({
     'Beds': 'sum',
     'Trauma_Level': lambda s: min([x for x in s if x > 0], default=0)
 }).reset_index().rename(columns={'NAME': 'County', 'Trauma_Level': 'HighestTraumaLevel'})
+hosp_agg = pd.merge(hosp_agg, county_hospitals, on='County', how='left')
 ```
 
 ::: {.notes}
@@ -239,7 +245,9 @@ for df, cols in [(broadband_df, ['County', 'Broadband']),
                  (unmet_county, None)]:
     final_df = pd.merge(final_df, df if cols is None else df[cols], on='County', how='left')
 
-
+final_df['Beds'] = final_df['Beds'].fillna(0)
+final_df['HighestTraumaLevel'] = final_df['HighestTraumaLevel'].fillna(0)
+final_df['Hospitals'] = final_df['Hospitals'].fillna('').apply(lambda x: x if isinstance(x, list) else [])
 
 # Median imputation for remaining missing values
 numeric_cols = final_df.select_dtypes(include=[np.number]).columns
@@ -248,7 +256,7 @@ for col in numeric_cols:
 ```
 
 ::: {.callout-warning}
-**Proxy variables** are estimated from Census covariates — correlated but not directly measured.
+**PLACES measures** has 30 county-level indicators.
 :::
 
 ---
@@ -295,6 +303,10 @@ $$z = \frac{x - \mu}{\sigma}$$
 ```{python}
 final_df['BedsPer10k'] = (final_df['Beds'] / final_df['Total Population'] * 10000).round(1)
 
+# Calculate Hospital Density
+final_df['HospitalCount'] = final_df['Hospitals'].apply(len)
+final_df['HospitalsPerSqMile'] = final_df['HospitalCount'] / final_df['Area (sq miles)']
+
 def z_score(series, invert=False):
     z = (series - series.mean()) / series.std(ddof=1)
     return -z if invert else z
@@ -309,8 +321,10 @@ final_df['z_structural'] = (z_score(final_df['BedsPer10k']) +
 trauma_map = {1: 100, 2: 75, 3: 50, 4: 25, 0: 0}
 final_df['z_service'] = z_score(final_df['HighestTraumaLevel'].map(trauma_map))
 
-# Geographic Accessibility (35%): travel time — INVERTED (longer = worse)
-final_df['z_geo'] = z_score(final_df['Travel Time to Nearest PCPCH'], invert=True)
+# Geographic Accessibility (35%): travel time (inverted) and hospital density
+z_travel = z_score(final_df['Travel Time to Nearest PCPCH'], invert=True)
+z_hosp_density = z_score(final_df['HospitalsPerSqMile'])
+final_df['z_geo'] = (z_travel + z_hosp_density) / 2.0
 
 # Composite + Min-Max scale to 0–100
 final_df['access_z'] = 0.45 * final_df['z_structural'] + 0.35 * final_df['z_geo'] + 0.20 * final_df['z_service']

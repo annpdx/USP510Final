@@ -18,12 +18,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 40,
-        "access_raw_z": -0.682,
+        "access": 27,
+        "access_raw_z": -0.462,
         "need": 42,
         "sections": {
           "access_structural": -0.139,
-          "access_geo": -1.571,
+          "access_geo": -0.943,
           "access_service": -0.349,
           "need_socioeconomic": 46.5,
           "need_demographics": 44.4,
@@ -38,6 +38,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 0.65,
         "primary_care_capacity": 0.8,
         "travel_time_pcpch": 16.47,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 4.0,
         "poverty_pct": 13.72,
         "no_vehicle_pct": 4.8,
@@ -98,12 +99,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 87,
-        "access_raw_z": 0.996,
+        "access": 63,
+        "access_raw_z": 0.919,
         "need": 14,
         "sections": {
           "access_structural": 1.146,
-          "access_geo": 0.377,
+          "access_geo": 0.156,
           "access_service": 1.743,
           "need_socioeconomic": 51.0,
           "need_demographics": 41.6,
@@ -118,6 +119,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 1.76,
         "primary_care_capacity": 1.37,
         "travel_time_pcpch": 10.0,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 2.0,
         "poverty_pct": 19.06,
         "no_vehicle_pct": 7.72,
@@ -202,12 +204,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 62,
-        "access_raw_z": 0.102,
+        "access": 40,
+        "access_raw_z": 0.05,
         "need": 6,
         "sections": {
           "access_structural": 0.554,
-          "access_geo": 0.377,
+          "access_geo": 0.227,
           "access_service": -1.394,
           "need_socioeconomic": 13.6,
           "need_demographics": 45.9,
@@ -222,6 +224,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 1.19,
         "primary_care_capacity": 0.9,
         "travel_time_pcpch": 10.0,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 0.0,
         "poverty_pct": 7.58,
         "no_vehicle_pct": 4.88,
@@ -290,12 +293,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 63,
-        "access_raw_z": 0.127,
+        "access": 41,
+        "access_raw_z": 0.085,
         "need": 33,
         "sections": {
           "access_structural": 0.144,
-          "access_geo": 0.377,
+          "access_geo": 0.257,
           "access_service": -0.349,
           "need_socioeconomic": 47.9,
           "need_demographics": 56.2,
@@ -310,6 +313,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 0.72,
         "primary_care_capacity": 1.02,
         "travel_time_pcpch": 10.0,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 4.0,
         "poverty_pct": 10.24,
         "no_vehicle_pct": 8.65,
@@ -361,12 +365,12 @@ const _dashData = {
       "beds": 0,
       "hospitals": [],
       "scores": {
-        "access": 39,
-        "access_raw_z": -0.717,
+        "access": 17,
+        "access_raw_z": -0.85,
         "need": 19,
         "sections": {
           "access_structural": -1.266,
-          "access_geo": 0.377,
+          "access_geo": -0.005,
           "access_service": -1.394,
           "need_socioeconomic": 16.3,
           "need_demographics": 29.1,
@@ -381,6 +385,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 0.32,
         "primary_care_capacity": 0.3,
         "travel_time_pcpch": 10.0,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 0.0,
         "poverty_pct": 9.12,
         "no_vehicle_pct": 4.36,
@@ -457,12 +462,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 72,
-        "access_raw_z": 0.476,
+        "access": 50,
+        "access_raw_z": 0.428,
         "need": 83,
         "sections": {
           "access_structural": 0.521,
-          "access_geo": 0.291,
+          "access_geo": 0.156,
           "access_service": 0.697,
           "need_socioeconomic": 65.0,
           "need_demographics": 61.1,
@@ -477,6 +482,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 0.81,
         "primary_care_capacity": 0.92,
         "travel_time_pcpch": 10.28,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 3.0,
         "poverty_pct": 16.09,
         "no_vehicle_pct": 6.46,
@@ -537,12 +543,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 53,
-        "access_raw_z": -0.223,
+        "access": 30,
+        "access_raw_z": -0.344,
         "need": 28,
         "sections": {
           "access_structural": -0.634,
-          "access_geo": 0.377,
+          "access_geo": 0.032,
           "access_service": -0.349,
           "need_socioeconomic": 22.2,
           "need_demographics": 40.3,
@@ -557,6 +563,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 0.48,
         "primary_care_capacity": 0.45,
         "travel_time_pcpch": 10.0,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 4.0,
         "poverty_pct": 7.92,
         "no_vehicle_pct": 3.68,
@@ -617,12 +624,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 49,
-        "access_raw_z": -0.355,
+        "access": 30,
+        "access_raw_z": -0.347,
         "need": 53,
         "sections": {
           "access_structural": -0.402,
-          "access_geo": -0.298,
+          "access_geo": -0.275,
           "access_service": -0.349,
           "need_socioeconomic": 45.1,
           "need_demographics": 66.7,
@@ -637,6 +644,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 0.48,
         "primary_care_capacity": 0.72,
         "travel_time_pcpch": 12.24,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 4.0,
         "poverty_pct": 12.43,
         "no_vehicle_pct": 4.4,
@@ -705,12 +713,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 84,
-        "access_raw_z": 0.882,
+        "access": 59,
+        "access_raw_z": 0.773,
         "need": 8,
         "sections": {
           "access_structural": 0.891,
-          "access_geo": 0.377,
+          "access_geo": 0.067,
           "access_service": 1.743,
           "need_socioeconomic": 15.3,
           "need_demographics": 36.1,
@@ -725,6 +733,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 1.58,
         "primary_care_capacity": 1.04,
         "travel_time_pcpch": 10.0,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 2.0,
         "poverty_pct": 9.13,
         "no_vehicle_pct": 4.22,
@@ -801,12 +810,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 62,
-        "access_raw_z": 0.117,
+        "access": 40,
+        "access_raw_z": 0.054,
         "need": 81,
         "sections": {
           "access_structural": -0.129,
-          "access_geo": 0.101,
+          "access_geo": -0.078,
           "access_service": 0.697,
           "need_socioeconomic": 53.1,
           "need_demographics": 48.6,
@@ -821,6 +830,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 0.74,
         "primary_care_capacity": 0.79,
         "travel_time_pcpch": 10.92,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 3.0,
         "poverty_pct": 14.87,
         "no_vehicle_pct": 5.1,
@@ -873,11 +883,11 @@ const _dashData = {
       "hospitals": [],
       "scores": {
         "access": 0,
-        "access_raw_z": -2.095,
+        "access_raw_z": -1.52,
         "need": 78,
         "sections": {
           "access_structural": -1.182,
-          "access_geo": -3.67,
+          "access_geo": -2.028,
           "access_service": -1.394,
           "need_socioeconomic": 63.2,
           "need_demographics": 66.7,
@@ -892,6 +902,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 0.0,
         "primary_care_capacity": 0.86,
         "travel_time_pcpch": 23.45,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 0.0,
         "poverty_pct": 12.86,
         "no_vehicle_pct": 7.19,
@@ -952,12 +963,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 60,
-        "access_raw_z": 0.023,
+        "access": 36,
+        "access_raw_z": -0.102,
         "need": 75,
         "sections": {
           "access_structural": -0.087,
-          "access_geo": 0.377,
+          "access_geo": 0.019,
           "access_service": -0.349,
           "need_socioeconomic": 66.0,
           "need_demographics": 50.0,
@@ -972,6 +983,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 0.11,
         "primary_care_capacity": 0.92,
         "travel_time_pcpch": 10.0,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 4.0,
         "poverty_pct": 16.49,
         "no_vehicle_pct": 3.47,
@@ -1032,12 +1044,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 61,
-        "access_raw_z": 0.082,
+        "access": 38,
+        "access_raw_z": -0.048,
         "need": 97,
         "sections": {
           "access_structural": 0.044,
-          "access_geo": 0.377,
+          "access_geo": 0.006,
           "access_service": -0.349,
           "need_socioeconomic": 70.1,
           "need_demographics": 50.0,
@@ -1052,6 +1064,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 0.41,
         "primary_care_capacity": 0.88,
         "travel_time_pcpch": 10.0,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 4.0,
         "poverty_pct": 12.13,
         "no_vehicle_pct": 6.38,
@@ -1112,12 +1125,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 83,
-        "access_raw_z": 0.838,
+        "access": 60,
+        "access_raw_z": 0.816,
         "need": 17,
         "sections": {
           "access_structural": 1.433,
-          "access_geo": 0.155,
+          "access_geo": 0.092,
           "access_service": 0.697,
           "need_socioeconomic": 42.4,
           "need_demographics": 57.0,
@@ -1132,6 +1145,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 1.28,
         "primary_care_capacity": 1.57,
         "travel_time_pcpch": 10.74,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 3.0,
         "poverty_pct": 6.57,
         "no_vehicle_pct": 5.41,
@@ -1208,12 +1222,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 77,
-        "access_raw_z": 0.62,
+        "access": 53,
+        "access_raw_z": 0.536,
         "need": 44,
         "sections": {
           "access_structural": 0.811,
-          "access_geo": 0.332,
+          "access_geo": 0.09,
           "access_service": 0.697,
           "need_socioeconomic": 57.7,
           "need_demographics": 61.2,
@@ -1228,6 +1242,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 1.14,
         "primary_care_capacity": 1.06,
         "travel_time_pcpch": 10.15,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 3.0,
         "poverty_pct": 13.26,
         "no_vehicle_pct": 5.39,
@@ -1288,12 +1303,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 53,
-        "access_raw_z": -0.204,
+        "access": 32,
+        "access_raw_z": -0.263,
         "need": 72,
         "sections": {
           "access_structural": -0.357,
-          "access_geo": 0.076,
+          "access_geo": -0.094,
           "access_service": -0.349,
           "need_socioeconomic": 51.7,
           "need_demographics": 68.0,
@@ -1308,6 +1323,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 0.38,
         "primary_care_capacity": 0.86,
         "travel_time_pcpch": 11.0,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 4.0,
         "poverty_pct": 12.68,
         "no_vehicle_pct": 4.92,
@@ -1376,12 +1392,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 61,
-        "access_raw_z": 0.063,
+        "access": 38,
+        "access_raw_z": -0.024,
         "need": 86,
         "sections": {
           "access_structural": 0.002,
-          "access_geo": 0.377,
+          "access_geo": 0.128,
           "access_service": -0.349,
           "need_socioeconomic": 51.4,
           "need_demographics": 54.1,
@@ -1396,6 +1412,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 0.57,
         "primary_care_capacity": 0.83,
         "travel_time_pcpch": 10.0,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 4.0,
         "poverty_pct": 16.11,
         "no_vehicle_pct": 4.74,
@@ -1456,12 +1473,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 61,
-        "access_raw_z": 0.071,
+        "access": 42,
+        "access_raw_z": 0.101,
         "need": 92,
         "sections": {
           "access_structural": 0.255,
-          "access_geo": -0.524,
+          "access_geo": -0.437,
           "access_service": 0.697,
           "need_socioeconomic": 67.7,
           "need_demographics": 62.5,
@@ -1476,6 +1493,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 0.64,
         "primary_care_capacity": 0.85,
         "travel_time_pcpch": 13.0,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 3.0,
         "poverty_pct": 17.83,
         "no_vehicle_pct": 5.13,
@@ -1537,11 +1555,11 @@ const _dashData = {
       ],
       "scores": {
         "access": 19,
-        "access_raw_z": -1.409,
+        "access_raw_z": -0.79,
         "need": 100,
         "sections": {
           "access_structural": 0.055,
-          "access_geo": -3.895,
+          "access_geo": -2.127,
           "access_service": -0.349,
           "need_socioeconomic": 95.1,
           "need_demographics": 59.0,
@@ -1556,6 +1574,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 0.43,
         "primary_care_capacity": 0.89,
         "travel_time_pcpch": 24.2,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 4.0,
         "poverty_pct": 19.57,
         "no_vehicle_pct": 7.73,
@@ -1648,12 +1667,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 78,
-        "access_raw_z": 0.675,
+        "access": 54,
+        "access_raw_z": 0.595,
         "need": 47,
         "sections": {
           "access_structural": 0.484,
-          "access_geo": 0.31,
+          "access_geo": 0.081,
           "access_service": 1.743,
           "need_socioeconomic": 59.0,
           "need_demographics": 50.0,
@@ -1668,6 +1687,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 1.43,
         "primary_care_capacity": 0.92,
         "travel_time_pcpch": 10.22,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 2.0,
         "poverty_pct": 16.13,
         "no_vehicle_pct": 7.38,
@@ -1736,12 +1756,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 55,
-        "access_raw_z": -0.16,
+        "access": 34,
+        "access_raw_z": -0.199,
         "need": 56,
         "sections": {
           "access_structural": -0.417,
-          "access_geo": 0.279,
+          "access_geo": 0.168,
           "access_service": -0.349,
           "need_socioeconomic": 51.4,
           "need_demographics": 72.2,
@@ -1756,6 +1776,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 0.61,
         "primary_care_capacity": 0.71,
         "travel_time_pcpch": 10.32,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 4.0,
         "poverty_pct": 14.72,
         "no_vehicle_pct": 4.85,
@@ -1824,12 +1845,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 60,
-        "access_raw_z": 0.02,
+        "access": 37,
+        "access_raw_z": -0.076,
         "need": 39,
         "sections": {
           "access_structural": -0.54,
-          "access_geo": 0.353,
+          "access_geo": 0.078,
           "access_service": 0.697,
           "need_socioeconomic": 34.0,
           "need_demographics": 38.8,
@@ -1844,6 +1865,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 0.51,
         "primary_care_capacity": 0.66,
         "travel_time_pcpch": 10.08,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 3.0,
         "poverty_pct": 11.95,
         "no_vehicle_pct": 4.41,
@@ -1904,12 +1926,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 59,
-        "access_raw_z": 0.011,
+        "access": 37,
+        "access_raw_z": -0.063,
         "need": 94,
         "sections": {
           "access_structural": 0.135,
-          "access_geo": 0.058,
+          "access_geo": -0.153,
           "access_service": -0.349,
           "need_socioeconomic": 82.6,
           "need_demographics": 55.6,
@@ -1924,6 +1946,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 0.58,
         "primary_care_capacity": 0.92,
         "travel_time_pcpch": 11.06,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 4.0,
         "poverty_pct": 18.9,
         "no_vehicle_pct": 5.78,
@@ -2008,12 +2031,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 72,
-        "access_raw_z": 0.474,
+        "access": 51,
+        "access_raw_z": 0.469,
         "need": 50,
         "sections": {
           "access_structural": 0.449,
-          "access_geo": 0.377,
+          "access_geo": 0.363,
           "access_service": 0.697,
           "need_socioeconomic": 64.2,
           "need_demographics": 50.7,
@@ -2028,6 +2051,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 1.14,
         "primary_care_capacity": 0.97,
         "travel_time_pcpch": 10.0,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 3.0,
         "poverty_pct": 12.99,
         "no_vehicle_pct": 6.18,
@@ -2088,12 +2112,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 51,
-        "access_raw_z": -0.276,
+        "access": 29,
+        "access_raw_z": -0.391,
         "need": 89,
         "sections": {
           "access_structural": -0.751,
-          "access_geo": 0.377,
+          "access_geo": 0.049,
           "access_service": -0.349,
           "need_socioeconomic": 64.6,
           "need_demographics": 55.5,
@@ -2108,6 +2132,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 0.32,
         "primary_care_capacity": 0.77,
         "travel_time_pcpch": 10.0,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 4.0,
         "poverty_pct": 16.7,
         "no_vehicle_pct": 1.52,
@@ -2257,11 +2282,11 @@ const _dashData = {
       ],
       "scores": {
         "access": 100,
-        "access_raw_z": 1.452,
+        "access_raw_z": 2.375,
         "need": 11,
         "sections": {
           "access_structural": 1.695,
-          "access_geo": 0.377,
+          "access_geo": 3.013,
           "access_service": 2.789,
           "need_socioeconomic": 40.6,
           "need_demographics": 43.1,
@@ -2276,6 +2301,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 2.12,
         "primary_care_capacity": 1.23,
         "travel_time_pcpch": 10.0,
+        "hospitals_per_sq_mile": 0.03,
         "highest_trauma_level": 1.0,
         "poverty_pct": 12.2,
         "no_vehicle_pct": 12.53,
@@ -2336,12 +2362,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 46,
-        "access_raw_z": -0.472,
+        "access": 25,
+        "access_raw_z": -0.555,
         "need": 25,
         "sections": {
           "access_structural": -1.188,
-          "access_geo": 0.377,
+          "access_geo": 0.142,
           "access_service": -0.349,
           "need_socioeconomic": 38.5,
           "need_demographics": 48.6,
@@ -2356,6 +2382,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 0.3,
         "primary_care_capacity": 0.3,
         "travel_time_pcpch": 10.0,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 4.0,
         "poverty_pct": 11.86,
         "no_vehicle_pct": 5.14,
@@ -2407,12 +2434,12 @@ const _dashData = {
       "beds": 0,
       "hospitals": [],
       "scores": {
-        "access": 35,
-        "access_raw_z": -0.841,
+        "access": 14,
+        "access_raw_z": -0.975,
         "need": 69,
         "sections": {
           "access_structural": -1.543,
-          "access_geo": 0.377,
+          "access_geo": -0.005,
           "access_service": -1.394,
           "need_socioeconomic": 67.0,
           "need_demographics": 36.1,
@@ -2427,6 +2454,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 0.0,
         "primary_care_capacity": 0.57,
         "travel_time_pcpch": 10.0,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 0.0,
         "poverty_pct": 15.54,
         "no_vehicle_pct": 7.4,
@@ -2487,12 +2515,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 58,
-        "access_raw_z": -0.05,
+        "access": 35,
+        "access_raw_z": -0.149,
         "need": 36,
         "sections": {
           "access_structural": -0.248,
-          "access_geo": 0.377,
+          "access_geo": 0.094,
           "access_service": -0.349,
           "need_socioeconomic": 50.7,
           "need_demographics": 62.5,
@@ -2507,6 +2535,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 0.4,
         "primary_care_capacity": 0.75,
         "travel_time_pcpch": 10.0,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 4.0,
         "poverty_pct": 12.5,
         "no_vehicle_pct": 4.86,
@@ -2575,12 +2604,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 59,
-        "access_raw_z": 0.012,
+        "access": 38,
+        "access_raw_z": -0.048,
         "need": 64,
         "sections": {
           "access_structural": -0.355,
-          "access_geo": 0.091,
+          "access_geo": -0.08,
           "access_service": 0.697,
           "need_socioeconomic": 64.9,
           "need_demographics": 45.8,
@@ -2595,6 +2624,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 0.39,
         "primary_care_capacity": 0.87,
         "travel_time_pcpch": 10.95,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 3.0,
         "poverty_pct": 11.7,
         "no_vehicle_pct": 5.47,
@@ -2655,12 +2685,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 60,
-        "access_raw_z": 0.043,
+        "access": 37,
+        "access_raw_z": -0.072,
         "need": 58,
         "sections": {
           "access_structural": -0.042,
-          "access_geo": 0.377,
+          "access_geo": 0.049,
           "access_service": -0.349,
           "need_socioeconomic": 71.2,
           "need_demographics": 30.6,
@@ -2675,6 +2705,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 0.84,
         "primary_care_capacity": 0.97,
         "travel_time_pcpch": 10.0,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 4.0,
         "poverty_pct": 15.24,
         "no_vehicle_pct": 7.4,
@@ -2735,12 +2766,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 78,
-        "access_raw_z": 0.67,
+        "access": 53,
+        "access_raw_z": 0.549,
         "need": 22,
         "sections": {
           "access_structural": 1.351,
-          "access_geo": 0.377,
+          "access_geo": 0.03,
           "access_service": -0.349,
           "need_socioeconomic": 54.2,
           "need_demographics": 44.4,
@@ -2755,6 +2786,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 0.65,
         "primary_care_capacity": 1.55,
         "travel_time_pcpch": 10.0,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 4.0,
         "poverty_pct": 9.2,
         "no_vehicle_pct": 4.95,
@@ -2815,12 +2847,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 70,
-        "access_raw_z": 0.379,
+        "access": 46,
+        "access_raw_z": 0.262,
         "need": 67,
         "sections": {
           "access_structural": 0.24,
-          "access_geo": 0.377,
+          "access_geo": 0.041,
           "access_service": 0.697,
           "need_socioeconomic": 63.9,
           "need_demographics": 62.5,
@@ -2835,6 +2867,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 0.65,
         "primary_care_capacity": 1.0,
         "travel_time_pcpch": 10.0,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 3.0,
         "poverty_pct": 11.69,
         "no_vehicle_pct": 6.55,
@@ -2919,12 +2952,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 65,
-        "access_raw_z": 0.21,
+        "access": 46,
+        "access_raw_z": 0.286,
         "need": 3,
         "sections": {
           "access_structural": 0.792,
-          "access_geo": 0.377,
+          "access_geo": 0.594,
           "access_service": -1.394,
           "need_socioeconomic": 22.2,
           "need_demographics": 45.1,
@@ -2939,6 +2972,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 1.08,
         "primary_care_capacity": 1.2,
         "travel_time_pcpch": 10.0,
+        "hospitals_per_sq_mile": 0.01,
         "highest_trauma_level": 0.0,
         "poverty_pct": 8.16,
         "no_vehicle_pct": 5.64,
@@ -2990,12 +3024,12 @@ const _dashData = {
       "beds": 0,
       "hospitals": [],
       "scores": {
-        "access": 35,
-        "access_raw_z": -0.845,
+        "access": 14,
+        "access_raw_z": -0.978,
         "need": 61,
         "sections": {
           "access_structural": -1.551,
-          "access_geo": 0.377,
+          "access_geo": -0.005,
           "access_service": -1.394,
           "need_socioeconomic": 40.6,
           "need_demographics": 59.7,
@@ -3010,6 +3044,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 0.0,
         "primary_care_capacity": 0.37,
         "travel_time_pcpch": 10.0,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 0.0,
         "poverty_pct": 9.86,
         "no_vehicle_pct": 3.21,
@@ -3078,12 +3113,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 59,
-        "access_raw_z": -0.015,
+        "access": 38,
+        "access_raw_z": -0.042,
         "need": 31,
         "sections": {
           "access_structural": -0.171,
-          "access_geo": 0.377,
+          "access_geo": 0.298,
           "access_service": -0.349,
           "need_socioeconomic": 38.9,
           "need_demographics": 50.0,
@@ -3098,6 +3133,7 @@ const _dashData = {
         "mental_health_providers_per_1k": 0.73,
         "primary_care_capacity": 0.76,
         "travel_time_pcpch": 10.0,
+        "hospitals_per_sq_mile": 0.0,
         "highest_trauma_level": 4.0,
         "poverty_pct": 11.35,
         "no_vehicle_pct": 5.52,
@@ -3148,6 +3184,7 @@ const _dashData = {
     "mental_health_providers_per_1k": 0.63,
     "primary_care_capacity": 0.87,
     "travel_time_pcpch": 10.0,
+    "hospitals_per_sq_mile": 0.0,
     "highest_trauma_level": 3.0,
     "poverty_pct": 12.59,
     "no_vehicle_pct": 5.26,

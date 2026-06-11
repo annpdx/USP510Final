@@ -85,6 +85,7 @@ Calculates healthcare infrastructure strength using standard deviation Z-scores 
   * Primary Care Capacity Ratio (aggregated from `UnmetNeedIndicators.xlsx`)
 * **Geographical Accessibility (35% weight)**:
   * Travel time to nearest Patient-Centered Primary Care Home (PCPCH) (aggregated from `UnmetNeedIndicators.xlsx` - **Inverted** since shorter travel is better)
+  * Hospitals per square mile (calculated from hospital count and county area)
 * **Service Level (20% weight)**:
   * Highest Trauma Level Available (scaled: Level 1 = 100, Level 2 = 75, Level 3 = 50, Level 4 = 25, None = 0)
 
