@@ -277,7 +277,7 @@ $$z = \frac{x - \mu}{\sigma}$$
 
 Aggregated variables:
 * **Structural Capacity (45%):** Average Z-score of beds/10k, dentists/1k, mental health providers/1k, primary care capacity.
-* **Geographical Accessibility (35%):** Average Z-score of travel times (inverted) and hospitals per square mile.
+* **Geographical Accessibility (35%):** Average Z-score of travel times (inverted) and hospitals per square mile (percentile-ranked first to mitigate outlier skew, then Z-scored).
 * **Service Level (20%):** Standardized trauma level.
 
 ```{python}
@@ -308,8 +308,11 @@ final_df['trauma_scaled'] = final_df['HighestTraumaLevel'].map(trauma_map)
 final_df['z_service'] = z_score(final_df['trauma_scaled'])
 
 # 3. Geo (Combined travel time and hospital density)
+# Travel time is directly Z-scored (inverted); hospital density is
+# percentile-ranked first to mitigate outlier skew, then Z-scored
 z_travel = z_score(final_df['Travel Time to Nearest PCPCH'], invert=True)
-z_hosp_density = z_score(final_df['HospitalsPerSqMile'])
+hosp_density_pr = final_df['HospitalsPerSqMile'].rank(pct=True) * 100
+z_hosp_density = z_score(hosp_density_pr)
 final_df['z_geo'] = (z_travel + z_hosp_density) / 2.0
 
 # Composite Z-score and Min-Max scaling

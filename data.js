@@ -18,12 +18,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 27,
-        "access_raw_z": -0.462,
+        "access": 35,
+        "access_raw_z": -0.532,
         "need": 42,
         "sections": {
           "access_structural": -0.139,
-          "access_geo": -0.943,
+          "access_geo": -1.142,
           "access_service": -0.349,
           "need_socioeconomic": 46.5,
           "need_demographics": 44.4,
@@ -99,12 +99,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 63,
-        "access_raw_z": 0.919,
+        "access": 82,
+        "access_raw_z": 1.072,
         "need": 14,
         "sections": {
           "access_structural": 1.146,
-          "access_geo": 0.156,
+          "access_geo": 0.592,
           "access_service": 1.743,
           "need_socioeconomic": 51.0,
           "need_demographics": 41.6,
@@ -204,12 +204,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 40,
-        "access_raw_z": 0.05,
+        "access": 58,
+        "access_raw_z": 0.244,
         "need": 6,
         "sections": {
           "access_structural": 0.554,
-          "access_geo": 0.227,
+          "access_geo": 0.782,
           "access_service": -1.394,
           "need_socioeconomic": 13.6,
           "need_demographics": 45.9,
@@ -293,12 +293,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 41,
-        "access_raw_z": 0.085,
+        "access": 59,
+        "access_raw_z": 0.285,
         "need": 33,
         "sections": {
           "access_structural": 0.144,
-          "access_geo": 0.257,
+          "access_geo": 0.829,
           "access_service": -0.349,
           "need_socioeconomic": 47.9,
           "need_demographics": 56.2,
@@ -365,12 +365,12 @@ const _dashData = {
       "beds": 0,
       "hospitals": [],
       "scores": {
-        "access": 17,
-        "access_raw_z": -0.85,
+        "access": 20,
+        "access_raw_z": -1.049,
         "need": 19,
         "sections": {
           "access_structural": -1.266,
-          "access_geo": -0.005,
+          "access_geo": -0.571,
           "access_service": -1.394,
           "need_socioeconomic": 16.3,
           "need_demographics": 29.1,
@@ -462,12 +462,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 50,
-        "access_raw_z": 0.428,
+        "access": 68,
+        "access_raw_z": 0.583,
         "need": 83,
         "sections": {
           "access_structural": 0.521,
-          "access_geo": 0.156,
+          "access_geo": 0.597,
           "access_service": 0.697,
           "need_socioeconomic": 65.0,
           "need_demographics": 61.1,
@@ -543,12 +543,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 30,
-        "access_raw_z": -0.344,
+        "access": 39,
+        "access_raw_z": -0.397,
         "need": 28,
         "sections": {
           "access_structural": -0.634,
-          "access_geo": 0.032,
+          "access_geo": -0.12,
           "access_service": -0.349,
           "need_socioeconomic": 22.2,
           "need_demographics": 40.3,
@@ -624,12 +624,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 30,
-        "access_raw_z": -0.347,
+        "access": 41,
+        "access_raw_z": -0.311,
         "need": 53,
         "sections": {
           "access_structural": -0.402,
-          "access_geo": -0.275,
+          "access_geo": -0.173,
           "access_service": -0.349,
           "need_socioeconomic": 45.1,
           "need_demographics": 66.7,
@@ -713,12 +713,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 59,
-        "access_raw_z": 0.773,
+        "access": 75,
+        "access_raw_z": 0.841,
         "need": 8,
         "sections": {
           "access_structural": 0.891,
-          "access_geo": 0.067,
+          "access_geo": 0.26,
           "access_service": 1.743,
           "need_socioeconomic": 15.3,
           "need_demographics": 36.1,
@@ -810,12 +810,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 40,
-        "access_raw_z": 0.054,
+        "access": 53,
+        "access_raw_z": 0.074,
         "need": 81,
         "sections": {
           "access_structural": -0.129,
-          "access_geo": -0.078,
+          "access_geo": -0.021,
           "access_service": 0.697,
           "need_socioeconomic": 53.1,
           "need_demographics": 48.6,
@@ -883,11 +883,11 @@ const _dashData = {
       "hospitals": [],
       "scores": {
         "access": 0,
-        "access_raw_z": -1.52,
+        "access_raw_z": -1.719,
         "need": 78,
         "sections": {
           "access_structural": -1.182,
-          "access_geo": -2.028,
+          "access_geo": -2.595,
           "access_service": -1.394,
           "need_socioeconomic": 63.2,
           "need_demographics": 66.7,
@@ -963,12 +963,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 36,
-        "access_raw_z": -0.102,
+        "access": 45,
+        "access_raw_z": -0.201,
         "need": 75,
         "sections": {
           "access_structural": -0.087,
-          "access_geo": 0.019,
+          "access_geo": -0.263,
           "access_service": -0.349,
           "need_socioeconomic": 66.0,
           "need_demographics": 50.0,
@@ -1044,12 +1044,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 38,
-        "access_raw_z": -0.048,
+        "access": 44,
+        "access_raw_z": -0.208,
         "need": 97,
         "sections": {
           "access_structural": 0.044,
-          "access_geo": 0.006,
+          "access_geo": -0.453,
           "access_service": -0.349,
           "need_socioeconomic": 70.1,
           "need_demographics": 50.0,
@@ -1125,12 +1125,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 60,
-        "access_raw_z": 0.816,
+        "access": 80,
+        "access_raw_z": 0.986,
         "need": 17,
         "sections": {
           "access_structural": 1.433,
-          "access_geo": 0.092,
+          "access_geo": 0.576,
           "access_service": 0.697,
           "need_socioeconomic": 42.4,
           "need_demographics": 57.0,
@@ -1222,12 +1222,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 53,
-        "access_raw_z": 0.536,
+        "access": 69,
+        "access_raw_z": 0.637,
         "need": 44,
         "sections": {
           "access_structural": 0.811,
-          "access_geo": 0.09,
+          "access_geo": 0.38,
           "access_service": 0.697,
           "need_socioeconomic": 57.7,
           "need_demographics": 61.2,
@@ -1303,12 +1303,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 32,
-        "access_raw_z": -0.263,
+        "access": 43,
+        "access_raw_z": -0.258,
         "need": 72,
         "sections": {
           "access_structural": -0.357,
-          "access_geo": -0.094,
+          "access_geo": -0.081,
           "access_service": -0.349,
           "need_socioeconomic": 51.7,
           "need_demographics": 68.0,
@@ -1392,12 +1392,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 38,
-        "access_raw_z": -0.024,
+        "access": 54,
+        "access_raw_z": 0.105,
         "need": 86,
         "sections": {
           "access_structural": 0.002,
-          "access_geo": 0.128,
+          "access_geo": 0.497,
           "access_service": -0.349,
           "need_socioeconomic": 51.4,
           "need_demographics": 54.1,
@@ -1473,12 +1473,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 42,
-        "access_raw_z": 0.101,
+        "access": 50,
+        "access_raw_z": -0.012,
         "need": 92,
         "sections": {
           "access_structural": 0.255,
-          "access_geo": -0.437,
+          "access_geo": -0.761,
           "access_service": 0.697,
           "need_socioeconomic": 67.7,
           "need_demographics": 62.5,
@@ -1554,12 +1554,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 19,
-        "access_raw_z": -0.79,
+        "access": 24,
+        "access_raw_z": -0.918,
         "need": 100,
         "sections": {
           "access_structural": 0.055,
-          "access_geo": -2.127,
+          "access_geo": -2.494,
           "access_service": -0.349,
           "need_socioeconomic": 95.1,
           "need_demographics": 59.0,
@@ -1667,12 +1667,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 54,
-        "access_raw_z": 0.595,
+        "access": 72,
+        "access_raw_z": 0.712,
         "need": 47,
         "sections": {
           "access_structural": 0.484,
-          "access_geo": 0.081,
+          "access_geo": 0.416,
           "access_service": 1.743,
           "need_socioeconomic": 59.0,
           "need_demographics": 50.0,
@@ -1756,12 +1756,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 34,
-        "access_raw_z": -0.199,
+        "access": 50,
+        "access_raw_z": -0.018,
         "need": 56,
         "sections": {
           "access_structural": -0.417,
-          "access_geo": 0.168,
+          "access_geo": 0.686,
           "access_service": -0.349,
           "need_socioeconomic": 51.4,
           "need_demographics": 72.2,
@@ -1845,12 +1845,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 37,
-        "access_raw_z": -0.076,
+        "access": 51,
+        "access_raw_z": -0.0,
         "need": 39,
         "sections": {
           "access_structural": -0.54,
-          "access_geo": 0.078,
+          "access_geo": 0.295,
           "access_service": 0.697,
           "need_socioeconomic": 34.0,
           "need_demographics": 38.8,
@@ -1926,12 +1926,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 37,
-        "access_raw_z": -0.063,
+        "access": 45,
+        "access_raw_z": -0.207,
         "need": 94,
         "sections": {
           "access_structural": 0.135,
-          "access_geo": -0.153,
+          "access_geo": -0.565,
           "access_service": -0.349,
           "need_socioeconomic": 82.6,
           "need_demographics": 55.6,
@@ -2031,12 +2031,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 51,
-        "access_raw_z": 0.469,
+        "access": 70,
+        "access_raw_z": 0.665,
         "need": 50,
         "sections": {
           "access_structural": 0.449,
-          "access_geo": 0.363,
+          "access_geo": 0.924,
           "access_service": 0.697,
           "need_socioeconomic": 64.2,
           "need_demographics": 50.7,
@@ -2112,12 +2112,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 29,
-        "access_raw_z": -0.391,
+        "access": 39,
+        "access_raw_z": -0.4,
         "need": 89,
         "sections": {
           "access_structural": -0.751,
-          "access_geo": 0.049,
+          "access_geo": 0.022,
           "access_service": -0.349,
           "need_socioeconomic": 64.6,
           "need_demographics": 55.5,
@@ -2282,11 +2282,11 @@ const _dashData = {
       ],
       "scores": {
         "access": 100,
-        "access_raw_z": 2.375,
+        "access_raw_z": 1.677,
         "need": 11,
         "sections": {
           "access_structural": 1.695,
-          "access_geo": 3.013,
+          "access_geo": 1.019,
           "access_service": 2.789,
           "need_socioeconomic": 40.6,
           "need_demographics": 43.1,
@@ -2362,12 +2362,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 25,
-        "access_raw_z": -0.555,
+        "access": 38,
+        "access_raw_z": -0.414,
         "need": 25,
         "sections": {
           "access_structural": -1.188,
-          "access_geo": 0.142,
+          "access_geo": 0.545,
           "access_service": -0.349,
           "need_socioeconomic": 38.5,
           "need_demographics": 48.6,
@@ -2434,12 +2434,12 @@ const _dashData = {
       "beds": 0,
       "hospitals": [],
       "scores": {
-        "access": 14,
-        "access_raw_z": -0.975,
+        "access": 16,
+        "access_raw_z": -1.173,
         "need": 69,
         "sections": {
           "access_structural": -1.543,
-          "access_geo": -0.005,
+          "access_geo": -0.571,
           "access_service": -1.394,
           "need_socioeconomic": 67.0,
           "need_demographics": 36.1,
@@ -2515,12 +2515,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 35,
-        "access_raw_z": -0.149,
+        "access": 49,
+        "access_raw_z": -0.057,
         "need": 36,
         "sections": {
           "access_structural": -0.248,
-          "access_geo": 0.094,
+          "access_geo": 0.355,
           "access_service": -0.349,
           "need_socioeconomic": 50.7,
           "need_demographics": 62.5,
@@ -2604,12 +2604,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 38,
-        "access_raw_z": -0.048,
+        "access": 51,
+        "access_raw_z": 0.004,
         "need": 64,
         "sections": {
           "access_structural": -0.355,
-          "access_geo": -0.08,
+          "access_geo": 0.069,
           "access_service": 0.697,
           "need_socioeconomic": 64.9,
           "need_demographics": 45.8,
@@ -2685,12 +2685,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 37,
-        "access_raw_z": -0.072,
+        "access": 48,
+        "access_raw_z": -0.098,
         "need": 58,
         "sections": {
           "access_structural": -0.042,
-          "access_geo": 0.049,
+          "access_geo": -0.025,
           "access_service": -0.349,
           "need_socioeconomic": 71.2,
           "need_demographics": 30.6,
@@ -2766,12 +2766,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 53,
-        "access_raw_z": 0.549,
+        "access": 64,
+        "access_raw_z": 0.463,
         "need": 22,
         "sections": {
           "access_structural": 1.351,
-          "access_geo": 0.03,
+          "access_geo": -0.215,
           "access_service": -0.349,
           "need_socioeconomic": 54.2,
           "need_demographics": 44.4,
@@ -2847,12 +2847,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 46,
-        "access_raw_z": 0.262,
+        "access": 57,
+        "access_raw_z": 0.222,
         "need": 67,
         "sections": {
           "access_structural": 0.24,
-          "access_geo": 0.041,
+          "access_geo": -0.073,
           "access_service": 0.697,
           "need_socioeconomic": 63.9,
           "need_demographics": 62.5,
@@ -2952,12 +2952,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 46,
-        "access_raw_z": 0.286,
+        "access": 63,
+        "access_raw_z": 0.418,
         "need": 3,
         "sections": {
           "access_structural": 0.792,
-          "access_geo": 0.594,
+          "access_geo": 0.972,
           "access_service": -1.394,
           "need_socioeconomic": 22.2,
           "need_demographics": 45.1,
@@ -3024,12 +3024,12 @@ const _dashData = {
       "beds": 0,
       "hospitals": [],
       "scores": {
-        "access": 14,
-        "access_raw_z": -0.978,
+        "access": 16,
+        "access_raw_z": -1.177,
         "need": 61,
         "sections": {
           "access_structural": -1.551,
-          "access_geo": -0.005,
+          "access_geo": -0.571,
           "access_service": -1.394,
           "need_socioeconomic": 40.6,
           "need_demographics": 59.7,
@@ -3113,12 +3113,12 @@ const _dashData = {
         }
       ],
       "scores": {
-        "access": 38,
-        "access_raw_z": -0.042,
+        "access": 55,
+        "access_raw_z": 0.16,
         "need": 31,
         "sections": {
           "access_structural": -0.171,
-          "access_geo": 0.298,
+          "access_geo": 0.877,
           "access_service": -0.349,
           "need_socioeconomic": 38.9,
           "need_demographics": 50.0,

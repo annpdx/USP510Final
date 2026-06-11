@@ -240,9 +240,12 @@ def build_dashboard_data():
     final_df['z_service'] = z_score(final_df['trauma_scaled'])
     
     # 3. Geographical Accessibility ( travel time and hospital density )
-    # Inverted travel time and positive hospitals per square mile
+    # Travel time is directly Z-scored (inverted: longer = worse)
+    # Hospital density is first converted to percentile rank to mitigate outlier skew,
+    # then the percentile rank is Z-scored to match the travel time scale
     z_travel = z_score(final_df['Travel Time to Nearest PCPCH'], invert=True)
-    z_hosp_density = z_score(final_df['HospitalsPerSqMile'])
+    hosp_density_pr = final_df['HospitalsPerSqMile'].rank(pct=True) * 100
+    z_hosp_density = z_score(hosp_density_pr)
     final_df['z_geo'] = (z_travel + z_hosp_density) / 2.0
     
     # Composite Z-score

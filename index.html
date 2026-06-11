@@ -370,7 +370,7 @@
                                 </li>
                                 <li><strong>Geographical Accessibility (35% weight):</strong> Average of the Z-scores of:
                                     <br>- Travel time to the nearest Patient-Centered Primary Care Home (<strong>inverted</strong>, as longer travel times mean worse accessibility)
-                                    <br>- Hospitals per square mile (normal, representing geographical service density)
+                                    <br>- Hospitals per square mile (<strong>percentile-ranked</strong> first to mitigate outlier skew, then Z-scored)
                                 </li>
                                 <li><strong>Service Level (20% weight):</strong> Standardized Z-score of the Highest
                                     Trauma Level Available in the county. Trauma levels are scaled as: Level 1 = 100,
