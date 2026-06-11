@@ -15,7 +15,6 @@ Final Project/
 │       ├── BroadbandAccess.csv             # Census Broadband Access metrics
 │       ├── HealthIndicators.csv            # CDC PLACES chronic disease and lifestyle indicators (OR data)
 │       ├── Insured.csv                     # Census Small Area Health Insurance Estimates (SAHIE)
-│       ├── OHPEnrollment.xlsx              # Oregon Health Plan Enrollment data by county
 │       └── UnmetNeedIndicators.xlsx        # OHSU Unmet Need Indicators (by service area)
 │
 ├── Documentation/
@@ -93,11 +92,11 @@ Calculates healthcare infrastructure strength using standard deviation Z-scores 
 
 ### 2. Healthcare Need Score (Percentile Ranks)
 Percentile rank (0 to 100) representing county-level vulnerability across five key thematic sections:
-* **Socioeconomic Vulnerability (25% weight)**: Poverty %, Households without vehicle %, Broadband lack (inverted access rate), Food insecurity, Housing insecurity, Utility shutoff threats, Uninsured rate (from `Insured.csv`), and Transportation barriers.
+* **Socioeconomic Vulnerability (25% weight)**: Poverty %, Households without vehicle %, Broadband lack (inverted access rate), and Uninsured rate (from `Insured.csv`).
 * **Health Outcomes Burden (35% weight)**: Prevalence of Diabetes, COPD, Heart disease, Stroke, Hypertension, Cancer, Asthma, Obesity, disability (all types), poor/fair self-rated health, cognitive/mental distress, and mobility/self-care limitations.
 * **Preventable Care Gaps (25% weight)**: Inverted screening rates (Colorectal, Mammography, Cholesterol, Routine checkups, Dental visits) + negative healthcare outcomes (preventable hospitalizations, Emergency Department dental visits, Emergency Department mental health visits, inadequate prenatal care).
 * **Demographics (7.5% weight)**: Population over 65 % and People of Color (POC) %.
-* **Lifestyle/Behavioral Risk (7.5% weight)**: Smoking %, Physical inactivity %, Short sleep duration %, Binge drinking %, Loneliness %, and Lack of social/emotional support %.
+* **Lifestyle/Behavioral Risk (7.5% weight)**: Smoking %, Physical inactivity %, Short sleep duration %, and Binge drinking %.
 
 ---
 
