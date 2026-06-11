@@ -77,18 +77,6 @@ insured_df['Insured (Percent)'] = pd.to_numeric(insured_df['Insured (Percent)'],
 insured_df['Uninsured'] = 100.0 - insured_df['Insured (Percent)']
 ```
 
-## 2.3 Oregon Health Plan (OHP) Enrollment
-Ingests OHP administrative enrollment data and aggregates it by county for March 2026.
-
-```{python}
-ohp_df = pd.read_excel('Data/Raw/OHPEnrollment.xlsx', sheet_name='Data (by county)', skiprows=3)
-ohp_latest = ohp_df[ohp_df['Month and Year'] == 'Mar 2026'].copy()
-ohp_latest['County'] = ohp_latest['County'].str.strip()
-ohp_latest['Total'] = pd.to_numeric(ohp_latest['Total'].replace('*', 0), errors='coerce').fillna(0)
-ohp_county = ohp_latest.groupby('County', as_index=False)['Total'].sum()
-ohp_county = ohp_county.rename(columns={'Total': 'OHP_Total'})
-```
-
 ---
 
 # Step 3: Population-Weighted Aggregations (OHSU Unmet Need)

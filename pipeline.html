@@ -2354,7 +2354,6 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#geographic-data-census-base" id="toc-geographic-data-census-base" class="nav-link" data-scroll-target="#geographic-data-census-base">2.1 Geographic Data &amp; Census Base</a></li>
   <li><a href="#broadband-insurance-datasets" id="toc-broadband-insurance-datasets" class="nav-link" data-scroll-target="#broadband-insurance-datasets">2.2 Broadband &amp; Insurance Datasets</a></li>
-  <li><a href="#oregon-health-plan-ohp-enrollment" id="toc-oregon-health-plan-ohp-enrollment" class="nav-link" data-scroll-target="#oregon-health-plan-ohp-enrollment">2.3 Oregon Health Plan (OHP) Enrollment</a></li>
   </ul></li>
   <li><a href="#step-3-population-weighted-aggregations-ohsu-unmet-need" id="toc-step-3-population-weighted-aggregations-ohsu-unmet-need" class="nav-link" data-scroll-target="#step-3-population-weighted-aggregations-ohsu-unmet-need">Step 3: Population-Weighted Aggregations (OHSU Unmet Need)</a></li>
   <li><a href="#step-4-health-indicators-preprocessing-cdc-places" id="toc-step-4-health-indicators-preprocessing-cdc-places" class="nav-link" data-scroll-target="#step-4-health-indicators-preprocessing-cdc-places">Step 4: Health Indicators Preprocessing (CDC PLACES)</a></li>
@@ -2412,7 +2411,7 @@ window.Quarto = {
 <section id="step-1-libraries-and-environment-setup" class="level1">
 <h1>Step 1: Libraries and Environment Setup</h1>
 <p>This pipeline uses standard data science libraries: * <strong>Pandas</strong> for tabular data manipulation. * <strong>GeoPandas</strong> and <strong>Shapely</strong> for spatial data processing. * <strong>Requests</strong> to query the live ArcGIS REST API for hospital locations.</p>
-<div id="7faae665" class="cell" data-execution_count="1">
+<div id="d9548ce0" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely.geometry <span class="im">import</span> Point</span>
@@ -2429,7 +2428,7 @@ window.Quarto = {
 <section id="geographic-data-census-base" class="level2">
 <h2 class="anchored" data-anchor-id="geographic-data-census-base">2.1 Geographic Data &amp; Census Base</h2>
 <p>The Oregon county boundary shapefile (GeoJSON) and baseline Census demographic metrics are loaded.</p>
-<div id="5ddc4be3" class="cell" data-execution_count="2">
+<div id="93e21c3f" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load county shape boundaries</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>counties_gdf <span class="op">=</span> gpd.read_file(<span class="st">&#39;oregon_counties.geojson&#39;</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -2441,7 +2440,7 @@ window.Quarto = {
 <section id="broadband-insurance-datasets" class="level2">
 <h2 class="anchored" data-anchor-id="broadband-insurance-datasets">2.2 Broadband &amp; Insurance Datasets</h2>
 <p>Broadband access rates are loaded and uninsured rates are calculated.</p>
-<div id="1b8ca2e6" class="cell" data-execution_count="3">
+<div id="cbf60c2c" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Broadband access rates</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>broadband_df <span class="op">=</span> pd.read_csv(<span class="st">&#39;Data/Raw/BroadbandAccess.csv&#39;</span>, skiprows<span class="op">=</span><span class="dv">5</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>broadband_df <span class="op">=</span> broadband_df.rename(columns<span class="op">=</span>{<span class="st">&#39;Percent(1)&#39;</span>: <span class="st">&#39;Broadband&#39;</span>})</span>
@@ -2454,203 +2453,191 @@ window.Quarto = {
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>insured_df[<span class="st">&#39;Insured (Percent)&#39;</span>] <span class="op">=</span> pd.to_numeric(insured_df[<span class="st">&#39;Insured (Percent)&#39;</span>], errors<span class="op">=</span><span class="st">&#39;coerce&#39;</span>).fillna(<span class="fl">90.0</span>)</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>insured_df[<span class="st">&#39;Uninsured&#39;</span>] <span class="op">=</span> <span class="fl">100.0</span> <span class="op">-</span> insured_df[<span class="st">&#39;Insured (Percent)&#39;</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section>
-<section id="oregon-health-plan-ohp-enrollment" class="level2">
-<h2 class="anchored" data-anchor-id="oregon-health-plan-ohp-enrollment">2.3 Oregon Health Plan (OHP) Enrollment</h2>
-<p>Ingests OHP administrative enrollment data and aggregates it by county for March 2026.</p>
-<div id="3dfa97ae" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ohp_df <span class="op">=</span> pd.read_excel(<span class="st">&#39;Data/Raw/OHPEnrollment.xlsx&#39;</span>, sheet_name<span class="op">=</span><span class="st">&#39;Data (by county)&#39;</span>, skiprows<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>ohp_latest <span class="op">=</span> ohp_df[ohp_df[<span class="st">&#39;Month and Year&#39;</span>] <span class="op">==</span> <span class="st">&#39;Mar 2026&#39;</span>].copy()</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>ohp_latest[<span class="st">&#39;County&#39;</span>] <span class="op">=</span> ohp_latest[<span class="st">&#39;County&#39;</span>].<span class="bu">str</span>.strip()</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>ohp_latest[<span class="st">&#39;Total&#39;</span>] <span class="op">=</span> pd.to_numeric(ohp_latest[<span class="st">&#39;Total&#39;</span>].replace(<span class="st">&#39;*&#39;</span>, <span class="dv">0</span>), errors<span class="op">=</span><span class="st">&#39;coerce&#39;</span>).fillna(<span class="dv">0</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>ohp_county <span class="op">=</span> ohp_latest.groupby(<span class="st">&#39;County&#39;</span>, as_index<span class="op">=</span><span class="va">False</span>)[<span class="st">&#39;Total&#39;</span>].<span class="bu">sum</span>()</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>ohp_county <span class="op">=</span> ohp_county.rename(columns<span class="op">=</span>{<span class="st">&#39;Total&#39;</span>: <span class="st">&#39;OHP_Total&#39;</span>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
 <hr>
 </section>
 </section>
 <section id="step-3-population-weighted-aggregations-ohsu-unmet-need" class="level1">
 <h1>Step 3: Population-Weighted Aggregations (OHSU Unmet Need)</h1>
 <p>Since the OHSU Unmet Healthcare Need indicators are provided by localized service areas (not simple county boundaries), a <strong>population-weighted aggregation</strong> is performed to combine them at the county level.</p>
-<div id="2f567416" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>unmet_df <span class="op">=</span> pd.read_excel(<span class="st">&#39;Data/Raw/UnmetNeedIndicators.xlsx&#39;</span>, sheet_name<span class="op">=</span><span class="st">&#39;Unmet_Need_9_FINAL&#39;</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>unmet_df <span class="op">=</span> unmet_df[unmet_df[<span class="st">&#39;County&#39;</span>] <span class="op">!=</span> <span class="st">&#39;OR&#39;</span>].copy()</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>unmet_df[<span class="st">&#39;County&#39;</span>] <span class="op">=</span> unmet_df[<span class="st">&#39;County&#39;</span>].<span class="bu">str</span>.strip().<span class="bu">str</span>.title()</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>unmet_df[<span class="st">&#39;2024 Population&#39;</span>] <span class="op">=</span> pd.to_numeric(unmet_df[<span class="st">&#39;2024 Population&#39;</span>], errors<span class="op">=</span><span class="st">&#39;coerce&#39;</span>).fillna(<span class="dv">0</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Indicators to aggregate</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>unmet_cols <span class="op">=</span> [</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Travel Time to Nearest PCPCH&#39;</span>,</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Primary Care  Capacity Ratio&#39;</span>,</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Dentists per 1,000&#39;</span>,</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Mental Health Providers per 1,000&#39;</span>,</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Inadequate Prenatal Care Rate&#39;</span>,</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Preventable Hospitalizations per 1,000&#39;</span>,</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Emergency Dept Dental Visits per 1,000&#39;</span>,</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Emergency Dept Mental Health Visits per 1,000&#39;</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> unmet_cols:</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    unmet_df[col] <span class="op">=</span> pd.to_numeric(unmet_df[col], errors<span class="op">=</span><span class="st">&#39;coerce&#39;</span>).fillna(<span class="dv">0</span>)</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> weighted_avg(group):</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    pop_sum <span class="op">=</span> group[<span class="st">&#39;2024 Population&#39;</span>].<span class="bu">sum</span>()</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    res <span class="op">=</span> {}</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col <span class="kw">in</span> unmet_cols:</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> pop_sum <span class="op">&gt;</span> <span class="dv">0</span>:</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>            res[col] <span class="op">=</span> (group[col] <span class="op">*</span> group[<span class="st">&#39;2024 Population&#39;</span>]).<span class="bu">sum</span>() <span class="op">/</span> pop_sum</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>            res[col] <span class="op">=</span> group[col].mean()</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.Series(res)</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>unmet_county <span class="op">=</span> unmet_df.groupby(<span class="st">&#39;County&#39;</span>).<span class="bu">apply</span>(weighted_avg, include_groups<span class="op">=</span><span class="va">False</span>).reset_index()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="259a739f" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>unmet_df <span class="op">=</span> pd.read_excel(<span class="st">&#39;Data/Raw/UnmetNeedIndicators.xlsx&#39;</span>, sheet_name<span class="op">=</span><span class="st">&#39;Unmet_Need_9_FINAL&#39;</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>unmet_df <span class="op">=</span> unmet_df[unmet_df[<span class="st">&#39;County&#39;</span>] <span class="op">!=</span> <span class="st">&#39;OR&#39;</span>].copy()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>unmet_df[<span class="st">&#39;County&#39;</span>] <span class="op">=</span> unmet_df[<span class="st">&#39;County&#39;</span>].<span class="bu">str</span>.strip().<span class="bu">str</span>.title()</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>unmet_df[<span class="st">&#39;2024 Population&#39;</span>] <span class="op">=</span> pd.to_numeric(unmet_df[<span class="st">&#39;2024 Population&#39;</span>], errors<span class="op">=</span><span class="st">&#39;coerce&#39;</span>).fillna(<span class="dv">0</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Indicators to aggregate</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>unmet_cols <span class="op">=</span> [</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Travel Time to Nearest PCPCH&#39;</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Primary Care  Capacity Ratio&#39;</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Dentists per 1,000&#39;</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Mental Health Providers per 1,000&#39;</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Inadequate Prenatal Care Rate&#39;</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Preventable Hospitalizations per 1,000&#39;</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Emergency Dept Dental Visits per 1,000&#39;</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Emergency Dept Mental Health Visits per 1,000&#39;</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> unmet_cols:</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    unmet_df[col] <span class="op">=</span> pd.to_numeric(unmet_df[col], errors<span class="op">=</span><span class="st">&#39;coerce&#39;</span>).fillna(<span class="dv">0</span>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> weighted_avg(group):</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    pop_sum <span class="op">=</span> group[<span class="st">&#39;2024 Population&#39;</span>].<span class="bu">sum</span>()</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    res <span class="op">=</span> {}</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col <span class="kw">in</span> unmet_cols:</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> pop_sum <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>            res[col] <span class="op">=</span> (group[col] <span class="op">*</span> group[<span class="st">&#39;2024 Population&#39;</span>]).<span class="bu">sum</span>() <span class="op">/</span> pop_sum</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>            res[col] <span class="op">=</span> group[col].mean()</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.Series(res)</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>unmet_county <span class="op">=</span> unmet_df.groupby(<span class="st">&#39;County&#39;</span>).<span class="bu">apply</span>(weighted_avg, include_groups<span class="op">=</span><span class="va">False</span>).reset_index()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <hr>
 </section>
 <section id="step-4-health-indicators-preprocessing-cdc-places" class="level1">
 <h1>Step 4: Health Indicators Preprocessing (CDC PLACES)</h1>
 <p>The CDC PLACES datasets are pivoted to map 36 separate health outcome and lifestyle risk features per county. Age-adjusted rates are prioritized over crude prevalence rates to allow scientific comparison.</p>
-<div id="b45e1a6b" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>health_chunks <span class="op">=</span> []</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> chunk <span class="kw">in</span> pd.read_csv(<span class="st">&#39;Data/Raw/HealthIndicators.csv&#39;</span>, chunksize<span class="op">=</span><span class="dv">100000</span>):</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    or_chunk <span class="op">=</span> chunk[chunk[<span class="st">&#39;StateAbbr&#39;</span>] <span class="op">==</span> <span class="st">&#39;OR&#39;</span>]</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> or_chunk.empty:</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        health_chunks.append(</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>            or_chunk[[<span class="st">&#39;LocationName&#39;</span>, <span class="st">&#39;Measure&#39;</span>, <span class="st">&#39;Data_Value&#39;</span>, <span class="st">&#39;Data_Value_Type&#39;</span>]]</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>health_df <span class="op">=</span> pd.concat(health_chunks)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>health_df[<span class="st">&#39;County&#39;</span>] <span class="op">=</span> health_df[<span class="st">&#39;LocationName&#39;</span>].<span class="bu">str</span>.strip()</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Prefer Age-adjusted, fall back to Crude when Age-adjusted is missing</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>adj_df <span class="op">=</span> health_df[health_df[<span class="st">&#39;Data_Value_Type&#39;</span>] <span class="op">==</span> <span class="st">&#39;Age-adjusted prevalence&#39;</span>].copy()</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>cru_df <span class="op">=</span> health_df[health_df[<span class="st">&#39;Data_Value_Type&#39;</span>] <span class="op">==</span> <span class="st">&#39;Crude prevalence&#39;</span>].copy()</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>adj_keys <span class="op">=</span> <span class="bu">set</span>(<span class="bu">zip</span>(adj_df[<span class="st">&#39;County&#39;</span>], adj_df[<span class="st">&#39;Measure&#39;</span>]))</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>fallback_rows <span class="op">=</span> cru_df[<span class="op">~</span>cru_df.<span class="bu">apply</span>(<span class="kw">lambda</span> r: (r[<span class="st">&#39;County&#39;</span>], r[<span class="st">&#39;Measure&#39;</span>]) <span class="kw">in</span> adj_keys, axis<span class="op">=</span><span class="dv">1</span>)]</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>preferred_df <span class="op">=</span> pd.concat([adj_df, fallback_rows])</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Dictionary of measures</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>places_measures <span class="op">=</span> {</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Diabetes&#39;</span>: <span class="st">&#39;Diagnosed diabetes&#39;</span>,</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;COPD&#39;</span>: <span class="st">&#39;Chronic obstructive pulmonary disease&#39;</span>,</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Heart_Disease&#39;</span>: <span class="st">&#39;Coronary heart disease&#39;</span>,</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Stroke&#39;</span>: <span class="st">&#39;Stroke among adults&#39;</span>,</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Hypertension&#39;</span>: <span class="st">&#39;High blood pressure&#39;</span>,</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Cancer&#39;</span>: <span class="st">&#39;Cancer (non-skin) or melanoma&#39;</span>,</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Asthma&#39;</span>: <span class="st">&#39;Current asthma&#39;</span>,</span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Obesity&#39;</span>: <span class="st">&#39;Obesity among adults&#39;</span>,</span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Disability_Any&#39;</span>: <span class="st">&#39;Any disability&#39;</span>,</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Disability_Hearing&#39;</span>: <span class="st">&#39;Hearing disability&#39;</span>,</span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Disability_Vision&#39;</span>: <span class="st">&#39;Vision disability&#39;</span>,</span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Disability_Mobility&#39;</span>: <span class="st">&#39;Mobility disability&#39;</span>,</span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Disability_SelfCare&#39;</span>: <span class="st">&#39;Self-care disability&#39;</span>,</span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Disability_Cognitive&#39;</span>: <span class="st">&#39;Cognitive disability&#39;</span>,</span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Disability_IndependentLiving&#39;</span>: <span class="st">&#39;Independent living disability&#39;</span>,</span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Poor_Fair_Health&#39;</span>: <span class="st">&#39;Fair or poor self-rated health&#39;</span>,</span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Frequent_Mental_Distress&#39;</span>: <span class="st">&#39;Frequent mental distress&#39;</span>,</span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Depression&#39;</span>: <span class="st">&#39;Depression among adults&#39;</span>,</span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Frequent_Physical_Distress&#39;</span>: <span class="st">&#39;Frequent physical distress&#39;</span>,</span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Arthritis&#39;</span>: <span class="st">&#39;Arthritis among adults&#39;</span>,</span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Teeth_Lost&#39;</span>: <span class="st">&#39;All teeth lost&#39;</span>,</span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Colorectal_Screening&#39;</span>: <span class="st">&#39;Colorectal cancer screening&#39;</span>,</span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Mammography&#39;</span>: <span class="st">&#39;Mammography use&#39;</span>,</span>
-<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Cholesterol_Screening&#39;</span>: <span class="st">&#39;Cholesterol screening among adults&#39;</span>,</span>
-<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Routine_Checkup&#39;</span>: <span class="st">&#39;Visits to doctor for routine checkup&#39;</span>,</span>
-<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Dental_Visit&#39;</span>: <span class="st">&#39;Visited dentist or dental clinic&#39;</span>,</span>
-<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Smoking&#39;</span>: <span class="st">&#39;Current cigarette smoking&#39;</span>,</span>
-<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Physical_Inactivity&#39;</span>: <span class="st">&#39;No leisure-time physical activity&#39;</span>,</span>
-<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Short_Sleep&#39;</span>: <span class="st">&#39;Short sleep duration&#39;</span>,</span>
-<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Binge_Drinking&#39;</span>: <span class="st">&#39;Binge drinking&#39;</span></span>
-<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>preferred_df[<span class="st">&#39;CleanMeasure&#39;</span>] <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> clean_name, pattern <span class="kw">in</span> places_measures.items():</span>
-<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>    mask <span class="op">=</span> preferred_df[<span class="st">&#39;Measure&#39;</span>].<span class="bu">str</span>.contains(pattern, na<span class="op">=</span><span class="va">False</span>, regex<span class="op">=</span><span class="va">False</span>, case<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>    preferred_df.loc[mask, <span class="st">&#39;CleanMeasure&#39;</span>] <span class="op">=</span> clean_name</span>
-<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>matched_df <span class="op">=</span> preferred_df[preferred_df[<span class="st">&#39;CleanMeasure&#39;</span>].notna()].copy()</span>
-<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a><span class="co"># Pivot table</span></span>
-<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>health_pivot <span class="op">=</span> matched_df.pivot_table(</span>
-<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span><span class="st">&#39;County&#39;</span>, columns<span class="op">=</span><span class="st">&#39;CleanMeasure&#39;</span>, values<span class="op">=</span><span class="st">&#39;Data_Value&#39;</span></span>
-<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>).reset_index()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="343afd61" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>health_chunks <span class="op">=</span> []</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> chunk <span class="kw">in</span> pd.read_csv(<span class="st">&#39;Data/Raw/HealthIndicators.csv&#39;</span>, chunksize<span class="op">=</span><span class="dv">100000</span>):</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    or_chunk <span class="op">=</span> chunk[chunk[<span class="st">&#39;StateAbbr&#39;</span>] <span class="op">==</span> <span class="st">&#39;OR&#39;</span>]</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> or_chunk.empty:</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        health_chunks.append(</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>            or_chunk[[<span class="st">&#39;LocationName&#39;</span>, <span class="st">&#39;Measure&#39;</span>, <span class="st">&#39;Data_Value&#39;</span>, <span class="st">&#39;Data_Value_Type&#39;</span>]]</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>health_df <span class="op">=</span> pd.concat(health_chunks)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>health_df[<span class="st">&#39;County&#39;</span>] <span class="op">=</span> health_df[<span class="st">&#39;LocationName&#39;</span>].<span class="bu">str</span>.strip()</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Prefer Age-adjusted, fall back to Crude when Age-adjusted is missing</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>adj_df <span class="op">=</span> health_df[health_df[<span class="st">&#39;Data_Value_Type&#39;</span>] <span class="op">==</span> <span class="st">&#39;Age-adjusted prevalence&#39;</span>].copy()</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>cru_df <span class="op">=</span> health_df[health_df[<span class="st">&#39;Data_Value_Type&#39;</span>] <span class="op">==</span> <span class="st">&#39;Crude prevalence&#39;</span>].copy()</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>adj_keys <span class="op">=</span> <span class="bu">set</span>(<span class="bu">zip</span>(adj_df[<span class="st">&#39;County&#39;</span>], adj_df[<span class="st">&#39;Measure&#39;</span>]))</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>fallback_rows <span class="op">=</span> cru_df[<span class="op">~</span>cru_df.<span class="bu">apply</span>(<span class="kw">lambda</span> r: (r[<span class="st">&#39;County&#39;</span>], r[<span class="st">&#39;Measure&#39;</span>]) <span class="kw">in</span> adj_keys, axis<span class="op">=</span><span class="dv">1</span>)]</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>preferred_df <span class="op">=</span> pd.concat([adj_df, fallback_rows])</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Dictionary of measures</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>places_measures <span class="op">=</span> {</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Diabetes&#39;</span>: <span class="st">&#39;Diagnosed diabetes&#39;</span>,</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;COPD&#39;</span>: <span class="st">&#39;Chronic obstructive pulmonary disease&#39;</span>,</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Heart_Disease&#39;</span>: <span class="st">&#39;Coronary heart disease&#39;</span>,</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Stroke&#39;</span>: <span class="st">&#39;Stroke among adults&#39;</span>,</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Hypertension&#39;</span>: <span class="st">&#39;High blood pressure&#39;</span>,</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Cancer&#39;</span>: <span class="st">&#39;Cancer (non-skin) or melanoma&#39;</span>,</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Asthma&#39;</span>: <span class="st">&#39;Current asthma&#39;</span>,</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Obesity&#39;</span>: <span class="st">&#39;Obesity among adults&#39;</span>,</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Disability_Any&#39;</span>: <span class="st">&#39;Any disability&#39;</span>,</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Disability_Hearing&#39;</span>: <span class="st">&#39;Hearing disability&#39;</span>,</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Disability_Vision&#39;</span>: <span class="st">&#39;Vision disability&#39;</span>,</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Disability_Mobility&#39;</span>: <span class="st">&#39;Mobility disability&#39;</span>,</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Disability_SelfCare&#39;</span>: <span class="st">&#39;Self-care disability&#39;</span>,</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Disability_Cognitive&#39;</span>: <span class="st">&#39;Cognitive disability&#39;</span>,</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Disability_IndependentLiving&#39;</span>: <span class="st">&#39;Independent living disability&#39;</span>,</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Poor_Fair_Health&#39;</span>: <span class="st">&#39;Fair or poor self-rated health&#39;</span>,</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Frequent_Mental_Distress&#39;</span>: <span class="st">&#39;Frequent mental distress&#39;</span>,</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Depression&#39;</span>: <span class="st">&#39;Depression among adults&#39;</span>,</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Frequent_Physical_Distress&#39;</span>: <span class="st">&#39;Frequent physical distress&#39;</span>,</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Arthritis&#39;</span>: <span class="st">&#39;Arthritis among adults&#39;</span>,</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Teeth_Lost&#39;</span>: <span class="st">&#39;All teeth lost&#39;</span>,</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Colorectal_Screening&#39;</span>: <span class="st">&#39;Colorectal cancer screening&#39;</span>,</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Mammography&#39;</span>: <span class="st">&#39;Mammography use&#39;</span>,</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Cholesterol_Screening&#39;</span>: <span class="st">&#39;Cholesterol screening among adults&#39;</span>,</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Routine_Checkup&#39;</span>: <span class="st">&#39;Visits to doctor for routine checkup&#39;</span>,</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Dental_Visit&#39;</span>: <span class="st">&#39;Visited dentist or dental clinic&#39;</span>,</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Smoking&#39;</span>: <span class="st">&#39;Current cigarette smoking&#39;</span>,</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Physical_Inactivity&#39;</span>: <span class="st">&#39;No leisure-time physical activity&#39;</span>,</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Short_Sleep&#39;</span>: <span class="st">&#39;Short sleep duration&#39;</span>,</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Binge_Drinking&#39;</span>: <span class="st">&#39;Binge drinking&#39;</span></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>preferred_df[<span class="st">&#39;CleanMeasure&#39;</span>] <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> clean_name, pattern <span class="kw">in</span> places_measures.items():</span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>    mask <span class="op">=</span> preferred_df[<span class="st">&#39;Measure&#39;</span>].<span class="bu">str</span>.contains(pattern, na<span class="op">=</span><span class="va">False</span>, regex<span class="op">=</span><span class="va">False</span>, case<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>    preferred_df.loc[mask, <span class="st">&#39;CleanMeasure&#39;</span>] <span class="op">=</span> clean_name</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>matched_df <span class="op">=</span> preferred_df[preferred_df[<span class="st">&#39;CleanMeasure&#39;</span>].notna()].copy()</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a><span class="co"># Pivot table</span></span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>health_pivot <span class="op">=</span> matched_df.pivot_table(</span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span><span class="st">&#39;County&#39;</span>, columns<span class="op">=</span><span class="st">&#39;CleanMeasure&#39;</span>, values<span class="op">=</span><span class="st">&#39;Data_Value&#39;</span></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>).reset_index()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <hr>
 </section>
 <section id="step-5-spatial-joins-live-hospital-data-arcgis-api" class="level1">
 <h1>Step 5: Spatial Joins &amp; Live Hospital Data (ArcGIS API)</h1>
 <p>Live OHA licensed hospital points are queried via the ArcGIS REST API and a spatial join is performed using <code>GeoPandas</code> to map coordinates to respective county shapes.</p>
-<div id="91d4e768" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">&quot;https://services1.arcgis.com/CD5mKowwN6nIaqd8/arcgis/rest/services/Hospitals_OHA/FeatureServer/0/query&quot;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {<span class="st">&quot;where&quot;</span>: <span class="st">&quot;1=1&quot;</span>, <span class="st">&quot;outFields&quot;</span>: <span class="st">&quot;*&quot;</span>, <span class="st">&quot;outSR&quot;</span>: <span class="st">&quot;4326&quot;</span>, <span class="st">&quot;f&quot;</span>: <span class="st">&quot;json&quot;</span>}</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>resp <span class="op">=</span> requests.get(url, params<span class="op">=</span>params)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>hospital_data <span class="op">=</span> resp.json().get(<span class="st">&#39;features&#39;</span>, [])</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>hosp_records <span class="op">=</span> []</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f <span class="kw">in</span> hospital_data:</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    attrs <span class="op">=</span> f[<span class="st">&#39;attributes&#39;</span>]</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    geom <span class="op">=</span> f.get(<span class="st">&#39;geometry&#39;</span>)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> geom:</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        hosp_records.append({</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;Name&#39;</span>: attrs.get(<span class="st">&#39;Hospital_Name&#39;</span>),</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;Beds&#39;</span>: attrs.get(<span class="st">&#39;Beds_Licensed&#39;</span>) <span class="kw">or</span> attrs.get(<span class="st">&#39;Beds_Avail&#39;</span>) <span class="kw">or</span> <span class="dv">0</span>,</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;Trauma_Level&#39;</span>: attrs.get(<span class="st">&#39;Trauma_Level&#39;</span>),</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;Address&#39;</span>: attrs.get(<span class="st">&#39;Address&#39;</span>),</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;City&#39;</span>: attrs.get(<span class="st">&#39;City&#39;</span>),</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;Zip&#39;</span>: attrs.get(<span class="st">&#39;Zip&#39;</span>),</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;geometry&#39;</span>: Point(geom[<span class="st">&#39;x&#39;</span>], geom[<span class="st">&#39;y&#39;</span>])</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>        })</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>hosp_gdf <span class="op">=</span> gpd.GeoDataFrame(hosp_records, crs<span class="op">=</span><span class="st">&quot;EPSG:4326&quot;</span>)</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>hosp_with_county <span class="op">=</span> gpd.sjoin(hosp_gdf, counties_gdf, how<span class="op">=</span><span class="st">&quot;inner&quot;</span>, predicate<span class="op">=</span><span class="st">&quot;within&quot;</span>)</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> min_trauma(series):</span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    valid <span class="op">=</span> [x <span class="cf">for</span> x <span class="kw">in</span> series <span class="cf">if</span> x <span class="op">&gt;</span> <span class="dv">0</span>]</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">min</span>(valid) <span class="cf">if</span> valid <span class="cf">else</span> <span class="dv">0</span></span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>hosp_with_county[<span class="st">&#39;Address&#39;</span>] <span class="op">=</span> hosp_with_county[<span class="st">&#39;Address&#39;</span>].fillna(<span class="st">&#39;&#39;</span>)</span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>hosp_with_county[<span class="st">&#39;City&#39;</span>] <span class="op">=</span> hosp_with_county[<span class="st">&#39;City&#39;</span>].fillna(<span class="st">&#39;&#39;</span>)</span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>hosp_with_county[<span class="st">&#39;Zip&#39;</span>] <span class="op">=</span> hosp_with_county[<span class="st">&#39;Zip&#39;</span>].fillna(<span class="st">&#39;&#39;</span>)</span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>county_hospitals <span class="op">=</span> hosp_with_county.groupby(<span class="st">&#39;NAME&#39;</span>).<span class="bu">apply</span>(</span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: x[[<span class="st">&#39;Name&#39;</span>, <span class="st">&#39;Beds&#39;</span>, <span class="st">&#39;Trauma_Level&#39;</span>, <span class="st">&#39;Address&#39;</span>, <span class="st">&#39;City&#39;</span>, <span class="st">&#39;Zip&#39;</span>]].to_dict(<span class="st">&#39;records&#39;</span>),</span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>    include_groups<span class="op">=</span><span class="va">False</span></span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>).reset_index().rename(columns<span class="op">=</span>{<span class="st">&#39;NAME&#39;</span>: <span class="st">&#39;County&#39;</span>, <span class="dv">0</span>: <span class="st">&#39;Hospitals&#39;</span>})</span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>hosp_agg <span class="op">=</span> hosp_with_county.groupby(<span class="st">&#39;NAME&#39;</span>).agg({</span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Beds&#39;</span>: <span class="st">&#39;sum&#39;</span>,</span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Trauma_Level&#39;</span>: min_trauma</span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>}).reset_index().rename(columns<span class="op">=</span>{<span class="st">&#39;NAME&#39;</span>: <span class="st">&#39;County&#39;</span>, <span class="st">&#39;Trauma_Level&#39;</span>: <span class="st">&#39;HighestTraumaLevel&#39;</span>})</span>
-<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>hosp_agg <span class="op">=</span> pd.merge(hosp_agg, county_hospitals, on<span class="op">=</span><span class="st">&#39;County&#39;</span>, how<span class="op">=</span><span class="st">&#39;left&#39;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="ec62b410" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">&quot;https://services1.arcgis.com/CD5mKowwN6nIaqd8/arcgis/rest/services/Hospitals_OHA/FeatureServer/0/query&quot;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {<span class="st">&quot;where&quot;</span>: <span class="st">&quot;1=1&quot;</span>, <span class="st">&quot;outFields&quot;</span>: <span class="st">&quot;*&quot;</span>, <span class="st">&quot;outSR&quot;</span>: <span class="st">&quot;4326&quot;</span>, <span class="st">&quot;f&quot;</span>: <span class="st">&quot;json&quot;</span>}</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>resp <span class="op">=</span> requests.get(url, params<span class="op">=</span>params)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>hospital_data <span class="op">=</span> resp.json().get(<span class="st">&#39;features&#39;</span>, [])</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>hosp_records <span class="op">=</span> []</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f <span class="kw">in</span> hospital_data:</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    attrs <span class="op">=</span> f[<span class="st">&#39;attributes&#39;</span>]</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    geom <span class="op">=</span> f.get(<span class="st">&#39;geometry&#39;</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> geom:</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        hosp_records.append({</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;Name&#39;</span>: attrs.get(<span class="st">&#39;Hospital_Name&#39;</span>),</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;Beds&#39;</span>: attrs.get(<span class="st">&#39;Beds_Licensed&#39;</span>) <span class="kw">or</span> attrs.get(<span class="st">&#39;Beds_Avail&#39;</span>) <span class="kw">or</span> <span class="dv">0</span>,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;Trauma_Level&#39;</span>: attrs.get(<span class="st">&#39;Trauma_Level&#39;</span>),</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;Address&#39;</span>: attrs.get(<span class="st">&#39;Address&#39;</span>),</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;City&#39;</span>: attrs.get(<span class="st">&#39;City&#39;</span>),</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;Zip&#39;</span>: attrs.get(<span class="st">&#39;Zip&#39;</span>),</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;geometry&#39;</span>: Point(geom[<span class="st">&#39;x&#39;</span>], geom[<span class="st">&#39;y&#39;</span>])</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>        })</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>hosp_gdf <span class="op">=</span> gpd.GeoDataFrame(hosp_records, crs<span class="op">=</span><span class="st">&quot;EPSG:4326&quot;</span>)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>hosp_with_county <span class="op">=</span> gpd.sjoin(hosp_gdf, counties_gdf, how<span class="op">=</span><span class="st">&quot;inner&quot;</span>, predicate<span class="op">=</span><span class="st">&quot;within&quot;</span>)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> min_trauma(series):</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    valid <span class="op">=</span> [x <span class="cf">for</span> x <span class="kw">in</span> series <span class="cf">if</span> x <span class="op">&gt;</span> <span class="dv">0</span>]</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">min</span>(valid) <span class="cf">if</span> valid <span class="cf">else</span> <span class="dv">0</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>hosp_with_county[<span class="st">&#39;Address&#39;</span>] <span class="op">=</span> hosp_with_county[<span class="st">&#39;Address&#39;</span>].fillna(<span class="st">&#39;&#39;</span>)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>hosp_with_county[<span class="st">&#39;City&#39;</span>] <span class="op">=</span> hosp_with_county[<span class="st">&#39;City&#39;</span>].fillna(<span class="st">&#39;&#39;</span>)</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>hosp_with_county[<span class="st">&#39;Zip&#39;</span>] <span class="op">=</span> hosp_with_county[<span class="st">&#39;Zip&#39;</span>].fillna(<span class="st">&#39;&#39;</span>)</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>county_hospitals <span class="op">=</span> hosp_with_county.groupby(<span class="st">&#39;NAME&#39;</span>).<span class="bu">apply</span>(</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: x[[<span class="st">&#39;Name&#39;</span>, <span class="st">&#39;Beds&#39;</span>, <span class="st">&#39;Trauma_Level&#39;</span>, <span class="st">&#39;Address&#39;</span>, <span class="st">&#39;City&#39;</span>, <span class="st">&#39;Zip&#39;</span>]].to_dict(<span class="st">&#39;records&#39;</span>),</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>    include_groups<span class="op">=</span><span class="va">False</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>).reset_index().rename(columns<span class="op">=</span>{<span class="st">&#39;NAME&#39;</span>: <span class="st">&#39;County&#39;</span>, <span class="dv">0</span>: <span class="st">&#39;Hospitals&#39;</span>})</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>hosp_agg <span class="op">=</span> hosp_with_county.groupby(<span class="st">&#39;NAME&#39;</span>).agg({</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Beds&#39;</span>: <span class="st">&#39;sum&#39;</span>,</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Trauma_Level&#39;</span>: min_trauma</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>}).reset_index().rename(columns<span class="op">=</span>{<span class="st">&#39;NAME&#39;</span>: <span class="st">&#39;County&#39;</span>, <span class="st">&#39;Trauma_Level&#39;</span>: <span class="st">&#39;HighestTraumaLevel&#39;</span>})</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>hosp_agg <span class="op">=</span> pd.merge(hosp_agg, county_hospitals, on<span class="op">=</span><span class="st">&#39;County&#39;</span>, how<span class="op">=</span><span class="st">&#39;left&#39;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <hr>
 </section>
 <section id="step-6-dataset-merging-median-imputations" class="level1">
 <h1>Step 6: Dataset Merging &amp; Median Imputations</h1>
 <p>All preprocessed datasets are merged into a single master Pandas DataFrame and missing variables are imputed.</p>
-<div id="5f673809" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>final_df <span class="op">=</span> census_df.copy()</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>final_df <span class="op">=</span> pd.merge(final_df, broadband_df[[<span class="st">&#39;County&#39;</span>, <span class="st">&#39;Broadband&#39;</span>]], on<span class="op">=</span><span class="st">&#39;County&#39;</span>, how<span class="op">=</span><span class="st">&#39;left&#39;</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>final_df <span class="op">=</span> pd.merge(final_df, unmet_county, on<span class="op">=</span><span class="st">&#39;County&#39;</span>, how<span class="op">=</span><span class="st">&#39;left&#39;</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>final_df <span class="op">=</span> pd.merge(final_df, insured_df[[<span class="st">&#39;County&#39;</span>, <span class="st">&#39;Uninsured&#39;</span>]], on<span class="op">=</span><span class="st">&#39;County&#39;</span>, how<span class="op">=</span><span class="st">&#39;left&#39;</span>)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>final_df <span class="op">=</span> pd.merge(final_df, health_pivot, on<span class="op">=</span><span class="st">&#39;County&#39;</span>, how<span class="op">=</span><span class="st">&#39;left&#39;</span>)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>final_df <span class="op">=</span> pd.merge(final_df, hosp_agg, on<span class="op">=</span><span class="st">&#39;County&#39;</span>, how<span class="op">=</span><span class="st">&#39;left&#39;</span>)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>final_df <span class="op">=</span> pd.merge(final_df, ohp_county, on<span class="op">=</span><span class="st">&#39;County&#39;</span>, how<span class="op">=</span><span class="st">&#39;left&#39;</span>)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;Beds&#39;</span>] <span class="op">=</span> final_df[<span class="st">&#39;Beds&#39;</span>].fillna(<span class="dv">0</span>)</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;HighestTraumaLevel&#39;</span>] <span class="op">=</span> final_df[<span class="st">&#39;HighestTraumaLevel&#39;</span>].fillna(<span class="dv">0</span>)</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;Hospitals&#39;</span>] <span class="op">=</span> final_df[<span class="st">&#39;Hospitals&#39;</span>].fillna(<span class="st">&#39;&#39;</span>).<span class="bu">apply</span>(<span class="kw">lambda</span> x: x <span class="cf">if</span> <span class="bu">isinstance</span>(x, <span class="bu">list</span>) <span class="cf">else</span> [])</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Median Imputations for other columns</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>numeric_cols <span class="op">=</span> final_df.select_dtypes(include<span class="op">=</span>[np.number]).columns</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> numeric_cols:</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    final_df[col] <span class="op">=</span> final_df[col].fillna(final_df[col].median())</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;OHP_Total&#39;</span>] <span class="op">=</span> final_df[<span class="st">&#39;OHP_Total&#39;</span>].fillna(<span class="dv">0</span>)</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;OHPEnrollment&#39;</span>] <span class="op">=</span> (final_df[<span class="st">&#39;OHP_Total&#39;</span>] <span class="op">/</span> final_df[<span class="st">&#39;Total Population&#39;</span>] <span class="op">*</span> <span class="dv">100</span>).<span class="bu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="feb7d76a" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>final_df <span class="op">=</span> census_df.copy()</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>final_df <span class="op">=</span> pd.merge(final_df, broadband_df[[<span class="st">&#39;County&#39;</span>, <span class="st">&#39;Broadband&#39;</span>]], on<span class="op">=</span><span class="st">&#39;County&#39;</span>, how<span class="op">=</span><span class="st">&#39;left&#39;</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>final_df <span class="op">=</span> pd.merge(final_df, unmet_county, on<span class="op">=</span><span class="st">&#39;County&#39;</span>, how<span class="op">=</span><span class="st">&#39;left&#39;</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>final_df <span class="op">=</span> pd.merge(final_df, insured_df[[<span class="st">&#39;County&#39;</span>, <span class="st">&#39;Uninsured&#39;</span>]], on<span class="op">=</span><span class="st">&#39;County&#39;</span>, how<span class="op">=</span><span class="st">&#39;left&#39;</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>final_df <span class="op">=</span> pd.merge(final_df, health_pivot, on<span class="op">=</span><span class="st">&#39;County&#39;</span>, how<span class="op">=</span><span class="st">&#39;left&#39;</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>final_df <span class="op">=</span> pd.merge(final_df, hosp_agg, on<span class="op">=</span><span class="st">&#39;County&#39;</span>, how<span class="op">=</span><span class="st">&#39;left&#39;</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>final_df <span class="op">=</span> pd.merge(final_df, ohp_county, on<span class="op">=</span><span class="st">&#39;County&#39;</span>, how<span class="op">=</span><span class="st">&#39;left&#39;</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;Beds&#39;</span>] <span class="op">=</span> final_df[<span class="st">&#39;Beds&#39;</span>].fillna(<span class="dv">0</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;HighestTraumaLevel&#39;</span>] <span class="op">=</span> final_df[<span class="st">&#39;HighestTraumaLevel&#39;</span>].fillna(<span class="dv">0</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;Hospitals&#39;</span>] <span class="op">=</span> final_df[<span class="st">&#39;Hospitals&#39;</span>].fillna(<span class="st">&#39;&#39;</span>).<span class="bu">apply</span>(<span class="kw">lambda</span> x: x <span class="cf">if</span> <span class="bu">isinstance</span>(x, <span class="bu">list</span>) <span class="cf">else</span> [])</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Median Imputations for other columns</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>numeric_cols <span class="op">=</span> final_df.select_dtypes(include<span class="op">=</span>[np.number]).columns</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> numeric_cols:</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    final_df[col] <span class="op">=</span> final_df[col].fillna(final_df[col].median())</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;OHP_Total&#39;</span>] <span class="op">=</span> final_df[<span class="st">&#39;OHP_Total&#39;</span>].fillna(<span class="dv">0</span>)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;OHPEnrollment&#39;</span>] <span class="op">=</span> (final_df[<span class="st">&#39;OHP_Total&#39;</span>] <span class="op">/</span> final_df[<span class="st">&#39;Total Population&#39;</span>] <span class="op">*</span> <span class="dv">100</span>).<span class="bu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <hr>
 </section>
@@ -2661,99 +2648,99 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="access-score-z-score-standardization">7.1 Access Score (Z-Score Standardization)</h2>
 <p>Z-scores calculate variation from the mean: <span class="math display">\[z = \frac{x - \mu}{\sigma}\]</span></p>
 <p>Aggregated variables: * <strong>Structural Capacity (45%):</strong> Average Z-score of beds/10k, dentists/1k, mental health providers/1k, primary care capacity. * <strong>Geographical Accessibility (35%):</strong> Inverted Z-score of PCPCH travel times. * <strong>Service Level (20%):</strong> Standardized trauma level.</p>
-<div id="43de5927" class="cell" data-execution_count="9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;BedsPer10k&#39;</span>] <span class="op">=</span> (final_df[<span class="st">&#39;Beds&#39;</span>] <span class="op">/</span> final_df[<span class="st">&#39;Total Population&#39;</span>] <span class="op">*</span> <span class="dv">10000</span>).<span class="bu">round</span>(<span class="dv">1</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> z_score(series, invert<span class="op">=</span><span class="va">False</span>):</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    mean <span class="op">=</span> series.mean()</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    std <span class="op">=</span> series.std(ddof<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> std <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> pd.Series(<span class="dv">0</span>, index<span class="op">=</span>series.index)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    z <span class="op">=</span> (series <span class="op">-</span> mean) <span class="op">/</span> std</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span>z <span class="cf">if</span> invert <span class="cf">else</span> z</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Structural</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>z_beds <span class="op">=</span> z_score(final_df[<span class="st">&#39;BedsPer10k&#39;</span>])</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>z_dentists <span class="op">=</span> z_score(final_df[<span class="st">&#39;Dentists per 1,000&#39;</span>])</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>z_mental <span class="op">=</span> z_score(final_df[<span class="st">&#39;Mental Health Providers per 1,000&#39;</span>])</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>z_primary <span class="op">=</span> z_score(final_df[<span class="st">&#39;Primary Care  Capacity Ratio&#39;</span>])</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;z_structural&#39;</span>] <span class="op">=</span> (z_beds <span class="op">+</span> z_dentists <span class="op">+</span> z_mental <span class="op">+</span> z_primary) <span class="op">/</span> <span class="fl">4.0</span></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Service</span></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>trauma_map <span class="op">=</span> {<span class="dv">1</span>: <span class="dv">100</span>, <span class="dv">2</span>: <span class="dv">75</span>, <span class="dv">3</span>: <span class="dv">50</span>, <span class="dv">4</span>: <span class="dv">25</span>, <span class="dv">0</span>: <span class="dv">0</span>}</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;trauma_scaled&#39;</span>] <span class="op">=</span> final_df[<span class="st">&#39;HighestTraumaLevel&#39;</span>].<span class="bu">map</span>(trauma_map)</span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;z_service&#39;</span>] <span class="op">=</span> z_score(final_df[<span class="st">&#39;trauma_scaled&#39;</span>])</span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Geo (Inverted)</span></span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;z_geo&#39;</span>] <span class="op">=</span> z_score(final_df[<span class="st">&#39;Travel Time to Nearest PCPCH&#39;</span>], invert<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Composite Z-score and Min-Max scaling</span></span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;access_z&#39;</span>] <span class="op">=</span> <span class="fl">0.45</span> <span class="op">*</span> final_df[<span class="st">&#39;z_structural&#39;</span>] <span class="op">+</span> <span class="fl">0.35</span> <span class="op">*</span> final_df[<span class="st">&#39;z_geo&#39;</span>] <span class="op">+</span> <span class="fl">0.20</span> <span class="op">*</span> final_df[<span class="st">&#39;z_service&#39;</span>]</span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>mn, mx <span class="op">=</span> final_df[<span class="st">&#39;access_z&#39;</span>].<span class="bu">min</span>(), final_df[<span class="st">&#39;access_z&#39;</span>].<span class="bu">max</span>()</span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;access_score_scaled&#39;</span>] <span class="op">=</span> ((final_df[<span class="st">&#39;access_z&#39;</span>] <span class="op">-</span> mn) <span class="op">/</span> (mx <span class="op">-</span> mn) <span class="op">*</span> <span class="dv">100</span>).<span class="bu">round</span>().astype(<span class="bu">int</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="49d019ee" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;BedsPer10k&#39;</span>] <span class="op">=</span> (final_df[<span class="st">&#39;Beds&#39;</span>] <span class="op">/</span> final_df[<span class="st">&#39;Total Population&#39;</span>] <span class="op">*</span> <span class="dv">10000</span>).<span class="bu">round</span>(<span class="dv">1</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> z_score(series, invert<span class="op">=</span><span class="va">False</span>):</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    mean <span class="op">=</span> series.mean()</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    std <span class="op">=</span> series.std(ddof<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> std <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> pd.Series(<span class="dv">0</span>, index<span class="op">=</span>series.index)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    z <span class="op">=</span> (series <span class="op">-</span> mean) <span class="op">/</span> std</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span>z <span class="cf">if</span> invert <span class="cf">else</span> z</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Structural</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>z_beds <span class="op">=</span> z_score(final_df[<span class="st">&#39;BedsPer10k&#39;</span>])</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>z_dentists <span class="op">=</span> z_score(final_df[<span class="st">&#39;Dentists per 1,000&#39;</span>])</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>z_mental <span class="op">=</span> z_score(final_df[<span class="st">&#39;Mental Health Providers per 1,000&#39;</span>])</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>z_primary <span class="op">=</span> z_score(final_df[<span class="st">&#39;Primary Care  Capacity Ratio&#39;</span>])</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;z_structural&#39;</span>] <span class="op">=</span> (z_beds <span class="op">+</span> z_dentists <span class="op">+</span> z_mental <span class="op">+</span> z_primary) <span class="op">/</span> <span class="fl">4.0</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Service</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>trauma_map <span class="op">=</span> {<span class="dv">1</span>: <span class="dv">100</span>, <span class="dv">2</span>: <span class="dv">75</span>, <span class="dv">3</span>: <span class="dv">50</span>, <span class="dv">4</span>: <span class="dv">25</span>, <span class="dv">0</span>: <span class="dv">0</span>}</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;trauma_scaled&#39;</span>] <span class="op">=</span> final_df[<span class="st">&#39;HighestTraumaLevel&#39;</span>].<span class="bu">map</span>(trauma_map)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;z_service&#39;</span>] <span class="op">=</span> z_score(final_df[<span class="st">&#39;trauma_scaled&#39;</span>])</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Geo (Inverted)</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;z_geo&#39;</span>] <span class="op">=</span> z_score(final_df[<span class="st">&#39;Travel Time to Nearest PCPCH&#39;</span>], invert<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Composite Z-score and Min-Max scaling</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;access_z&#39;</span>] <span class="op">=</span> <span class="fl">0.45</span> <span class="op">*</span> final_df[<span class="st">&#39;z_structural&#39;</span>] <span class="op">+</span> <span class="fl">0.35</span> <span class="op">*</span> final_df[<span class="st">&#39;z_geo&#39;</span>] <span class="op">+</span> <span class="fl">0.20</span> <span class="op">*</span> final_df[<span class="st">&#39;z_service&#39;</span>]</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>mn, mx <span class="op">=</span> final_df[<span class="st">&#39;access_z&#39;</span>].<span class="bu">min</span>(), final_df[<span class="st">&#39;access_z&#39;</span>].<span class="bu">max</span>()</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;access_score_scaled&#39;</span>] <span class="op">=</span> ((final_df[<span class="st">&#39;access_z&#39;</span>] <span class="op">-</span> mn) <span class="op">/</span> (mx <span class="op">-</span> mn) <span class="op">*</span> <span class="dv">100</span>).<span class="bu">round</span>().astype(<span class="bu">int</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="need-index-percentile-ranks" class="level2">
 <h2 class="anchored" data-anchor-id="need-index-percentile-ranks">7.2 Need Index (Percentile Ranks)</h2>
 <p>Percentile ranks (0 to 100) are aggregated across 5 thematic categories: * <strong>Socioeconomic Vulnerability (25% weight)</strong> * <strong>Demographics (7.5% weight)</strong> * <strong>Health Outcomes Burden (35% weight)</strong> * <strong>Preventable Care Gaps (25% weight)</strong> * <strong>Lifestyle &amp; Behavioral Risk (7.5% weight)</strong></p>
-<div id="762bea75" class="cell" data-execution_count="10">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pr_rank(series, invert<span class="op">=</span><span class="va">False</span>):</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> invert:</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (series.rank(ascending<span class="op">=</span><span class="va">False</span>, pct<span class="op">=</span><span class="va">True</span>) <span class="op">*</span> <span class="dv">100</span>).<span class="bu">round</span>(<span class="dv">1</span>)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (series.rank(ascending<span class="op">=</span><span class="va">True</span>, pct<span class="op">=</span><span class="va">True</span>) <span class="op">*</span> <span class="dv">100</span>).<span class="bu">round</span>(<span class="dv">1</span>)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Socioeconomic</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>pr_poverty <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;% Poverty&#39;</span>])</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>pr_nocar <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;% No Vehicle&#39;</span>])</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>pr_broadband <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Broadband&#39;</span>], invert<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>pr_uninsured <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Uninsured&#39;</span>])</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;pr_socio&#39;</span>] <span class="op">=</span> (pr_poverty <span class="op">+</span> pr_nocar <span class="op">+</span> pr_broadband <span class="op">+</span> pr_uninsured) <span class="op">/</span> <span class="fl">4.0</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Demographics</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>pr_over65 <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;% Over 65&#39;</span>])</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>pr_poc <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;% POC&#39;</span>])</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;pr_demo&#39;</span>] <span class="op">=</span> (pr_over65 <span class="op">+</span> pr_poc) <span class="op">/</span> <span class="fl">2.0</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Health Outcomes</span></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>health_outcomes_cols <span class="op">=</span> [</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Diabetes&#39;</span>, <span class="st">&#39;COPD&#39;</span>, <span class="st">&#39;Heart_Disease&#39;</span>, <span class="st">&#39;Stroke&#39;</span>, <span class="st">&#39;Hypertension&#39;</span>, <span class="st">&#39;Cancer&#39;</span>, <span class="st">&#39;Asthma&#39;</span>, <span class="st">&#39;Obesity&#39;</span>,</span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Disability_Any&#39;</span>, <span class="st">&#39;Disability_Hearing&#39;</span>, <span class="st">&#39;Disability_Vision&#39;</span>, <span class="st">&#39;Disability_Mobility&#39;</span>, </span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Disability_SelfCare&#39;</span>, <span class="st">&#39;Disability_Cognitive&#39;</span>, <span class="st">&#39;Disability_IndependentLiving&#39;</span>,</span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Poor_Fair_Health&#39;</span>, <span class="st">&#39;Frequent_Mental_Distress&#39;</span>, <span class="st">&#39;Depression&#39;</span>, <span class="st">&#39;Frequent_Physical_Distress&#39;</span>,</span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Arthritis&#39;</span>, <span class="st">&#39;Teeth_Lost&#39;</span></span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>pr_outcomes <span class="op">=</span> [pr_rank(final_df[col]) <span class="cf">for</span> col <span class="kw">in</span> health_outcomes_cols]</span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;pr_health&#39;</span>] <span class="op">=</span> pd.DataFrame(pr_outcomes).mean(axis<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Gaps</span></span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>pr_colorectal <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Colorectal_Screening&#39;</span>], invert<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>pr_mammography <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Mammography&#39;</span>], invert<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>pr_cholesterol <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Cholesterol_Screening&#39;</span>], invert<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>pr_checkups <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Routine_Checkup&#39;</span>], invert<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>pr_dental <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Dental_Visit&#39;</span>], invert<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>pr_hosp <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Preventable Hospitalizations per 1,000&#39;</span>])</span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>pr_ed_dent <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Emergency Dept Dental Visits per 1,000&#39;</span>])</span>
-<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>pr_ed_ment <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Emergency Dept Mental Health Visits per 1,000&#39;</span>])</span>
-<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>pr_prenatal <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Inadequate Prenatal Care Rate&#39;</span>])</span>
-<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;pr_gaps&#39;</span>] <span class="op">=</span> (pr_colorectal <span class="op">+</span> pr_mammography <span class="op">+</span> pr_cholesterol <span class="op">+</span> pr_checkups <span class="op">+</span> pr_dental <span class="op">+</span> pr_hosp <span class="op">+</span> pr_ed_dent <span class="op">+</span> pr_ed_ment <span class="op">+</span> pr_prenatal) <span class="op">/</span> <span class="fl">9.0</span></span>
-<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Lifestyle</span></span>
-<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>pr_smoking <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Smoking&#39;</span>])</span>
-<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>pr_inactivity <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Physical_Inactivity&#39;</span>])</span>
-<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>pr_sleep <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Short_Sleep&#39;</span>])</span>
-<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>pr_drinking <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Binge_Drinking&#39;</span>])</span>
-<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;pr_lifestyle&#39;</span>] <span class="op">=</span> (pr_smoking <span class="op">+</span> pr_inactivity <span class="op">+</span> pr_sleep <span class="op">+</span> pr_drinking) <span class="op">/</span> <span class="fl">4.0</span></span>
-<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Composite weighted Need score &amp; final Need Index</span></span>
-<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;need_weighted&#39;</span>] <span class="op">=</span> (</span>
-<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.25</span> <span class="op">*</span> final_df[<span class="st">&#39;pr_socio&#39;</span>] <span class="op">+</span></span>
-<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.075</span> <span class="op">*</span> final_df[<span class="st">&#39;pr_demo&#39;</span>] <span class="op">+</span></span>
-<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.35</span> <span class="op">*</span> final_df[<span class="st">&#39;pr_health&#39;</span>] <span class="op">+</span></span>
-<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.25</span> <span class="op">*</span> final_df[<span class="st">&#39;pr_gaps&#39;</span>] <span class="op">+</span></span>
-<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.075</span> <span class="op">*</span> final_df[<span class="st">&#39;pr_lifestyle&#39;</span>]</span>
-<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;need_index&#39;</span>] <span class="op">=</span> (final_df[<span class="st">&#39;need_weighted&#39;</span>].rank(pct<span class="op">=</span><span class="va">True</span>) <span class="op">*</span> <span class="dv">100</span>).<span class="bu">round</span>().astype(<span class="bu">int</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="bf4025f5" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pr_rank(series, invert<span class="op">=</span><span class="va">False</span>):</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> invert:</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (series.rank(ascending<span class="op">=</span><span class="va">False</span>, pct<span class="op">=</span><span class="va">True</span>) <span class="op">*</span> <span class="dv">100</span>).<span class="bu">round</span>(<span class="dv">1</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (series.rank(ascending<span class="op">=</span><span class="va">True</span>, pct<span class="op">=</span><span class="va">True</span>) <span class="op">*</span> <span class="dv">100</span>).<span class="bu">round</span>(<span class="dv">1</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Socioeconomic</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>pr_poverty <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;% Poverty&#39;</span>])</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>pr_nocar <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;% No Vehicle&#39;</span>])</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>pr_broadband <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Broadband&#39;</span>], invert<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>pr_uninsured <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Uninsured&#39;</span>])</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;pr_socio&#39;</span>] <span class="op">=</span> (pr_poverty <span class="op">+</span> pr_nocar <span class="op">+</span> pr_broadband <span class="op">+</span> pr_uninsured) <span class="op">/</span> <span class="fl">4.0</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Demographics</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>pr_over65 <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;% Over 65&#39;</span>])</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>pr_poc <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;% POC&#39;</span>])</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;pr_demo&#39;</span>] <span class="op">=</span> (pr_over65 <span class="op">+</span> pr_poc) <span class="op">/</span> <span class="fl">2.0</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Health Outcomes</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>health_outcomes_cols <span class="op">=</span> [</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Diabetes&#39;</span>, <span class="st">&#39;COPD&#39;</span>, <span class="st">&#39;Heart_Disease&#39;</span>, <span class="st">&#39;Stroke&#39;</span>, <span class="st">&#39;Hypertension&#39;</span>, <span class="st">&#39;Cancer&#39;</span>, <span class="st">&#39;Asthma&#39;</span>, <span class="st">&#39;Obesity&#39;</span>,</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Disability_Any&#39;</span>, <span class="st">&#39;Disability_Hearing&#39;</span>, <span class="st">&#39;Disability_Vision&#39;</span>, <span class="st">&#39;Disability_Mobility&#39;</span>, </span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Disability_SelfCare&#39;</span>, <span class="st">&#39;Disability_Cognitive&#39;</span>, <span class="st">&#39;Disability_IndependentLiving&#39;</span>,</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Poor_Fair_Health&#39;</span>, <span class="st">&#39;Frequent_Mental_Distress&#39;</span>, <span class="st">&#39;Depression&#39;</span>, <span class="st">&#39;Frequent_Physical_Distress&#39;</span>,</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Arthritis&#39;</span>, <span class="st">&#39;Teeth_Lost&#39;</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>pr_outcomes <span class="op">=</span> [pr_rank(final_df[col]) <span class="cf">for</span> col <span class="kw">in</span> health_outcomes_cols]</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;pr_health&#39;</span>] <span class="op">=</span> pd.DataFrame(pr_outcomes).mean(axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Gaps</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>pr_colorectal <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Colorectal_Screening&#39;</span>], invert<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>pr_mammography <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Mammography&#39;</span>], invert<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>pr_cholesterol <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Cholesterol_Screening&#39;</span>], invert<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>pr_checkups <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Routine_Checkup&#39;</span>], invert<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>pr_dental <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Dental_Visit&#39;</span>], invert<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>pr_hosp <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Preventable Hospitalizations per 1,000&#39;</span>])</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>pr_ed_dent <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Emergency Dept Dental Visits per 1,000&#39;</span>])</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>pr_ed_ment <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Emergency Dept Mental Health Visits per 1,000&#39;</span>])</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>pr_prenatal <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Inadequate Prenatal Care Rate&#39;</span>])</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;pr_gaps&#39;</span>] <span class="op">=</span> (pr_colorectal <span class="op">+</span> pr_mammography <span class="op">+</span> pr_cholesterol <span class="op">+</span> pr_checkups <span class="op">+</span> pr_dental <span class="op">+</span> pr_hosp <span class="op">+</span> pr_ed_dent <span class="op">+</span> pr_ed_ment <span class="op">+</span> pr_prenatal) <span class="op">/</span> <span class="fl">9.0</span></span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Lifestyle</span></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>pr_smoking <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Smoking&#39;</span>])</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>pr_inactivity <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Physical_Inactivity&#39;</span>])</span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>pr_sleep <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Short_Sleep&#39;</span>])</span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>pr_drinking <span class="op">=</span> pr_rank(final_df[<span class="st">&#39;Binge_Drinking&#39;</span>])</span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;pr_lifestyle&#39;</span>] <span class="op">=</span> (pr_smoking <span class="op">+</span> pr_inactivity <span class="op">+</span> pr_sleep <span class="op">+</span> pr_drinking) <span class="op">/</span> <span class="fl">4.0</span></span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Composite weighted Need score &amp; final Need Index</span></span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;need_weighted&#39;</span>] <span class="op">=</span> (</span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.25</span> <span class="op">*</span> final_df[<span class="st">&#39;pr_socio&#39;</span>] <span class="op">+</span></span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.075</span> <span class="op">*</span> final_df[<span class="st">&#39;pr_demo&#39;</span>] <span class="op">+</span></span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.35</span> <span class="op">*</span> final_df[<span class="st">&#39;pr_health&#39;</span>] <span class="op">+</span></span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.25</span> <span class="op">*</span> final_df[<span class="st">&#39;pr_gaps&#39;</span>] <span class="op">+</span></span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.075</span> <span class="op">*</span> final_df[<span class="st">&#39;pr_lifestyle&#39;</span>]</span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>final_df[<span class="st">&#39;need_index&#39;</span>] <span class="op">=</span> (final_df[<span class="st">&#39;need_weighted&#39;</span>].rank(pct<span class="op">=</span><span class="va">True</span>) <span class="op">*</span> <span class="dv">100</span>).<span class="bu">round</span>().astype(<span class="bu">int</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <hr>
 </section>
@@ -2761,96 +2748,96 @@ window.Quarto = {
 <section id="step-8-formatting-exporting" class="level1">
 <h1>Step 8: Formatting &amp; Exporting</h1>
 <p>Finally, the data structure is formatted, state-wide baseline medians are computed for comparison indicators, and the output database files are written.</p>
-<div id="d24ae2a3" class="cell" data-execution_count="11">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>all_metrics <span class="op">=</span> {</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;hospital_beds_per_10k&#39;</span>: <span class="st">&#39;BedsPer10k&#39;</span>,</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;dentists_per_1k&#39;</span>: <span class="st">&#39;Dentists per 1,000&#39;</span>,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;mental_health_providers_per_1k&#39;</span>: <span class="st">&#39;Mental Health Providers per 1,000&#39;</span>,</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;primary_care_capacity&#39;</span>: <span class="st">&#39;Primary Care  Capacity Ratio&#39;</span>,</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;travel_time_pcpch&#39;</span>: <span class="st">&#39;Travel Time to Nearest PCPCH&#39;</span>,</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;highest_trauma_level&#39;</span>: <span class="st">&#39;HighestTraumaLevel&#39;</span>,</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;poverty_pct&#39;</span>: <span class="st">&#39;% Poverty&#39;</span>,</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;no_vehicle_pct&#39;</span>: <span class="st">&#39;% No Vehicle&#39;</span>,</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;broadband_pct&#39;</span>: <span class="st">&#39;Broadband&#39;</span>,</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;uninsured_pct&#39;</span>: <span class="st">&#39;Uninsured&#39;</span>,</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;pct_over_65&#39;</span>: <span class="st">&#39;% Over 65&#39;</span>,</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;pct_poc&#39;</span>: <span class="st">&#39;% POC&#39;</span>,</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;diabetes_pct&#39;</span>: <span class="st">&#39;Diabetes&#39;</span>,</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;copd_pct&#39;</span>: <span class="st">&#39;COPD&#39;</span>,</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;heart_disease_pct&#39;</span>: <span class="st">&#39;Heart_Disease&#39;</span>,</span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;stroke_pct&#39;</span>: <span class="st">&#39;Stroke&#39;</span>,</span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;hypertension_pct&#39;</span>: <span class="st">&#39;Hypertension&#39;</span>,</span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;cancer_pct&#39;</span>: <span class="st">&#39;Cancer&#39;</span>,</span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;asthma_pct&#39;</span>: <span class="st">&#39;Asthma&#39;</span>,</span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;obesity_pct&#39;</span>: <span class="st">&#39;Obesity&#39;</span>,</span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;any_disability_pct&#39;</span>: <span class="st">&#39;Disability_Any&#39;</span>,</span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;hearing_disability_pct&#39;</span>: <span class="st">&#39;Disability_Hearing&#39;</span>,</span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;vision_disability_pct&#39;</span>: <span class="st">&#39;Disability_Vision&#39;</span>,</span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;mobility_disability_pct&#39;</span>: <span class="st">&#39;Disability_Mobility&#39;</span>,</span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;self_care_disability_pct&#39;</span>: <span class="st">&#39;Disability_SelfCare&#39;</span>,</span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;cognitive_disability_pct&#39;</span>: <span class="st">&#39;Disability_Cognitive&#39;</span>,</span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;independent_living_disability_pct&#39;</span>: <span class="st">&#39;Disability_IndependentLiving&#39;</span>,</span>
-<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;poor_fair_health_pct&#39;</span>: <span class="st">&#39;Poor_Fair_Health&#39;</span>,</span>
-<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;frequent_mental_distress_pct&#39;</span>: <span class="st">&#39;Frequent_Mental_Distress&#39;</span>,</span>
-<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;depression_pct&#39;</span>: <span class="st">&#39;Depression&#39;</span>,</span>
-<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;frequent_physical_distress_pct&#39;</span>: <span class="st">&#39;Frequent_Physical_Distress&#39;</span>,</span>
-<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;arthritis_pct&#39;</span>: <span class="st">&#39;Arthritis&#39;</span>,</span>
-<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;all_teeth_lost_pct&#39;</span>: <span class="st">&#39;Teeth_Lost&#39;</span>,</span>
-<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;colorectal_screening_pct&#39;</span>: <span class="st">&#39;Colorectal_Screening&#39;</span>,</span>
-<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;mammography_pct&#39;</span>: <span class="st">&#39;Mammography&#39;</span>,</span>
-<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;cholesterol_screening_pct&#39;</span>: <span class="st">&#39;Cholesterol_Screening&#39;</span>,</span>
-<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;routine_checkups_pct&#39;</span>: <span class="st">&#39;Routine_Checkup&#39;</span>,</span>
-<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;dental_visits_pct&#39;</span>: <span class="st">&#39;Dental_Visit&#39;</span>,</span>
-<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;preventable_hospitalizations_rate&#39;</span>: <span class="st">&#39;Preventable Hospitalizations per 1,000&#39;</span>,</span>
-<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;ed_dental_visits_rate&#39;</span>: <span class="st">&#39;Emergency Dept Dental Visits per 1,000&#39;</span>,</span>
-<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;ed_mental_health_visits_rate&#39;</span>: <span class="st">&#39;Emergency Dept Mental Health Visits per 1,000&#39;</span>,</span>
-<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;inadequate_prenatal_care_rate&#39;</span>: <span class="st">&#39;Inadequate Prenatal Care Rate&#39;</span>,</span>
-<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;smoking_pct&#39;</span>: <span class="st">&#39;Smoking&#39;</span>,</span>
-<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;physical_inactivity_pct&#39;</span>: <span class="st">&#39;Physical_Inactivity&#39;</span>,</span>
-<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;short_sleep_pct&#39;</span>: <span class="st">&#39;Short_Sleep&#39;</span>,</span>
-<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;binge_drinking_pct&#39;</span>: <span class="st">&#39;Binge_Drinking&#39;</span></span>
-<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>statewide_medians <span class="op">=</span> {}</span>
-<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> key, col <span class="kw">in</span> all_metrics.items():</span>
-<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a>    statewide_medians[key] <span class="op">=</span> <span class="bu">round</span>(<span class="bu">float</span>(final_df[col].median()), <span class="dv">2</span>)</span>
-<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>js_records <span class="op">=</span> []</span>
-<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _, row <span class="kw">in</span> final_df.iterrows():</span>
-<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a>    density <span class="op">=</span> row[<span class="st">&#39;Total Population&#39;</span>] <span class="op">/</span> row[<span class="st">&#39;Area (sq miles)&#39;</span>]</span>
-<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a>    region <span class="op">=</span> <span class="st">&quot;Urban&quot;</span> <span class="cf">if</span> density <span class="op">&gt;</span> <span class="dv">100</span> <span class="cf">else</span> <span class="st">&quot;Rural&quot;</span> <span class="cf">if</span> density <span class="op">&gt;</span> <span class="dv">10</span> <span class="cf">else</span> <span class="st">&quot;Remote&quot;</span></span>
-<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a>    scores_obj <span class="op">=</span> {</span>
-<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;access&#39;</span>: <span class="bu">int</span>(row[<span class="st">&#39;access_score_scaled&#39;</span>]),</span>
-<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;access_raw_z&#39;</span>: <span class="bu">round</span>(<span class="bu">float</span>(row[<span class="st">&#39;access_z&#39;</span>]), <span class="dv">3</span>),</span>
-<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;need&#39;</span>: <span class="bu">int</span>(row[<span class="st">&#39;need_index&#39;</span>]),</span>
-<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;sections&#39;</span>: {</span>
-<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;access_structural&#39;</span>: <span class="bu">round</span>(<span class="bu">float</span>(row[<span class="st">&#39;z_structural&#39;</span>]), <span class="dv">3</span>),</span>
-<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;access_geo&#39;</span>: <span class="bu">round</span>(<span class="bu">float</span>(row[<span class="st">&#39;z_geo&#39;</span>]), <span class="dv">3</span>),</span>
-<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;access_service&#39;</span>: <span class="bu">round</span>(<span class="bu">float</span>(row[<span class="st">&#39;z_service&#39;</span>]), <span class="dv">3</span>),</span>
-<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;need_socioeconomic&#39;</span>: <span class="bu">round</span>(<span class="bu">float</span>(row[<span class="st">&#39;pr_socio&#39;</span>]), <span class="dv">1</span>),</span>
-<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;need_demographics&#39;</span>: <span class="bu">round</span>(<span class="bu">float</span>(row[<span class="st">&#39;pr_demo&#39;</span>]), <span class="dv">1</span>),</span>
-<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;need_health_outcomes&#39;</span>: <span class="bu">round</span>(<span class="bu">float</span>(row[<span class="st">&#39;pr_health&#39;</span>]), <span class="dv">1</span>),</span>
-<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;need_preventable_gaps&#39;</span>: <span class="bu">round</span>(<span class="bu">float</span>(row[<span class="st">&#39;pr_gaps&#39;</span>]), <span class="dv">1</span>),</span>
-<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;need_lifestyle&#39;</span>: <span class="bu">round</span>(<span class="bu">float</span>(row[<span class="st">&#39;pr_lifestyle&#39;</span>]), <span class="dv">1</span>)</span>
-<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a>    vars_obj <span class="op">=</span> {}</span>
-<span id="cb11-76"><a href="#cb11-76" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> key, col <span class="kw">in</span> all_metrics.items():</span>
-<span id="cb11-77"><a href="#cb11-77" aria-hidden="true" tabindex="-1"></a>        vars_obj[key] <span class="op">=</span> <span class="bu">round</span>(<span class="bu">float</span>(row[col]), <span class="dv">2</span>)</span>
-<span id="cb11-78"><a href="#cb11-78" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb11-79"><a href="#cb11-79" aria-hidden="true" tabindex="-1"></a>    js_records.append({</span>
-<span id="cb11-80"><a href="#cb11-80" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;name&#39;</span>: row[<span class="st">&#39;County&#39;</span>],</span>
-<span id="cb11-81"><a href="#cb11-81" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;region&#39;</span>: region,</span>
-<span id="cb11-82"><a href="#cb11-82" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;pop&#39;</span>: <span class="bu">int</span>(row[<span class="st">&#39;Total Population&#39;</span>]),</span>
-<span id="cb11-83"><a href="#cb11-83" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;area&#39;</span>: <span class="bu">float</span>(row[<span class="st">&#39;Area (sq miles)&#39;</span>]),</span>
-<span id="cb11-84"><a href="#cb11-84" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;beds&#39;</span>: <span class="bu">int</span>(row[<span class="st">&#39;Beds&#39;</span>]),</span>
-<span id="cb11-85"><a href="#cb11-85" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;ohpEnrollment&#39;</span>: <span class="bu">round</span>(<span class="bu">float</span>(row[<span class="st">&#39;OHPEnrollment&#39;</span>]), <span class="dv">1</span>),</span>
-<span id="cb11-86"><a href="#cb11-86" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;hospitals&#39;</span>: row[<span class="st">&#39;Hospitals&#39;</span>],</span>
-<span id="cb11-87"><a href="#cb11-87" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;scores&#39;</span>: scores_obj,</span>
-<span id="cb11-88"><a href="#cb11-88" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;variables&#39;</span>: vars_obj</span>
-<span id="cb11-89"><a href="#cb11-89" aria-hidden="true" tabindex="-1"></a>    })</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="03a2d802" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>all_metrics <span class="op">=</span> {</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;hospital_beds_per_10k&#39;</span>: <span class="st">&#39;BedsPer10k&#39;</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;dentists_per_1k&#39;</span>: <span class="st">&#39;Dentists per 1,000&#39;</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;mental_health_providers_per_1k&#39;</span>: <span class="st">&#39;Mental Health Providers per 1,000&#39;</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;primary_care_capacity&#39;</span>: <span class="st">&#39;Primary Care  Capacity Ratio&#39;</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;travel_time_pcpch&#39;</span>: <span class="st">&#39;Travel Time to Nearest PCPCH&#39;</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;highest_trauma_level&#39;</span>: <span class="st">&#39;HighestTraumaLevel&#39;</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;poverty_pct&#39;</span>: <span class="st">&#39;% Poverty&#39;</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;no_vehicle_pct&#39;</span>: <span class="st">&#39;% No Vehicle&#39;</span>,</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;broadband_pct&#39;</span>: <span class="st">&#39;Broadband&#39;</span>,</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;uninsured_pct&#39;</span>: <span class="st">&#39;Uninsured&#39;</span>,</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;pct_over_65&#39;</span>: <span class="st">&#39;% Over 65&#39;</span>,</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;pct_poc&#39;</span>: <span class="st">&#39;% POC&#39;</span>,</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;diabetes_pct&#39;</span>: <span class="st">&#39;Diabetes&#39;</span>,</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;copd_pct&#39;</span>: <span class="st">&#39;COPD&#39;</span>,</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;heart_disease_pct&#39;</span>: <span class="st">&#39;Heart_Disease&#39;</span>,</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;stroke_pct&#39;</span>: <span class="st">&#39;Stroke&#39;</span>,</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;hypertension_pct&#39;</span>: <span class="st">&#39;Hypertension&#39;</span>,</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;cancer_pct&#39;</span>: <span class="st">&#39;Cancer&#39;</span>,</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;asthma_pct&#39;</span>: <span class="st">&#39;Asthma&#39;</span>,</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;obesity_pct&#39;</span>: <span class="st">&#39;Obesity&#39;</span>,</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;any_disability_pct&#39;</span>: <span class="st">&#39;Disability_Any&#39;</span>,</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;hearing_disability_pct&#39;</span>: <span class="st">&#39;Disability_Hearing&#39;</span>,</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;vision_disability_pct&#39;</span>: <span class="st">&#39;Disability_Vision&#39;</span>,</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;mobility_disability_pct&#39;</span>: <span class="st">&#39;Disability_Mobility&#39;</span>,</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;self_care_disability_pct&#39;</span>: <span class="st">&#39;Disability_SelfCare&#39;</span>,</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;cognitive_disability_pct&#39;</span>: <span class="st">&#39;Disability_Cognitive&#39;</span>,</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;independent_living_disability_pct&#39;</span>: <span class="st">&#39;Disability_IndependentLiving&#39;</span>,</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;poor_fair_health_pct&#39;</span>: <span class="st">&#39;Poor_Fair_Health&#39;</span>,</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;frequent_mental_distress_pct&#39;</span>: <span class="st">&#39;Frequent_Mental_Distress&#39;</span>,</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;depression_pct&#39;</span>: <span class="st">&#39;Depression&#39;</span>,</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;frequent_physical_distress_pct&#39;</span>: <span class="st">&#39;Frequent_Physical_Distress&#39;</span>,</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;arthritis_pct&#39;</span>: <span class="st">&#39;Arthritis&#39;</span>,</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;all_teeth_lost_pct&#39;</span>: <span class="st">&#39;Teeth_Lost&#39;</span>,</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;colorectal_screening_pct&#39;</span>: <span class="st">&#39;Colorectal_Screening&#39;</span>,</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;mammography_pct&#39;</span>: <span class="st">&#39;Mammography&#39;</span>,</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;cholesterol_screening_pct&#39;</span>: <span class="st">&#39;Cholesterol_Screening&#39;</span>,</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;routine_checkups_pct&#39;</span>: <span class="st">&#39;Routine_Checkup&#39;</span>,</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;dental_visits_pct&#39;</span>: <span class="st">&#39;Dental_Visit&#39;</span>,</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;preventable_hospitalizations_rate&#39;</span>: <span class="st">&#39;Preventable Hospitalizations per 1,000&#39;</span>,</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;ed_dental_visits_rate&#39;</span>: <span class="st">&#39;Emergency Dept Dental Visits per 1,000&#39;</span>,</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;ed_mental_health_visits_rate&#39;</span>: <span class="st">&#39;Emergency Dept Mental Health Visits per 1,000&#39;</span>,</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;inadequate_prenatal_care_rate&#39;</span>: <span class="st">&#39;Inadequate Prenatal Care Rate&#39;</span>,</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;smoking_pct&#39;</span>: <span class="st">&#39;Smoking&#39;</span>,</span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;physical_inactivity_pct&#39;</span>: <span class="st">&#39;Physical_Inactivity&#39;</span>,</span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;short_sleep_pct&#39;</span>: <span class="st">&#39;Short_Sleep&#39;</span>,</span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;binge_drinking_pct&#39;</span>: <span class="st">&#39;Binge_Drinking&#39;</span></span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>statewide_medians <span class="op">=</span> {}</span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> key, col <span class="kw">in</span> all_metrics.items():</span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>    statewide_medians[key] <span class="op">=</span> <span class="bu">round</span>(<span class="bu">float</span>(final_df[col].median()), <span class="dv">2</span>)</span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>js_records <span class="op">=</span> []</span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _, row <span class="kw">in</span> final_df.iterrows():</span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>    density <span class="op">=</span> row[<span class="st">&#39;Total Population&#39;</span>] <span class="op">/</span> row[<span class="st">&#39;Area (sq miles)&#39;</span>]</span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a>    region <span class="op">=</span> <span class="st">&quot;Urban&quot;</span> <span class="cf">if</span> density <span class="op">&gt;</span> <span class="dv">100</span> <span class="cf">else</span> <span class="st">&quot;Rural&quot;</span> <span class="cf">if</span> density <span class="op">&gt;</span> <span class="dv">10</span> <span class="cf">else</span> <span class="st">&quot;Remote&quot;</span></span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a>    scores_obj <span class="op">=</span> {</span>
+<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;access&#39;</span>: <span class="bu">int</span>(row[<span class="st">&#39;access_score_scaled&#39;</span>]),</span>
+<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;access_raw_z&#39;</span>: <span class="bu">round</span>(<span class="bu">float</span>(row[<span class="st">&#39;access_z&#39;</span>]), <span class="dv">3</span>),</span>
+<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;need&#39;</span>: <span class="bu">int</span>(row[<span class="st">&#39;need_index&#39;</span>]),</span>
+<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;sections&#39;</span>: {</span>
+<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;access_structural&#39;</span>: <span class="bu">round</span>(<span class="bu">float</span>(row[<span class="st">&#39;z_structural&#39;</span>]), <span class="dv">3</span>),</span>
+<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;access_geo&#39;</span>: <span class="bu">round</span>(<span class="bu">float</span>(row[<span class="st">&#39;z_geo&#39;</span>]), <span class="dv">3</span>),</span>
+<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;access_service&#39;</span>: <span class="bu">round</span>(<span class="bu">float</span>(row[<span class="st">&#39;z_service&#39;</span>]), <span class="dv">3</span>),</span>
+<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;need_socioeconomic&#39;</span>: <span class="bu">round</span>(<span class="bu">float</span>(row[<span class="st">&#39;pr_socio&#39;</span>]), <span class="dv">1</span>),</span>
+<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;need_demographics&#39;</span>: <span class="bu">round</span>(<span class="bu">float</span>(row[<span class="st">&#39;pr_demo&#39;</span>]), <span class="dv">1</span>),</span>
+<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;need_health_outcomes&#39;</span>: <span class="bu">round</span>(<span class="bu">float</span>(row[<span class="st">&#39;pr_health&#39;</span>]), <span class="dv">1</span>),</span>
+<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;need_preventable_gaps&#39;</span>: <span class="bu">round</span>(<span class="bu">float</span>(row[<span class="st">&#39;pr_gaps&#39;</span>]), <span class="dv">1</span>),</span>
+<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;need_lifestyle&#39;</span>: <span class="bu">round</span>(<span class="bu">float</span>(row[<span class="st">&#39;pr_lifestyle&#39;</span>]), <span class="dv">1</span>)</span>
+<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a>    vars_obj <span class="op">=</span> {}</span>
+<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> key, col <span class="kw">in</span> all_metrics.items():</span>
+<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a>        vars_obj[key] <span class="op">=</span> <span class="bu">round</span>(<span class="bu">float</span>(row[col]), <span class="dv">2</span>)</span>
+<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb10-79"><a href="#cb10-79" aria-hidden="true" tabindex="-1"></a>    js_records.append({</span>
+<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;name&#39;</span>: row[<span class="st">&#39;County&#39;</span>],</span>
+<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;region&#39;</span>: region,</span>
+<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;pop&#39;</span>: <span class="bu">int</span>(row[<span class="st">&#39;Total Population&#39;</span>]),</span>
+<span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;area&#39;</span>: <span class="bu">float</span>(row[<span class="st">&#39;Area (sq miles)&#39;</span>]),</span>
+<span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;beds&#39;</span>: <span class="bu">int</span>(row[<span class="st">&#39;Beds&#39;</span>]),</span>
+<span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;ohpEnrollment&#39;</span>: <span class="bu">round</span>(<span class="bu">float</span>(row[<span class="st">&#39;OHPEnrollment&#39;</span>]), <span class="dv">1</span>),</span>
+<span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;hospitals&#39;</span>: row[<span class="st">&#39;Hospitals&#39;</span>],</span>
+<span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;scores&#39;</span>: scores_obj,</span>
+<span id="cb10-88"><a href="#cb10-88" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;variables&#39;</span>: vars_obj</span>
+<span id="cb10-89"><a href="#cb10-89" aria-hidden="true" tabindex="-1"></a>    })</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 

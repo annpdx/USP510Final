@@ -44,9 +44,8 @@ Oregon has 36 counties — from dense urban centers like Multnomah to remote rur
 | **U.S. Census ACS** (2022–2023, 5-Year) | Population, poverty, vehicles, broadband |
 | **OHA ArcGIS REST API** (live, 2026) | Hospital coordinates, beds, trauma levels |
 | **OHSU Unmet Need Report** (2025) | Travel time, providers per 1k, capacity ratios |
-| **CDC PLACES** (2023) | 36 county-level health & lifestyle indicators |
+| **CDC PLACES** (2023) | 30 county-level health & lifestyle indicators |
 | **Census SAHIE** (2023) | Health insurance coverage by county |
-| **Oregon Health Plan (OHP)** (March 2026) | Medicaid enrollment by county |
 
 
 ::: {.notes}
@@ -64,7 +63,6 @@ flowchart LR
   C[OHSU Excel] --> W[Pop-Weighted Agg] --> M
   D[CDC PLACES CSV] --> P[Pivot Table] --> M
   E[SAHIE CSV] --> M
-  F[OHP Excel] --> M
   M --> I[Index Formulation]
   I --> J[data.js Export]
 ```
@@ -124,16 +122,6 @@ insured_df['Insured (Percent)'] = pd.to_numeric(insured_df['Insured (Percent)'],
 insured_df['Uninsured'] = 100.0 - insured_df['Insured (Percent)']
 ```
 
-### 2.3 OHP Enrollment
-
-```{python}
-ohp_df = pd.read_excel('Data/Raw/OHPEnrollment.xlsx', sheet_name='Data (by county)', skiprows=3)
-ohp_latest = ohp_df[ohp_df['Month and Year'] == 'Mar 2026'].copy()
-ohp_latest['County'] = ohp_latest['County'].str.strip()
-ohp_latest['Total'] = pd.to_numeric(ohp_latest['Total'].replace('*', 0), errors='coerce').fillna(0)
-ohp_county = ohp_latest.groupby('County', as_index=False)['Total'].sum()
-ohp_county = ohp_county.rename(columns={'Total': 'OHP_Total'})
-```
 
 :::
 
@@ -248,7 +236,7 @@ final_df = census_df.copy()
 for df, cols in [(broadband_df, ['County', 'Broadband']),
                  (insured_df,   ['County', 'Uninsured']),
                  (hosp_agg,     None), (health_pivot, None),
-                 (unmet_county, None), (ohp_county,   None)]:
+                 (unmet_county, None)]:
     final_df = pd.merge(final_df, df if cols is None else df[cols], on='County', how='left')
 
 
@@ -392,7 +380,6 @@ for _, row in final_df.iterrows():
         'name': row['County'], 'region': region,
         'pop': int(row['Total Population']),
         'beds': int(row['Beds']),
-        'ohpEnrollment': round(float(row['OHPEnrollment']), 1),
         'hospitals': row['Hospitals'],
         'scores': {
             'access': int(row['access_score_scaled']),

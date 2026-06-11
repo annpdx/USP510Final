@@ -64,14 +64,7 @@ def build_dashboard_data():
     insured_df['Insured (Percent)'] = pd.to_numeric(insured_df['Insured (Percent)'], errors='coerce').fillna(90.0)
     insured_df['Uninsured'] = 100.0 - insured_df['Insured (Percent)']
     
-    # OHP Enrollment (for reference and profile)
-    print("Processing OHP Enrollment...")
-    ohp_df = pd.read_excel('Data/Raw/OHPEnrollment.xlsx', sheet_name='Data (by county)', skiprows=3)
-    ohp_latest = ohp_df[ohp_df['Month and Year'] == 'Mar 2026'].copy()
-    ohp_latest['County'] = ohp_latest['County'].str.strip()
-    ohp_latest['Total'] = pd.to_numeric(ohp_latest['Total'].replace('*', 0), errors='coerce').fillna(0)
-    ohp_county = ohp_latest.groupby('County', as_index=False)['Total'].sum()
-    ohp_county = ohp_county.rename(columns={'Total': 'OHP_Total'})
+
 
     # ── Health Indicators: read ALL Oregon rows ──────────────────────────
     print("Processing Health Indicators (CDC PLACES)...")
@@ -203,7 +196,7 @@ def build_dashboard_data():
     final_df = pd.merge(final_df, insured_df[['County', 'Uninsured']], on='County', how='left')
     final_df = pd.merge(final_df, health_pivot, on='County', how='left')
     final_df = pd.merge(final_df, hosp_agg, on='County', how='left')
-    final_df = pd.merge(final_df, ohp_county, on='County', how='left')
+
     
 
 
@@ -216,8 +209,7 @@ def build_dashboard_data():
     for col in numeric_cols:
         final_df[col] = final_df[col].fillna(final_df[col].median())
         
-    final_df['OHP_Total'] = final_df['OHP_Total'].fillna(0)
-    final_df['OHPEnrollment'] = (final_df['OHP_Total'] / final_df['Total Population'] * 100).round(2)
+
     
     # ── Access Score Methodology (Z-Scores) ──────────────────────────────
     print("Calculating Access Scores (Z-score based)...")
@@ -428,7 +420,7 @@ def build_dashboard_data():
             'pop': int(row['Total Population']),
             'area': float(row['Area (sq miles)']),
             'beds': int(row['Beds']),
-            'ohpEnrollment': round(float(row['OHPEnrollment']), 1),
+
             'hospitals': row['Hospitals'] if isinstance(row['Hospitals'], list) else [],
             'scores': scores_obj,
             'variables': vars_obj

@@ -7,7 +7,6 @@ const _dashData = {
       "pop": 16685,
       "area": 3067.97,
       "beds": 36,
-      "ohpEnrollment": 34.5,
       "hospitals": [
         {
           "Name": "St. Alphonsus Medical Center - Baker City",
@@ -88,7 +87,6 @@ const _dashData = {
       "pop": 95615,
       "area": 675.21,
       "beds": 188,
-      "ohpEnrollment": 23.0,
       "hospitals": [
         {
           "Name": "Good Samaritan Regional Medical Center",
@@ -169,7 +167,6 @@ const _dashData = {
       "pop": 420925,
       "area": 1870.71,
       "beds": 699,
-      "ohpEnrollment": 25.2,
       "hospitals": [
         {
           "Name": "Kaiser Sunnyside Medical Center",
@@ -274,7 +271,6 @@ const _dashData = {
       "pop": 41190,
       "area": 828.1,
       "beds": 83,
-      "ohpEnrollment": 34.2,
       "hospitals": [
         {
           "Name": "Columbia Memorial Hospital",
@@ -363,7 +359,6 @@ const _dashData = {
       "pop": 52865,
       "area": 658.68,
       "beds": 0,
-      "ohpEnrollment": 29.8,
       "hospitals": [],
       "scores": {
         "access": 39,
@@ -435,7 +430,6 @@ const _dashData = {
       "pop": 64908,
       "area": 1596.04,
       "beds": 218,
-      "ohpEnrollment": 38.7,
       "hospitals": [
         {
           "Name": "Bay Area Hospital",
@@ -532,7 +526,6 @@ const _dashData = {
       "pop": 24987,
       "area": 2978.93,
       "beds": 35,
-      "ohpEnrollment": 37.9,
       "hospitals": [
         {
           "Name": "Pioneer Memorial Hospital - Prineville",
@@ -613,7 +606,6 @@ const _dashData = {
       "pop": 23404,
       "area": 1628.38,
       "beds": 24,
-      "ohpEnrollment": 35.8,
       "hospitals": [
         {
           "Name": "Curry General Hospital",
@@ -694,7 +686,6 @@ const _dashData = {
       "pop": 199352,
       "area": 3017.61,
       "beds": 309,
-      "ohpEnrollment": 30.5,
       "hospitals": [
         {
           "Name": "St. Charles Medical Center",
@@ -783,7 +774,6 @@ const _dashData = {
       "pop": 111322,
       "area": 5035.67,
       "beds": 190,
-      "ohpEnrollment": 40.0,
       "hospitals": [
         {
           "Name": "Lower Umpqua Hospital District",
@@ -880,7 +870,6 @@ const _dashData = {
       "pop": 1983,
       "area": 1204.72,
       "beds": 0,
-      "ohpEnrollment": 33.8,
       "hospitals": [],
       "scores": {
         "access": 0,
@@ -952,7 +941,6 @@ const _dashData = {
       "pop": 7237,
       "area": 4527.79,
       "beds": 25,
-      "ohpEnrollment": 30.9,
       "hospitals": [
         {
           "Name": "Blue Mountain Hospital",
@@ -1033,7 +1021,6 @@ const _dashData = {
       "pop": 7496,
       "area": 10134.43,
       "beds": 25,
-      "ohpEnrollment": 38.1,
       "hospitals": [
         {
           "Name": "Harney District Hospital",
@@ -1114,7 +1101,6 @@ const _dashData = {
       "pop": 23965,
       "area": 522.19,
       "beds": 25,
-      "ohpEnrollment": 36.5,
       "hospitals": [
         {
           "Name": "Providence Hood River Memorial Hospital",
@@ -1195,7 +1181,6 @@ const _dashData = {
       "pop": 222604,
       "area": 2783.25,
       "beds": 595,
-      "ohpEnrollment": 39.6,
       "hospitals": [
         {
           "Name": "Asante Rogue Regional Medical Center",
@@ -1292,7 +1277,6 @@ const _dashData = {
       "pop": 24659,
       "area": 1781.7,
       "beds": 36,
-      "ohpEnrollment": 47.6,
       "hospitals": [
         {
           "Name": "St. Charles Medical Center - Madras",
@@ -1373,7 +1357,6 @@ const _dashData = {
       "pop": 87994,
       "area": 1638.65,
       "beds": 125,
-      "ohpEnrollment": 46.2,
       "hospitals": [
         {
           "Name": "Asante Three Rivers Medical Center",
@@ -1462,7 +1445,6 @@ const _dashData = {
       "pop": 69506,
       "area": 5949.98,
       "beds": 176,
-      "ohpEnrollment": 43.4,
       "hospitals": [
         {
           "Name": "Sky Lakes Medical Center",
@@ -1543,7 +1525,6 @@ const _dashData = {
       "pop": 8201,
       "area": 8138.61,
       "beds": 24,
-      "ohpEnrollment": 40.0,
       "hospitals": [
         {
           "Name": "Lake District Hospital",
@@ -1624,7 +1605,6 @@ const _dashData = {
       "pop": 382218,
       "area": 4554.09,
       "beds": 599,
-      "ohpEnrollment": 33.7,
       "hospitals": [
         {
           "Name": "McKenzie-Willamette Medical Center",
@@ -1737,7 +1717,6 @@ const _dashData = {
       "pop": 50334,
       "area": 980.98,
       "beds": 50,
-      "ohpEnrollment": 37.7,
       "hospitals": [
         {
           "Name": "Samaritan North Lincoln Hospital",
@@ -1826,7 +1805,6 @@ const _dashData = {
       "pop": 128598,
       "area": 2289.51,
       "beds": 128,
-      "ohpEnrollment": 37.4,
       "hospitals": [
         {
           "Name": "Samaritan Albany General Hospital",
@@ -1915,7 +1893,6 @@ const _dashData = {
       "pop": 31538,
       "area": 9887.71,
       "beds": 49,
-      "ohpEnrollment": 52.9,
       "hospitals": [
         {
           "Name": "St. Alphonsus Medical Center - Ontario",
@@ -1996,7 +1973,6 @@ const _dashData = {
       "pop": 345815,
       "area": 1180.84,
       "beds": 543,
-      "ohpEnrollment": 39.9,
       "hospitals": [
         {
           "Name": "Oregon State Hospital - Salem",
@@ -2101,7 +2077,6 @@ const _dashData = {
       "pop": 12140,
       "area": 2030.53,
       "beds": 21,
-      "ohpEnrollment": 44.2,
       "hospitals": [
         {
           "Name": "Pioneer Memorial Hospital - Heppner",
@@ -2182,7 +2157,6 @@ const _dashData = {
       "pop": 808098,
       "area": 431.02,
       "beds": 2598,
-      "ohpEnrollment": 35.3,
       "hospitals": [
         {
           "Name": "Adventist Medical Center",
@@ -2351,7 +2325,6 @@ const _dashData = {
       "pop": 87600,
       "area": 740.92,
       "beds": 15,
-      "ohpEnrollment": 30.6,
       "hospitals": [
         {
           "Name": "West Valley Hospital",
@@ -2432,7 +2405,6 @@ const _dashData = {
       "pop": 1900,
       "area": 823.61,
       "beds": 0,
-      "ohpEnrollment": 36.9,
       "hospitals": [],
       "scores": {
         "access": 35,
@@ -2504,7 +2476,6 @@ const _dashData = {
       "pop": 27345,
       "area": 1103.18,
       "beds": 49,
-      "ohpEnrollment": 35.1,
       "hospitals": [
         {
           "Name": "Tillamook Regional Medical Center",
@@ -2585,7 +2556,6 @@ const _dashData = {
       "pop": 79904,
       "area": 3215.45,
       "beds": 98,
-      "ohpEnrollment": 40.6,
       "hospitals": [
         {
           "Name": "Good Shepherd Medical Center",
@@ -2674,7 +2644,6 @@ const _dashData = {
       "pop": 26286,
       "area": 2036.94,
       "beds": 25,
-      "ohpEnrollment": 35.7,
       "hospitals": [
         {
           "Name": "Grande Ronde Hospital",
@@ -2755,7 +2724,6 @@ const _dashData = {
       "pop": 7439,
       "area": 3145.9,
       "beds": 25,
-      "ohpEnrollment": 33.3,
       "hospitals": [
         {
           "Name": "Wallowa Memorial Hospital",
@@ -2836,7 +2804,6 @@ const _dashData = {
       "pop": 26639,
       "area": 2381.14,
       "beds": 49,
-      "ohpEnrollment": 40.4,
       "hospitals": [
         {
           "Name": "Mid-Columbia Medical Center",
@@ -2917,7 +2884,6 @@ const _dashData = {
       "pop": 599541,
       "area": 724.27,
       "beds": 860,
-      "ohpEnrollment": 26.9,
       "hospitals": [
         {
           "Name": "Cedar Hills Hospital",
@@ -3022,7 +2988,6 @@ const _dashData = {
       "pop": 1407,
       "area": 1716.02,
       "beds": 0,
-      "ohpEnrollment": 27.7,
       "hospitals": [],
       "scores": {
         "access": 35,
@@ -3094,7 +3059,6 @@ const _dashData = {
       "pop": 107674,
       "area": 715.94,
       "beds": 128,
-      "ohpEnrollment": 30.1,
       "hospitals": [
         {
           "Name": "Providence Newberg Medical Center",
