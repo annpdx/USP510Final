@@ -262,8 +262,8 @@ function renderMainMapsData() {
             const county = countyData.find(c => c.name === name);
             if (!county) return;
 
-            // Removed Travel time to PCPCH from the access map popups as requested
-            layer.bindTooltip(`<b>${county.name} County</b><br>Healthcare Access Score: ${county.scores.access}/100<br>Hospital Beds/10k: ${county.variables.hospital_beds_per_10k}<br>Trauma level: ${county.variables.highest_trauma_level}<br><br><em>Click to select</em>`);
+            // Removed Travel time to PCPCH from the access map popups as requested, added Hospitals per Square Mile
+            layer.bindTooltip(`<b>${county.name} County</b><br>Healthcare Access Score: ${county.scores.access}/100<br>Hospital Beds/10k: ${county.variables.hospital_beds_per_10k}<br>Hospitals/sq mi: ${county.variables.hospitals_per_sq_mile.toFixed(4)}<br>Trauma level: ${county.variables.highest_trauma_level}<br><br><em>Click to select</em>`);
             layer.on('click', () => {
                 selectCounty(county.name, false); // Disabled automatic profile view jump
             });
