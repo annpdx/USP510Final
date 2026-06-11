@@ -473,6 +473,14 @@ function renderStatewideProfile() {
             <div class="stat-meta">Standardized Z-Score: <strong>0.00</strong></div>
         </div>
         <div class="profile-stat">
+            <div class="stat-label">Hospitals per Square Mile</div>
+            <div class="stat-num-container">
+                <div class="stat-num">0.0033 /sq mi</div>
+                <span class="status-badge status-good">Average</span>
+            </div>
+            <div class="stat-meta">Standardized Z-Score: <strong>0.00</strong></div>
+        </div>
+        <div class="profile-stat">
             <div class="stat-label">Trauma Designation Scale (Highest)</div>
             <div class="stat-num-container">
                 <div class="stat-num">Level 1</div>
@@ -654,6 +662,7 @@ function renderCountyProfile(county) {
         ${renderAccessStat('Mental Health Providers per 1,000', county.variables.mental_health_providers_per_1k, ' providers', county.scores.sections.access_structural)}
         ${renderAccessStat('Primary Care Capacity Ratio', county.variables.primary_care_capacity, '', county.scores.sections.access_structural)}
         ${renderAccessStat('Travel Time to Nearest PCPCH', county.variables.travel_time_pcpch, ' min', county.scores.sections.access_geo, true)}
+        ${renderAccessStat('Hospitals per Square Mile', county.variables.hospitals_per_sq_mile.toFixed(4), ' /sq mi', county.scores.sections.access_geo)}
         ${renderAccessStat('Trauma Designation Scale (Highest)', county.variables.highest_trauma_level, ' Level', county.scores.sections.access_service)}
     `;
 
