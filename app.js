@@ -14,11 +14,7 @@ const variableMetadata = {
     'poverty_pct': { name: 'Poverty Rate', unit: '%', section: 'socioeconomic', reverse: false },
     'no_vehicle_pct': { name: 'Households without Vehicle', unit: '%', section: 'socioeconomic', reverse: false },
     'broadband_pct': { name: 'Broadband Access Rate', unit: '%', section: 'socioeconomic', reverse: true }, // positive, low access = high need
-    'food_insecurity_pct': { name: 'Food Insecurity Rate in the past 12 months', unit: '%', section: 'socioeconomic', reverse: false },
-    'housing_insecurity_pct': { name: 'Housing Insecurity Rate in the past 12 months', unit: '%', section: 'socioeconomic', reverse: false },
-    'utility_shutoff_pct': { name: 'Utility Services Shut-Off Threat', unit: '%', section: 'socioeconomic', reverse: false },
     'uninsured_pct': { name: 'Uninsured Rate (Small Area Health Insurance Estimates)', unit: '%', section: 'socioeconomic', reverse: false },
-    'transportation_barriers_pct': { name: 'Lack of Reliable Transportation', unit: '%', section: 'socioeconomic', reverse: false },
 
     // Demographic Risk
     'need_demographics': { name: '-- Demographic Risk Summary Score --', unit: '%', section: 'demographics', reverse: false, isSummary: true },
@@ -66,9 +62,7 @@ const variableMetadata = {
     'smoking_pct': { name: 'Current Cigarette Smoking among Adults', unit: '%', section: 'lifestyle', reverse: false },
     'physical_inactivity_pct': { name: 'No Leisure-Time Physical Activity among Adults', unit: '%', section: 'lifestyle', reverse: false },
     'short_sleep_pct': { name: 'Short Sleep Duration (<7 hours) among Adults', unit: '%', section: 'lifestyle', reverse: false },
-    'binge_drinking_pct': { name: 'Binge Drinking Prevalence among Adults', unit: '%', section: 'lifestyle', reverse: false },
-    'loneliness_pct': { name: 'Loneliness Prevalence among Adults', unit: '%', section: 'lifestyle', reverse: false },
-    'lack_social_support_pct': { name: 'Lack of Social and Emotional Support among Adults', unit: '%', section: 'lifestyle', reverse: false }
+    'binge_drinking_pct': { name: 'Binge Drinking Prevalence among Adults', unit: '%', section: 'lifestyle', reverse: false }
 };
 
 // DOM Elements
@@ -509,7 +503,7 @@ function renderStatewideNeedAccordion() {
         'socioeconomic': {
             title: 'Socioeconomic Vulnerability',
             icon: '&#x1F4B5;',
-            keys: ['poverty_pct', 'no_vehicle_pct', 'broadband_pct', 'food_insecurity_pct', 'housing_insecurity_pct', 'utility_shutoff_pct', 'uninsured_pct', 'transportation_barriers_pct']
+            keys: ['poverty_pct', 'no_vehicle_pct', 'broadband_pct', 'uninsured_pct']
         },
         'preventable_gaps': {
             title: 'Preventable Care Gaps & Outcomes',
@@ -524,7 +518,7 @@ function renderStatewideNeedAccordion() {
         'lifestyle': {
             title: 'Lifestyle & Behavioral Risk Factors',
             icon: '&#x1F6AC;',
-            keys: ['smoking_pct', 'physical_inactivity_pct', 'short_sleep_pct', 'binge_drinking_pct', 'loneliness_pct', 'lack_social_support_pct']
+            keys: ['smoking_pct', 'physical_inactivity_pct', 'short_sleep_pct', 'binge_drinking_pct']
         }
     };
 
@@ -684,7 +678,7 @@ function renderNeedAccordion(county) {
         'socioeconomic': {
             title: 'Socioeconomic Vulnerability',
             icon: '&#x1F4B5;',
-            keys: ['poverty_pct', 'no_vehicle_pct', 'broadband_pct', 'food_insecurity_pct', 'housing_insecurity_pct', 'utility_shutoff_pct', 'uninsured_pct', 'transportation_barriers_pct']
+            keys: ['poverty_pct', 'no_vehicle_pct', 'broadband_pct', 'uninsured_pct']
         },
         'preventable_gaps': {
             title: 'Preventable Care Gaps & Outcomes',
@@ -699,7 +693,7 @@ function renderNeedAccordion(county) {
         'lifestyle': {
             title: 'Lifestyle & Behavioral Risk Factors',
             icon: '&#x1F6AC;',
-            keys: ['smoking_pct', 'physical_inactivity_pct', 'short_sleep_pct', 'binge_drinking_pct', 'loneliness_pct', 'lack_social_support_pct']
+            keys: ['smoking_pct', 'physical_inactivity_pct', 'short_sleep_pct', 'binge_drinking_pct']
         }
     };
 

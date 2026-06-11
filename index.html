@@ -392,11 +392,10 @@
                                     Obstructive Pulmonary Disease, Heart disease, Stroke, Hypertension, Cancer, Asthma,
                                     Obesity, disability (all types), poor/fair self-rated health, cognitive/mental
                                     distress, and mobility/self-care limitations.</li>
-                                <li><strong>Socioeconomic Vulnerability (25% weight):</strong> 8 variables. Poverty %,
-                                    Households without vehicle %, Broadband lack (inverted access rate), Food insecurity
-                                    (PLACES), Housing insecurity (PLACES), Utility shutoff threats (PLACES), Uninsured
+                                <li><strong>Socioeconomic Vulnerability (25% weight):</strong> 4 variables. Poverty %,
+                                    Households without vehicle %, Broadband lack (inverted access rate), and Uninsured
                                     rate (derived from Small Area Health Insurance Estimates in
-                                    <code>insured.csv</code>), and Transportation barriers.
+                                    <code>insured.csv</code>).
                                 </li>
                                 <li><strong>Preventable Care Gaps (25% weight):</strong> 9 variables. Averages the
                                     inverted percentile ranks of positive preventive screeners (Colorectal, Mammography,
@@ -406,68 +405,13 @@
                                 <li><strong>Demographics (7.5% weight):</strong> Population over 65 % and People of
                                     Color (POC) % percentile ranks.</li>
                                 <li><strong>Lifestyle &amp; Behavioral Risks (7.5% weight):</strong> Smoking %, Physical
-                                    inactivity %, Short sleep duration %, Binge drinking %, Loneliness %, and Lack of
-                                    social/emotional support %.</li>
+                                    inactivity %, Short sleep duration %, and Binge drinking %.</li>
                             </ul>
                             <p>For each section, sub-indicator percentile ranks are averaged. The composite Need Score
                                 is the weighted average of these five sections. The final NeedIndex (0 to 100) is the
                                 percentile rank of this weighted average across all 36 counties.</p>
 
-                            <h4 class="methodology-hdr" style="margin-top: 24px;">Proxy Variable Estimates for Unavailable PLACES Measures</h4>
-                            <p>Six social determinant variables included in the CDC PLACES dataset were <strong>not available at the Oregon county level</strong> and were therefore estimated using linear proxy formulas derived from highly correlated Census variables. These are educated approximations, not direct measurements, and represent a known limitation of this analysis.</p>
-                            
-                            <div style="overflow-x: auto; margin-top: 12px; border: 1px solid var(--glass-border); border-radius: 8px; background: rgba(255,255,255,0.02);">
-                                <table style="width:100%; border-collapse: collapse; font-size: 0.85rem; text-align: left;">
-                                    <thead>
-                                        <tr style="border-bottom: 1px solid var(--glass-border); background: rgba(255,255,255,0.05);">
-                                            <th style="padding: 10px 12px; font-weight: 600;">Variable</th>
-                                            <th style="padding: 10px 12px; font-weight: 600;">Formula</th>
-                                            <th style="padding: 10px 12px; font-weight: 600;">Census Driver</th>
-                                            <th style="padding: 10px 12px; font-weight: 600;">Rationale</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-                                            <td style="padding: 10px 12px;"><strong>Food Insecurity</strong></td>
-                                            <td style="padding: 10px 12px;"><code>% Poverty × 1.1 + 2.0</code></td>
-                                            <td style="padding: 10px 12px;">Poverty rate</td>
-                                            <td style="padding: 10px 12px;">Food insecurity tracks closely with poverty but runs slightly higher; the +2.0 intercept captures baseline insecurity even in low-poverty counties.</td>
-                                        </tr>
-                                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
-                                            <td style="padding: 10px 12px;"><strong>Housing Insecurity</strong></td>
-                                            <td style="padding: 10px 12px;"><code>% Poverty × 0.9 + 1.5</code></td>
-                                            <td style="padding: 10px 12px;">Poverty rate</td>
-                                            <td style="padding: 10px 12px;">Related to poverty at a slightly lower rate — households typically prioritize housing payments before food.</td>
-                                        </tr>
-                                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-                                            <td style="padding: 10px 12px;"><strong>Utility Shutoff Threat</strong></td>
-                                            <td style="padding: 10px 12px;"><code>% Poverty × 0.3 + 0.5</code></td>
-                                            <td style="padding: 10px 12px;">Poverty rate</td>
-                                            <td style="padding: 10px 12px;">A more extreme outcome affecting a smaller fraction of even economically stressed households.</td>
-                                        </tr>
-                                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
-                                            <td style="padding: 10px 12px;"><strong>Transportation Barriers</strong></td>
-                                            <td style="padding: 10px 12px;"><code>% No Vehicle × 1.8 + 3.0</code></td>
-                                            <td style="padding: 10px 12px;">Vehicle access rate</td>
-                                            <td style="padding: 10px 12px;">Driven by vehicle access rather than poverty; the 1.8 multiplier reflects amplified barriers in rural Oregon where transit infrastructure is minimal.</td>
-                                        </tr>
-                                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-                                            <td style="padding: 10px 12px;"><strong>Loneliness</strong></td>
-                                            <td style="padding: 10px 12px;"><code>22.0 + % Over 65 × 0.2</code></td>
-                                            <td style="padding: 10px 12px;">Elderly population share</td>
-                                            <td style="padding: 10px 12px;">A baseline rate of ~22% exists across all ages; the elderly share adds a modest increment reflecting well-documented age-related social isolation.</td>
-                                        </tr>
-                                        <tr style="background: rgba(255,255,255,0.02);">
-                                            <td style="padding: 10px 12px;"><strong>Lack of Social Support</strong></td>
-                                            <td style="padding: 10px 12px;"><code>14.0 + % Over 65 × 0.15</code></td>
-                                            <td style="padding: 10px 12px;">Elderly population share</td>
-                                            <td style="padding: 10px 12px;">Similar structure to loneliness with a lower baseline and slope reflecting the narrower prevalence of this specific indicator.</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            
-                            <p style="margin-top: 12px; font-size: 0.85rem; color: var(--text-secondary);"><em>Note: These estimates are correlated with true values but introduce imprecision. The broad county-level patterns of the Need Index remain robust even when these variables are excluded.</em></p>
+
 
                             <h4 class="methodology-hdr" style="margin-top: 24px;">Data Sources &amp; Citations</h4>
                             <ul>

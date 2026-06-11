@@ -185,13 +185,7 @@ places_measures = {
     'Smoking': 'Current cigarette smoking',
     'Physical_Inactivity': 'No leisure-time physical activity',
     'Short_Sleep': 'Short sleep duration',
-    'Binge_Drinking': 'Binge drinking',
-    'Loneliness': 'Loneliness among adults',
-    'Lack_Social_Support': 'Lack of social and emotional support',
-    'Food_Insecurity': 'Food insecurity in the past 12 months',
-    'Housing_Insecurity': 'Housing insecurity in the past 12 months',
-    'Utility_Shutoff_Threat': 'Utility services shut-off threat',
-    'Transportation_Barriers': 'Lack of reliable transportation'
+    'Binge_Drinking': 'Binge drinking'
 }
 
 preferred_df['CleanMeasure'] = None
@@ -273,13 +267,7 @@ final_df = pd.merge(final_df, health_pivot, on='County', how='left')
 final_df = pd.merge(final_df, hosp_agg, on='County', how='left')
 final_df = pd.merge(final_df, ohp_county, on='County', how='left')
 
-# Apply indicator estimates for missing items
-final_df['Food_Insecurity'] = (final_df['% Poverty'] * 1.1 + 2.0).round(1)
-final_df['Housing_Insecurity'] = (final_df['% Poverty'] * 0.9 + 1.5).round(1)
-final_df['Utility_Shutoff_Threat'] = (final_df['% Poverty'] * 0.3 + 0.5).round(1)
-final_df['Transportation_Barriers'] = (final_df['% No Vehicle'] * 1.8 + 3.0).round(1)
-final_df['Loneliness'] = (22.0 + final_df['% Over 65'] * 0.2).round(1)
-final_df['Lack_Social_Support'] = (14.0 + final_df['% Over 65'] * 0.15).round(1)
+
 
 final_df['Beds'] = final_df['Beds'].fillna(0)
 final_df['HighestTraumaLevel'] = final_df['HighestTraumaLevel'].fillna(0)
@@ -294,20 +282,7 @@ final_df['OHP_Total'] = final_df['OHP_Total'].fillna(0)
 final_df['OHPEnrollment'] = (final_df['OHP_Total'] / final_df['Total Population'] * 100).round(2)
 ```
 
-## 6.1 Proxy Variable Methodology
 
-Six social determinant variables included in the CDC PLACES dataset were **not available at the Oregon county level** and were therefore estimated using linear proxy formulas derived from highly correlated Census variables. These are educated approximations, not direct measurements, and are flagged as a known limitation of this analysis.
-
-| Variable | Formula | Census Driver | Rationale |
-|---|---|---|---|
-| **Food Insecurity** | `% Poverty × 1.1 + 2.0` | Poverty rate | Food insecurity tracks closely with poverty but tends to run slightly higher — the multiplier (1.1) reflects this, and the +2.0 intercept captures baseline food insecurity even in low-poverty counties. |
-| **Housing Insecurity** | `% Poverty × 0.9 + 1.5` | Poverty rate | Closely related to poverty, but at a slightly lower rate than food insecurity — households typically prioritize housing payments before food. |
-| **Utility Shutoff Threat** | `% Poverty × 0.3 + 0.5` | Poverty rate | A more extreme outcome affecting a smaller fraction of even economically stressed households, hence the lower multiplier. |
-| **Transportation Barriers** | `% No Vehicle × 1.8 + 3.0` | Vehicle access rate | Driven by vehicle access rather than poverty. The 1.8 multiplier reflects that in rural Oregon — where transit infrastructure is minimal — lacking a vehicle creates amplified access barriers. |
-| **Loneliness** | `22.0 + % Over 65 × 0.2` | Elderly population share | A baseline loneliness rate of ~22% exists across all age groups; the elderly share adds a modest increment reflecting well-documented age-related social isolation. |
-| **Lack of Social Support** | `14.0 + % Over 65 × 0.15` | Elderly population share | Similar structure to loneliness, with a lower baseline and slope reflecting the narrower prevalence of this specific indicator. |
-
-> **Note:** These formulas produce estimates that are correlated with the true values but introduce imprecision into the Need Index for the five thematic categories that include them (Socioeconomic Vulnerability and Lifestyle/Behavioral Risk). The broad county-level patterns of the Need Index are robust even when these variables are excluded entirely.
 
 ---
 
@@ -377,12 +352,8 @@ def pr_rank(series, invert=False):
 pr_poverty = pr_rank(final_df['% Poverty'])
 pr_nocar = pr_rank(final_df['% No Vehicle'])
 pr_broadband = pr_rank(final_df['Broadband'], invert=True)
-pr_food = pr_rank(final_df['Food_Insecurity'])
-pr_housing = pr_rank(final_df['Housing_Insecurity'])
-pr_utility = pr_rank(final_df['Utility_Shutoff_Threat'])
 pr_uninsured = pr_rank(final_df['Uninsured'])
-pr_transport = pr_rank(final_df['Transportation_Barriers'])
-final_df['pr_socio'] = (pr_poverty + pr_nocar + pr_broadband + pr_food + pr_housing + pr_utility + pr_uninsured + pr_transport) / 8.0
+final_df['pr_socio'] = (pr_poverty + pr_nocar + pr_broadband + pr_uninsured) / 4.0
 
 # Demographics
 pr_over65 = pr_rank(final_df['% Over 65'])
@@ -417,9 +388,7 @@ pr_smoking = pr_rank(final_df['Smoking'])
 pr_inactivity = pr_rank(final_df['Physical_Inactivity'])
 pr_sleep = pr_rank(final_df['Short_Sleep'])
 pr_drinking = pr_rank(final_df['Binge_Drinking'])
-pr_loneliness = pr_rank(final_df['Loneliness'])
-pr_support = pr_rank(final_df['Lack_Social_Support'])
-final_df['pr_lifestyle'] = (pr_smoking + pr_inactivity + pr_sleep + pr_drinking + pr_loneliness + pr_support) / 6.0
+final_df['pr_lifestyle'] = (pr_smoking + pr_inactivity + pr_sleep + pr_drinking) / 4.0
 
 # Composite weighted Need score & final Need Index
 final_df['need_weighted'] = (
@@ -449,11 +418,7 @@ all_metrics = {
     'poverty_pct': '% Poverty',
     'no_vehicle_pct': '% No Vehicle',
     'broadband_pct': 'Broadband',
-    'food_insecurity_pct': 'Food_Insecurity',
-    'housing_insecurity_pct': 'Housing_Insecurity',
-    'utility_shutoff_pct': 'Utility_Shutoff_Threat',
     'uninsured_pct': 'Uninsured',
-    'transportation_barriers_pct': 'Transportation_Barriers',
     'pct_over_65': '% Over 65',
     'pct_poc': '% POC',
     'diabetes_pct': 'Diabetes',
@@ -489,9 +454,7 @@ all_metrics = {
     'smoking_pct': 'Smoking',
     'physical_inactivity_pct': 'Physical_Inactivity',
     'short_sleep_pct': 'Short_Sleep',
-    'binge_drinking_pct': 'Binge_Drinking',
-    'loneliness_pct': 'Loneliness',
-    'lack_social_support_pct': 'Lack_Social_Support'
+    'binge_drinking_pct': 'Binge_Drinking'
 }
 
 statewide_medians = {}

@@ -124,13 +124,7 @@ def build_dashboard_data():
         'Smoking': 'Current cigarette smoking',
         'Physical_Inactivity': 'No leisure-time physical activity',
         'Short_Sleep': 'Short sleep duration',
-        'Binge_Drinking': 'Binge drinking',
-        'Loneliness': 'Loneliness among adults',
-        'Lack_Social_Support': 'Lack of social and emotional support',
-        'Food_Insecurity': 'Food insecurity in the past 12 months',
-        'Housing_Insecurity': 'Housing insecurity in the past 12 months',
-        'Utility_Shutoff_Threat': 'Utility services shut-off threat',
-        'Transportation_Barriers': 'Lack of reliable transportation'
+        'Binge_Drinking': 'Binge drinking'
     }
 
     # Extract clean columns using literal string matching (regex=False) to avoid capture group errors
@@ -211,19 +205,7 @@ def build_dashboard_data():
     final_df = pd.merge(final_df, hosp_agg, on='County', how='left')
     final_df = pd.merge(final_df, ohp_county, on='County', how='left')
     
-    # Fill missing values and compute the fallbacks for missing PLACES variables in Oregon
-    if 'Food_Insecurity' not in final_df.columns:
-        final_df['Food_Insecurity'] = (final_df['% Poverty'] * 1.1 + 2.0).round(1)
-    if 'Housing_Insecurity' not in final_df.columns:
-        final_df['Housing_Insecurity'] = (final_df['% Poverty'] * 0.9 + 1.5).round(1)
-    if 'Utility_Shutoff_Threat' not in final_df.columns:
-        final_df['Utility_Shutoff_Threat'] = (final_df['% Poverty'] * 0.3 + 0.5).round(1)
-    if 'Transportation_Barriers' not in final_df.columns:
-        final_df['Transportation_Barriers'] = (final_df['% No Vehicle'] * 1.8 + 3.0).round(1)
-    if 'Loneliness' not in final_df.columns:
-        final_df['Loneliness'] = (22.0 + final_df['% Over 65'] * 0.2).round(1)
-    if 'Lack_Social_Support' not in final_df.columns:
-        final_df['Lack_Social_Support'] = (14.0 + final_df['% Over 65'] * 0.15).round(1)
+
 
     final_df['Beds'] = final_df['Beds'].fillna(0)
     final_df['HighestTraumaLevel'] = final_df['HighestTraumaLevel'].fillna(0)
@@ -292,13 +274,9 @@ def build_dashboard_data():
     pr_poverty = pr_rank(final_df['% Poverty'])
     pr_nocar = pr_rank(final_df['% No Vehicle'])
     pr_broadband = pr_rank(final_df['Broadband'], invert=True)  # Broadband access is positive, low access = high need
-    pr_food = pr_rank(final_df['Food_Insecurity'])
-    pr_housing = pr_rank(final_df['Housing_Insecurity'])
-    pr_utility = pr_rank(final_df['Utility_Shutoff_Threat'])
     pr_uninsured = pr_rank(final_df['Uninsured'])
-    pr_transport = pr_rank(final_df['Transportation_Barriers'])
     
-    final_df['pr_socio'] = (pr_poverty + pr_nocar + pr_broadband + pr_food + pr_housing + pr_utility + pr_uninsured + pr_transport) / 8.0
+    final_df['pr_socio'] = (pr_poverty + pr_nocar + pr_broadband + pr_uninsured) / 4.0
     
     # 2. Demographic Risk (7.5% weight)
     pr_over65 = pr_rank(final_df['% Over 65'])
@@ -338,10 +316,8 @@ def build_dashboard_data():
     pr_inactivity = pr_rank(final_df['Physical_Inactivity'])
     pr_sleep = pr_rank(final_df['Short_Sleep'])
     pr_drinking = pr_rank(final_df['Binge_Drinking'])
-    pr_loneliness = pr_rank(final_df['Loneliness'])
-    pr_support = pr_rank(final_df['Lack_Social_Support'])
     
-    final_df['pr_lifestyle'] = (pr_smoking + pr_inactivity + pr_sleep + pr_drinking + pr_loneliness + pr_support) / 6.0
+    final_df['pr_lifestyle'] = (pr_smoking + pr_inactivity + pr_sleep + pr_drinking) / 4.0
     
     # Composite weighted average
     final_df['need_weighted'] = (
@@ -368,11 +344,7 @@ def build_dashboard_data():
         'poverty_pct': '% Poverty',
         'no_vehicle_pct': '% No Vehicle',
         'broadband_pct': 'Broadband',
-        'food_insecurity_pct': 'Food_Insecurity',
-        'housing_insecurity_pct': 'Housing_Insecurity',
-        'utility_shutoff_pct': 'Utility_Shutoff_Threat',
         'uninsured_pct': 'Uninsured',
-        'transportation_barriers_pct': 'Transportation_Barriers',
         # Demographics
         'pct_over_65': '% Over 65',
         'pct_poc': '% POC',
@@ -412,9 +384,7 @@ def build_dashboard_data():
         'smoking_pct': 'Smoking',
         'physical_inactivity_pct': 'Physical_Inactivity',
         'short_sleep_pct': 'Short_Sleep',
-        'binge_drinking_pct': 'Binge_Drinking',
-        'loneliness_pct': 'Loneliness',
-        'lack_social_support_pct': 'Lack_Social_Support'
+        'binge_drinking_pct': 'Binge_Drinking'
     }
 
     statewide_medians = {}

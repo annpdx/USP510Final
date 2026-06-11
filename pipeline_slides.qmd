@@ -48,9 +48,6 @@ Oregon has 36 counties — from dense urban centers like Multnomah to remote rur
 | **Census SAHIE** (2023) | Health insurance coverage by county |
 | **Oregon Health Plan (OHP)** (March 2026) | Medicaid enrollment by county |
 
-::: {.callout-note}
-Several PLACES measures (food insecurity, transportation barriers, etc.) weren't available at the Oregon county level — **proxy estimates** were computed from correlated Census variables.
-:::
 
 ::: {.notes}
 All six sources are publicly available. The 5-year ACS estimates are ideal for small counties because they smooth out year-to-year noise.
@@ -254,12 +251,7 @@ for df, cols in [(broadband_df, ['County', 'Broadband']),
                  (unmet_county, None), (ohp_county,   None)]:
     final_df = pd.merge(final_df, df if cols is None else df[cols], on='County', how='left')
 
-# Proxy estimates for PLACES variables not available at county level
-final_df['Food_Insecurity']         = (final_df['% Poverty'] * 1.1 + 2.0).round(1)
-final_df['Housing_Insecurity']      = (final_df['% Poverty'] * 0.9 + 1.5).round(1)
-final_df['Utility_Shutoff_Threat']  = (final_df['% Poverty'] * 0.3 + 0.5).round(1)
-final_df['Transportation_Barriers'] = (final_df['% No Vehicle'] * 1.8 + 3.0).round(1)
-final_df['Loneliness']              = (22.0 + final_df['% Over 65'] * 0.2).round(1)
+
 
 # Median imputation for remaining missing values
 numeric_cols = final_df.select_dtypes(include=[np.number]).columns
@@ -355,9 +347,7 @@ def pr_rank(series, invert=False):
 
 # Socioeconomic Vulnerability (25%)
 final_df['pr_socio'] = (pr_rank(final_df['% Poverty']) + pr_rank(final_df['% No Vehicle']) +
-    pr_rank(final_df['Broadband'], invert=True) + pr_rank(final_df['Uninsured']) +
-    pr_rank(final_df['Food_Insecurity']) + pr_rank(final_df['Housing_Insecurity']) +
-    pr_rank(final_df['Utility_Shutoff_Threat']) + pr_rank(final_df['Transportation_Barriers'])) / 8.0
+    pr_rank(final_df['Broadband'], invert=True) + pr_rank(final_df['Uninsured'])) / 4.0
 
 # Health Outcomes Burden (35%) — 21 CDC PLACES indicators averaged
 health_outcomes_cols = ['Diabetes','COPD','Heart_Disease','Stroke','Hypertension','Cancer',
@@ -428,13 +418,11 @@ The output powers the entire frontend — Leaflet.js choropleth maps, the Access
 ## Limitations {.smaller}
 
 ::: {.incremental}
-1. **Proxy variables** — Food insecurity, housing insecurity, transportation barriers, loneliness, and utility shutoff threats are *estimated* from Census covariates (e.g., poverty rate). Correlated but not directly measured.
+1. **Temporal misalignment** — OHSU 2025, CDC PLACES 2023, ACS 2022–2023, hospital layer live 2026. No perfect time alignment, though 5-year ACS estimates help smooth this.
 
-2. **Temporal misalignment** — OHSU 2025, CDC PLACES 2023, ACS 2022–2023, hospital layer live 2026. No perfect time alignment, though 5-year ACS estimates help smooth this.
+2. **County-level geography** — Counties are a coarse unit. Intra-county variation (especially in large rural counties like Harney) is invisible at this scale.
 
-3. **County-level geography** — Counties are a coarse unit. Intra-county variation (especially in large rural counties like Harney) is invisible at this scale.
-
-4. **Index design choices** — Weighting decisions are defensible but not uniquely correct. Different weights shift some counties' ranks, though the **crisis zone counties are consistent** across approaches.
+3. **Index design choices** — Weighting decisions are defensible but not uniquely correct. Different weights shift some counties' ranks, though the **crisis zone counties are consistent** across approaches.
 :::
 
 ::: {.callout-important}

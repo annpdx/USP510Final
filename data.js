@@ -21,16 +21,16 @@ const _dashData = {
       "scores": {
         "access": 40,
         "access_raw_z": -0.682,
-        "need": 44,
+        "need": 42,
         "sections": {
           "access_structural": -0.139,
           "access_geo": -1.571,
           "access_service": -0.349,
-          "need_socioeconomic": 50.7,
+          "need_socioeconomic": 46.5,
           "need_demographics": 44.4,
           "need_health_outcomes": 48.9,
           "need_preventable_gaps": 51.9,
-          "need_lifestyle": 59.0
+          "need_lifestyle": 47.6
         }
       },
       "variables": {
@@ -43,11 +43,7 @@ const _dashData = {
         "poverty_pct": 13.72,
         "no_vehicle_pct": 4.8,
         "broadband_pct": 88.0,
-        "food_insecurity_pct": 17.1,
-        "housing_insecurity_pct": 13.8,
-        "utility_shutoff_pct": 4.6,
         "uninsured_pct": 8.0,
-        "transportation_barriers_pct": 11.6,
         "pct_over_65": 27.15,
         "pct_poc": 10.91,
         "diabetes_pct": 9.8,
@@ -83,9 +79,7 @@ const _dashData = {
         "smoking_pct": 14.5,
         "physical_inactivity_pct": 19.1,
         "short_sleep_pct": 33.1,
-        "binge_drinking_pct": 17.6,
-        "loneliness_pct": 27.4,
-        "lack_social_support_pct": 18.1
+        "binge_drinking_pct": 17.6
       }
     },
     {
@@ -108,16 +102,16 @@ const _dashData = {
       "scores": {
         "access": 87,
         "access_raw_z": 0.996,
-        "need": 22,
+        "need": 14,
         "sections": {
           "access_structural": 1.146,
           "access_geo": 0.377,
           "access_service": 1.743,
-          "need_socioeconomic": 73.4,
+          "need_socioeconomic": 51.0,
           "need_demographics": 41.6,
           "need_health_outcomes": 20.8,
           "need_preventable_gaps": 16.8,
-          "need_lifestyle": 23.2
+          "need_lifestyle": 25.0
         }
       },
       "variables": {
@@ -130,11 +124,7 @@ const _dashData = {
         "poverty_pct": 19.06,
         "no_vehicle_pct": 7.72,
         "broadband_pct": 93.0,
-        "food_insecurity_pct": 23.0,
-        "housing_insecurity_pct": 18.7,
-        "utility_shutoff_pct": 6.2,
         "uninsured_pct": 6.3,
-        "transportation_barriers_pct": 16.9,
         "pct_over_65": 16.9,
         "pct_poc": 21.54,
         "diabetes_pct": 9.3,
@@ -170,9 +160,7 @@ const _dashData = {
         "smoking_pct": 11.3,
         "physical_inactivity_pct": 16.7,
         "short_sleep_pct": 26.6,
-        "binge_drinking_pct": 17.9,
-        "loneliness_pct": 25.4,
-        "lack_social_support_pct": 16.5
+        "binge_drinking_pct": 17.9
       }
     },
     {
@@ -224,11 +212,11 @@ const _dashData = {
           "access_structural": 0.554,
           "access_geo": 0.377,
           "access_service": -1.394,
-          "need_socioeconomic": 13.4,
+          "need_socioeconomic": 13.6,
           "need_demographics": 45.9,
           "need_health_outcomes": 13.1,
           "need_preventable_gaps": 17.1,
-          "need_lifestyle": 23.9
+          "need_lifestyle": 20.2
         }
       },
       "variables": {
@@ -241,11 +229,7 @@ const _dashData = {
         "poverty_pct": 7.58,
         "no_vehicle_pct": 4.88,
         "broadband_pct": 93.0,
-        "food_insecurity_pct": 10.3,
-        "housing_insecurity_pct": 8.3,
-        "utility_shutoff_pct": 2.8,
         "uninsured_pct": 6.0,
-        "transportation_barriers_pct": 11.8,
         "pct_over_65": 18.94,
         "pct_poc": 21.05,
         "diabetes_pct": 8.6,
@@ -281,9 +265,7 @@ const _dashData = {
         "smoking_pct": 10.6,
         "physical_inactivity_pct": 18.6,
         "short_sleep_pct": 32.8,
-        "binge_drinking_pct": 16.4,
-        "loneliness_pct": 25.8,
-        "lack_social_support_pct": 16.8
+        "binge_drinking_pct": 16.4
       }
     },
     {
@@ -319,11 +301,11 @@ const _dashData = {
           "access_structural": 0.144,
           "access_geo": 0.377,
           "access_service": -0.349,
-          "need_socioeconomic": 45.5,
+          "need_socioeconomic": 47.9,
           "need_demographics": 56.2,
           "need_health_outcomes": 37.5,
           "need_preventable_gaps": 53.7,
-          "need_lifestyle": 47.0
+          "need_lifestyle": 40.3
         }
       },
       "variables": {
@@ -336,11 +318,7 @@ const _dashData = {
         "poverty_pct": 10.24,
         "no_vehicle_pct": 8.65,
         "broadband_pct": 91.0,
-        "food_insecurity_pct": 13.3,
-        "housing_insecurity_pct": 10.7,
-        "utility_shutoff_pct": 3.6,
         "uninsured_pct": 8.3,
-        "transportation_barriers_pct": 18.6,
         "pct_over_65": 23.56,
         "pct_poc": 17.8,
         "diabetes_pct": 9.5,
@@ -376,9 +354,7 @@ const _dashData = {
         "smoking_pct": 13.6,
         "physical_inactivity_pct": 19.8,
         "short_sleep_pct": 30.7,
-        "binge_drinking_pct": 17.7,
-        "loneliness_pct": 26.7,
-        "lack_social_support_pct": 17.5
+        "binge_drinking_pct": 17.7
       }
     },
     {
@@ -397,11 +373,11 @@ const _dashData = {
           "access_structural": -1.266,
           "access_geo": 0.377,
           "access_service": -1.394,
-          "need_socioeconomic": 16.0,
+          "need_socioeconomic": 16.3,
           "need_demographics": 29.1,
           "need_health_outcomes": 37.6,
           "need_preventable_gaps": 44.1,
-          "need_lifestyle": 50.5
+          "need_lifestyle": 57.0
         }
       },
       "variables": {
@@ -414,11 +390,7 @@ const _dashData = {
         "poverty_pct": 9.12,
         "no_vehicle_pct": 4.36,
         "broadband_pct": 92.0,
-        "food_insecurity_pct": 12.0,
-        "housing_insecurity_pct": 9.7,
-        "utility_shutoff_pct": 3.2,
         "uninsured_pct": 7.2,
-        "transportation_barriers_pct": 10.8,
         "pct_over_65": 19.37,
         "pct_poc": 14.24,
         "diabetes_pct": 9.6,
@@ -454,9 +426,7 @@ const _dashData = {
         "smoking_pct": 14.4,
         "physical_inactivity_pct": 20.7,
         "short_sleep_pct": 34.0,
-        "binge_drinking_pct": 17.6,
-        "loneliness_pct": 25.9,
-        "lack_social_support_pct": 16.9
+        "binge_drinking_pct": 17.6
       }
     },
     {
@@ -500,11 +470,11 @@ const _dashData = {
           "access_structural": 0.521,
           "access_geo": 0.291,
           "access_service": 0.697,
-          "need_socioeconomic": 72.1,
+          "need_socioeconomic": 65.0,
           "need_demographics": 61.1,
           "need_health_outcomes": 73.7,
           "need_preventable_gaps": 64.4,
-          "need_lifestyle": 69.9
+          "need_lifestyle": 65.3
         }
       },
       "variables": {
@@ -517,11 +487,7 @@ const _dashData = {
         "poverty_pct": 16.09,
         "no_vehicle_pct": 6.46,
         "broadband_pct": 89.0,
-        "food_insecurity_pct": 19.7,
-        "housing_insecurity_pct": 16.0,
-        "utility_shutoff_pct": 5.3,
         "uninsured_pct": 8.7,
-        "transportation_barriers_pct": 14.6,
         "pct_over_65": 26.79,
         "pct_poc": 16.57,
         "diabetes_pct": 10.2,
@@ -557,9 +523,7 @@ const _dashData = {
         "smoking_pct": 15.9,
         "physical_inactivity_pct": 21.7,
         "short_sleep_pct": 32.8,
-        "binge_drinking_pct": 17.7,
-        "loneliness_pct": 27.4,
-        "lack_social_support_pct": 18.0
+        "binge_drinking_pct": 17.7
       }
     },
     {
@@ -582,16 +546,16 @@ const _dashData = {
       "scores": {
         "access": 53,
         "access_raw_z": -0.223,
-        "need": 25,
+        "need": 28,
         "sections": {
           "access_structural": -0.634,
           "access_geo": 0.377,
           "access_service": -0.349,
-          "need_socioeconomic": 15.8,
+          "need_socioeconomic": 22.2,
           "need_demographics": 40.3,
           "need_health_outcomes": 35.2,
           "need_preventable_gaps": 51.7,
-          "need_lifestyle": 53.5
+          "need_lifestyle": 48.2
         }
       },
       "variables": {
@@ -604,11 +568,7 @@ const _dashData = {
         "poverty_pct": 7.92,
         "no_vehicle_pct": 3.68,
         "broadband_pct": 89.0,
-        "food_insecurity_pct": 10.7,
-        "housing_insecurity_pct": 8.6,
-        "utility_shutoff_pct": 2.9,
         "uninsured_pct": 7.2,
-        "transportation_barriers_pct": 9.6,
         "pct_over_65": 24.69,
         "pct_poc": 13.33,
         "diabetes_pct": 9.2,
@@ -644,9 +604,7 @@ const _dashData = {
         "smoking_pct": 13.4,
         "physical_inactivity_pct": 19.4,
         "short_sleep_pct": 32.4,
-        "binge_drinking_pct": 18.9,
-        "loneliness_pct": 26.9,
-        "lack_social_support_pct": 17.7
+        "binge_drinking_pct": 18.9
       }
     },
     {
@@ -669,16 +627,16 @@ const _dashData = {
       "scores": {
         "access": 49,
         "access_raw_z": -0.355,
-        "need": 58,
+        "need": 53,
         "sections": {
           "access_structural": -0.402,
           "access_geo": -0.298,
           "access_service": -0.349,
-          "need_socioeconomic": 42.9,
+          "need_socioeconomic": 45.1,
           "need_demographics": 66.7,
           "need_health_outcomes": 55.0,
           "need_preventable_gaps": 67.4,
-          "need_lifestyle": 68.0
+          "need_lifestyle": 53.5
         }
       },
       "variables": {
@@ -691,11 +649,7 @@ const _dashData = {
         "poverty_pct": 12.43,
         "no_vehicle_pct": 4.4,
         "broadband_pct": 90.0,
-        "food_insecurity_pct": 15.7,
-        "housing_insecurity_pct": 12.7,
-        "utility_shutoff_pct": 4.2,
         "uninsured_pct": 9.3,
-        "transportation_barriers_pct": 10.9,
         "pct_over_65": 34.43,
         "pct_poc": 15.94,
         "diabetes_pct": 9.9,
@@ -731,9 +685,7 @@ const _dashData = {
         "smoking_pct": 14.4,
         "physical_inactivity_pct": 20.4,
         "short_sleep_pct": 32.6,
-        "binge_drinking_pct": 18.0,
-        "loneliness_pct": 28.9,
-        "lack_social_support_pct": 19.2
+        "binge_drinking_pct": 18.0
       }
     },
     {
@@ -769,11 +721,11 @@ const _dashData = {
           "access_structural": 0.891,
           "access_geo": 0.377,
           "access_service": 1.743,
-          "need_socioeconomic": 15.1,
+          "need_socioeconomic": 15.3,
           "need_demographics": 36.1,
           "need_health_outcomes": 15.2,
           "need_preventable_gaps": 16.4,
-          "need_lifestyle": 34.0
+          "need_lifestyle": 27.8
         }
       },
       "variables": {
@@ -786,11 +738,7 @@ const _dashData = {
         "poverty_pct": 9.13,
         "no_vehicle_pct": 4.22,
         "broadband_pct": 93.0,
-        "food_insecurity_pct": 12.0,
-        "housing_insecurity_pct": 9.7,
-        "utility_shutoff_pct": 3.2,
         "uninsured_pct": 7.3,
-        "transportation_barriers_pct": 10.6,
         "pct_over_65": 20.48,
         "pct_poc": 14.68,
         "diabetes_pct": 8.2,
@@ -826,9 +774,7 @@ const _dashData = {
         "smoking_pct": 10.7,
         "physical_inactivity_pct": 15.6,
         "short_sleep_pct": 25.6,
-        "binge_drinking_pct": 18.9,
-        "loneliness_pct": 26.1,
-        "lack_social_support_pct": 17.1
+        "binge_drinking_pct": 18.9
       }
     },
     {
@@ -872,11 +818,11 @@ const _dashData = {
           "access_structural": -0.129,
           "access_geo": 0.101,
           "access_service": 0.697,
-          "need_socioeconomic": 58.3,
+          "need_socioeconomic": 53.1,
           "need_demographics": 48.6,
           "need_health_outcomes": 76.2,
           "need_preventable_gaps": 62.2,
-          "need_lifestyle": 69.7
+          "need_lifestyle": 68.4
         }
       },
       "variables": {
@@ -889,11 +835,7 @@ const _dashData = {
         "poverty_pct": 14.87,
         "no_vehicle_pct": 5.1,
         "broadband_pct": 87.0,
-        "food_insecurity_pct": 18.4,
-        "housing_insecurity_pct": 14.9,
-        "utility_shutoff_pct": 5.0,
         "uninsured_pct": 7.5,
-        "transportation_barriers_pct": 12.2,
         "pct_over_65": 25.96,
         "pct_poc": 14.45,
         "diabetes_pct": 10.5,
@@ -929,9 +871,7 @@ const _dashData = {
         "smoking_pct": 15.2,
         "physical_inactivity_pct": 23.5,
         "short_sleep_pct": 35.4,
-        "binge_drinking_pct": 17.0,
-        "loneliness_pct": 27.2,
-        "lack_social_support_pct": 17.9
+        "binge_drinking_pct": 17.0
       }
     },
     {
@@ -945,16 +885,16 @@ const _dashData = {
       "scores": {
         "access": 0,
         "access_raw_z": -2.095,
-        "need": 75,
+        "need": 78,
         "sections": {
           "access_structural": -1.182,
           "access_geo": -3.67,
           "access_service": -1.394,
-          "need_socioeconomic": 62.7,
+          "need_socioeconomic": 63.2,
           "need_demographics": 66.7,
           "need_health_outcomes": 72.3,
           "need_preventable_gaps": 53.9,
-          "need_lifestyle": 71.5
+          "need_lifestyle": 60.4
         }
       },
       "variables": {
@@ -967,11 +907,7 @@ const _dashData = {
         "poverty_pct": 12.86,
         "no_vehicle_pct": 7.19,
         "broadband_pct": 88.0,
-        "food_insecurity_pct": 16.1,
-        "housing_insecurity_pct": 13.1,
-        "utility_shutoff_pct": 4.4,
         "uninsured_pct": 8.7,
-        "transportation_barriers_pct": 15.9,
         "pct_over_65": 31.22,
         "pct_poc": 16.24,
         "diabetes_pct": 10.2,
@@ -1007,9 +943,7 @@ const _dashData = {
         "smoking_pct": 15.7,
         "physical_inactivity_pct": 22.7,
         "short_sleep_pct": 31.6,
-        "binge_drinking_pct": 17.5,
-        "loneliness_pct": 28.2,
-        "lack_social_support_pct": 18.7
+        "binge_drinking_pct": 17.5
       }
     },
     {
@@ -1032,16 +966,16 @@ const _dashData = {
       "scores": {
         "access": 60,
         "access_raw_z": 0.023,
-        "need": 78,
+        "need": 75,
         "sections": {
           "access_structural": -0.087,
           "access_geo": 0.377,
           "access_service": -0.349,
-          "need_socioeconomic": 66.3,
+          "need_socioeconomic": 66.0,
           "need_demographics": 50.0,
           "need_health_outcomes": 63.0,
           "need_preventable_gaps": 69.0,
-          "need_lifestyle": 70.6
+          "need_lifestyle": 60.1
         }
       },
       "variables": {
@@ -1054,11 +988,7 @@ const _dashData = {
         "poverty_pct": 16.49,
         "no_vehicle_pct": 3.47,
         "broadband_pct": 82.0,
-        "food_insecurity_pct": 20.1,
-        "housing_insecurity_pct": 16.3,
-        "utility_shutoff_pct": 5.4,
         "uninsured_pct": 9.7,
-        "transportation_barriers_pct": 9.2,
         "pct_over_65": 30.99,
         "pct_poc": 11.61,
         "diabetes_pct": 10.0,
@@ -1094,9 +1024,7 @@ const _dashData = {
         "smoking_pct": 15.5,
         "physical_inactivity_pct": 21.7,
         "short_sleep_pct": 33.6,
-        "binge_drinking_pct": 17.4,
-        "loneliness_pct": 28.2,
-        "lack_social_support_pct": 18.6
+        "binge_drinking_pct": 17.4
       }
     },
     {
@@ -1119,16 +1047,16 @@ const _dashData = {
       "scores": {
         "access": 61,
         "access_raw_z": 0.082,
-        "need": 92,
+        "need": 97,
         "sections": {
           "access_structural": 0.044,
           "access_geo": 0.377,
           "access_service": -0.349,
-          "need_socioeconomic": 59.4,
+          "need_socioeconomic": 70.1,
           "need_demographics": 50.0,
           "need_health_outcomes": 90.5,
           "need_preventable_gaps": 75.2,
-          "need_lifestyle": 78.0
+          "need_lifestyle": 83.0
         }
       },
       "variables": {
@@ -1141,11 +1069,7 @@ const _dashData = {
         "poverty_pct": 12.13,
         "no_vehicle_pct": 6.38,
         "broadband_pct": 79.0,
-        "food_insecurity_pct": 15.3,
-        "housing_insecurity_pct": 12.4,
-        "utility_shutoff_pct": 4.1,
         "uninsured_pct": 9.2,
-        "transportation_barriers_pct": 14.5,
         "pct_over_65": 25.51,
         "pct_poc": 14.87,
         "diabetes_pct": 11.0,
@@ -1181,9 +1105,7 @@ const _dashData = {
         "smoking_pct": 17.0,
         "physical_inactivity_pct": 24.0,
         "short_sleep_pct": 35.7,
-        "binge_drinking_pct": 17.4,
-        "loneliness_pct": 27.1,
-        "lack_social_support_pct": 17.8
+        "binge_drinking_pct": 17.4
       }
     },
     {
@@ -1206,16 +1128,16 @@ const _dashData = {
       "scores": {
         "access": 83,
         "access_raw_z": 0.838,
-        "need": 11,
+        "need": 17,
         "sections": {
           "access_structural": 1.433,
           "access_geo": 0.155,
           "access_service": 0.697,
-          "need_socioeconomic": 29.0,
+          "need_socioeconomic": 42.4,
           "need_demographics": 57.0,
           "need_health_outcomes": 17.7,
           "need_preventable_gaps": 22.5,
-          "need_lifestyle": 30.8
+          "need_lifestyle": 35.4
         }
       },
       "variables": {
@@ -1228,11 +1150,7 @@ const _dashData = {
         "poverty_pct": 6.57,
         "no_vehicle_pct": 5.41,
         "broadband_pct": 92.0,
-        "food_insecurity_pct": 9.2,
-        "housing_insecurity_pct": 7.4,
-        "utility_shutoff_pct": 2.5,
         "uninsured_pct": 11.8,
-        "transportation_barriers_pct": 12.7,
         "pct_over_65": 17.07,
         "pct_poc": 37.46,
         "diabetes_pct": 9.4,
@@ -1268,9 +1186,7 @@ const _dashData = {
         "smoking_pct": 11.4,
         "physical_inactivity_pct": 19.8,
         "short_sleep_pct": 29.8,
-        "binge_drinking_pct": 18.0,
-        "loneliness_pct": 25.4,
-        "lack_social_support_pct": 16.6
+        "binge_drinking_pct": 18.0
       }
     },
     {
@@ -1309,16 +1225,16 @@ const _dashData = {
       "scores": {
         "access": 77,
         "access_raw_z": 0.62,
-        "need": 42,
+        "need": 44,
         "sections": {
           "access_structural": 0.811,
           "access_geo": 0.332,
           "access_service": 0.697,
-          "need_socioeconomic": 58.5,
+          "need_socioeconomic": 57.7,
           "need_demographics": 61.2,
           "need_health_outcomes": 36.8,
           "need_preventable_gaps": 52.3,
-          "need_lifestyle": 52.8
+          "need_lifestyle": 51.4
         }
       },
       "variables": {
@@ -1331,11 +1247,7 @@ const _dashData = {
         "poverty_pct": 13.26,
         "no_vehicle_pct": 5.39,
         "broadband_pct": 90.0,
-        "food_insecurity_pct": 16.6,
-        "housing_insecurity_pct": 13.4,
-        "utility_shutoff_pct": 4.5,
         "uninsured_pct": 9.4,
-        "transportation_barriers_pct": 12.7,
         "pct_over_65": 22.49,
         "pct_poc": 21.72,
         "diabetes_pct": 10.0,
@@ -1371,9 +1283,7 @@ const _dashData = {
         "smoking_pct": 13.4,
         "physical_inactivity_pct": 20.3,
         "short_sleep_pct": 35.8,
-        "binge_drinking_pct": 17.1,
-        "loneliness_pct": 26.5,
-        "lack_social_support_pct": 17.4
+        "binge_drinking_pct": 17.1
       }
     },
     {
@@ -1396,16 +1306,16 @@ const _dashData = {
       "scores": {
         "access": 53,
         "access_raw_z": -0.204,
-        "need": 69,
+        "need": 72,
         "sections": {
           "access_structural": -0.357,
           "access_geo": 0.076,
           "access_service": -0.349,
-          "need_socioeconomic": 50.7,
+          "need_socioeconomic": 51.7,
           "need_demographics": 68.0,
           "need_health_outcomes": 57.2,
           "need_preventable_gaps": 77.2,
-          "need_lifestyle": 55.1
+          "need_lifestyle": 63.9
         }
       },
       "variables": {
@@ -1418,11 +1328,7 @@ const _dashData = {
         "poverty_pct": 12.68,
         "no_vehicle_pct": 4.92,
         "broadband_pct": 89.0,
-        "food_insecurity_pct": 15.9,
-        "housing_insecurity_pct": 12.9,
-        "utility_shutoff_pct": 4.3,
         "uninsured_pct": 9.0,
-        "transportation_barriers_pct": 11.9,
         "pct_over_65": 19.46,
         "pct_poc": 42.36,
         "diabetes_pct": 11.0,
@@ -1458,9 +1364,7 @@ const _dashData = {
         "smoking_pct": 15.0,
         "physical_inactivity_pct": 22.2,
         "short_sleep_pct": 34.7,
-        "binge_drinking_pct": 17.3,
-        "loneliness_pct": 25.9,
-        "lack_social_support_pct": 16.9
+        "binge_drinking_pct": 17.3
       }
     },
     {
@@ -1496,11 +1400,11 @@ const _dashData = {
           "access_structural": 0.002,
           "access_geo": 0.377,
           "access_service": -0.349,
-          "need_socioeconomic": 59.1,
+          "need_socioeconomic": 51.4,
           "need_demographics": 54.1,
           "need_health_outcomes": 84.6,
           "need_preventable_gaps": 75.8,
-          "need_lifestyle": 66.7
+          "need_lifestyle": 61.8
         }
       },
       "variables": {
@@ -1513,11 +1417,7 @@ const _dashData = {
         "poverty_pct": 16.11,
         "no_vehicle_pct": 4.74,
         "broadband_pct": 90.0,
-        "food_insecurity_pct": 19.7,
-        "housing_insecurity_pct": 16.0,
-        "utility_shutoff_pct": 5.3,
         "uninsured_pct": 8.9,
-        "transportation_barriers_pct": 11.5,
         "pct_over_65": 26.52,
         "pct_poc": 15.41,
         "diabetes_pct": 10.8,
@@ -1553,9 +1453,7 @@ const _dashData = {
         "smoking_pct": 16.4,
         "physical_inactivity_pct": 23.3,
         "short_sleep_pct": 33.3,
-        "binge_drinking_pct": 16.8,
-        "loneliness_pct": 27.3,
-        "lack_social_support_pct": 18.0
+        "binge_drinking_pct": 16.8
       }
     },
     {
@@ -1578,16 +1476,16 @@ const _dashData = {
       "scores": {
         "access": 61,
         "access_raw_z": 0.071,
-        "need": 97,
+        "need": 92,
         "sections": {
           "access_structural": 0.255,
           "access_geo": -0.524,
           "access_service": 0.697,
-          "need_socioeconomic": 74.0,
+          "need_socioeconomic": 67.7,
           "need_demographics": 62.5,
           "need_health_outcomes": 84.3,
           "need_preventable_gaps": 75.1,
-          "need_lifestyle": 62.7
+          "need_lifestyle": 67.7
         }
       },
       "variables": {
@@ -1600,11 +1498,7 @@ const _dashData = {
         "poverty_pct": 17.83,
         "no_vehicle_pct": 5.13,
         "broadband_pct": 85.0,
-        "food_insecurity_pct": 21.6,
-        "housing_insecurity_pct": 17.5,
-        "utility_shutoff_pct": 5.8,
         "uninsured_pct": 8.7,
-        "transportation_barriers_pct": 12.2,
         "pct_over_65": 21.45,
         "pct_poc": 24.79,
         "diabetes_pct": 11.2,
@@ -1640,9 +1534,7 @@ const _dashData = {
         "smoking_pct": 15.7,
         "physical_inactivity_pct": 24.9,
         "short_sleep_pct": 34.5,
-        "binge_drinking_pct": 16.9,
-        "loneliness_pct": 26.3,
-        "lack_social_support_pct": 17.2
+        "binge_drinking_pct": 16.9
       }
     },
     {
@@ -1670,11 +1562,11 @@ const _dashData = {
           "access_structural": 0.055,
           "access_geo": -3.895,
           "access_service": -0.349,
-          "need_socioeconomic": 96.7,
+          "need_socioeconomic": 95.1,
           "need_demographics": 59.0,
           "need_health_outcomes": 73.7,
           "need_preventable_gaps": 82.2,
-          "need_lifestyle": 68.3
+          "need_lifestyle": 68.4
         }
       },
       "variables": {
@@ -1687,11 +1579,7 @@ const _dashData = {
         "poverty_pct": 19.57,
         "no_vehicle_pct": 7.73,
         "broadband_pct": 71.0,
-        "food_insecurity_pct": 23.5,
-        "housing_insecurity_pct": 19.1,
-        "utility_shutoff_pct": 6.4,
         "uninsured_pct": 11.0,
-        "transportation_barriers_pct": 16.9,
         "pct_over_65": 25.36,
         "pct_poc": 17.8,
         "diabetes_pct": 11.0,
@@ -1727,9 +1615,7 @@ const _dashData = {
         "smoking_pct": 16.0,
         "physical_inactivity_pct": 23.5,
         "short_sleep_pct": 33.9,
-        "binge_drinking_pct": 17.3,
-        "loneliness_pct": 27.1,
-        "lack_social_support_pct": 17.8
+        "binge_drinking_pct": 17.3
       }
     },
     {
@@ -1784,16 +1670,16 @@ const _dashData = {
       "scores": {
         "access": 78,
         "access_raw_z": 0.675,
-        "need": 50,
+        "need": 47,
         "sections": {
           "access_structural": 0.484,
           "access_geo": 0.31,
           "access_service": 1.743,
-          "need_socioeconomic": 70.5,
+          "need_socioeconomic": 59.0,
           "need_demographics": 50.0,
           "need_health_outcomes": 42.1,
           "need_preventable_gaps": 61.9,
-          "need_lifestyle": 28.5
+          "need_lifestyle": 21.9
         }
       },
       "variables": {
@@ -1806,11 +1692,7 @@ const _dashData = {
         "poverty_pct": 16.13,
         "no_vehicle_pct": 7.38,
         "broadband_pct": 91.0,
-        "food_insecurity_pct": 19.7,
-        "housing_insecurity_pct": 16.0,
-        "utility_shutoff_pct": 5.3,
         "uninsured_pct": 8.3,
-        "transportation_barriers_pct": 16.3,
         "pct_over_65": 20.07,
         "pct_poc": 19.97,
         "diabetes_pct": 9.3,
@@ -1846,9 +1728,7 @@ const _dashData = {
         "smoking_pct": 13.0,
         "physical_inactivity_pct": 18.6,
         "short_sleep_pct": 31.9,
-        "binge_drinking_pct": 16.0,
-        "loneliness_pct": 26.0,
-        "lack_social_support_pct": 17.0
+        "binge_drinking_pct": 16.0
       }
     },
     {
@@ -1879,16 +1759,16 @@ const _dashData = {
       "scores": {
         "access": 55,
         "access_raw_z": -0.16,
-        "need": 67,
+        "need": 56,
         "sections": {
           "access_structural": -0.417,
           "access_geo": 0.279,
           "access_service": -0.349,
-          "need_socioeconomic": 54.7,
+          "need_socioeconomic": 51.4,
           "need_demographics": 72.2,
           "need_health_outcomes": 58.1,
           "need_preventable_gaps": 58.9,
-          "need_lifestyle": 68.8
+          "need_lifestyle": 58.3
         }
       },
       "variables": {
@@ -1901,11 +1781,7 @@ const _dashData = {
         "poverty_pct": 14.72,
         "no_vehicle_pct": 4.85,
         "broadband_pct": 91.0,
-        "food_insecurity_pct": 18.2,
-        "housing_insecurity_pct": 14.7,
-        "utility_shutoff_pct": 4.9,
         "uninsured_pct": 9.7,
-        "transportation_barriers_pct": 11.7,
         "pct_over_65": 30.54,
         "pct_poc": 19.96,
         "diabetes_pct": 10.1,
@@ -1941,9 +1817,7 @@ const _dashData = {
         "smoking_pct": 14.2,
         "physical_inactivity_pct": 21.0,
         "short_sleep_pct": 34.6,
-        "binge_drinking_pct": 17.5,
-        "loneliness_pct": 28.1,
-        "lack_social_support_pct": 18.6
+        "binge_drinking_pct": 17.5
       }
     },
     {
@@ -1979,11 +1853,11 @@ const _dashData = {
           "access_structural": -0.54,
           "access_geo": 0.353,
           "access_service": 0.697,
-          "need_socioeconomic": 34.2,
+          "need_socioeconomic": 34.0,
           "need_demographics": 38.8,
           "need_health_outcomes": 58.0,
           "need_preventable_gaps": 42.0,
-          "need_lifestyle": 58.4
+          "need_lifestyle": 71.9
         }
       },
       "variables": {
@@ -1996,11 +1870,7 @@ const _dashData = {
         "poverty_pct": 11.95,
         "no_vehicle_pct": 4.41,
         "broadband_pct": 90.0,
-        "food_insecurity_pct": 15.1,
-        "housing_insecurity_pct": 12.3,
-        "utility_shutoff_pct": 4.1,
         "uninsured_pct": 8.2,
-        "transportation_barriers_pct": 10.9,
         "pct_over_65": 18.98,
         "pct_poc": 17.27,
         "diabetes_pct": 10.1,
@@ -2036,9 +1906,7 @@ const _dashData = {
         "smoking_pct": 14.5,
         "physical_inactivity_pct": 21.5,
         "short_sleep_pct": 35.0,
-        "binge_drinking_pct": 18.2,
-        "loneliness_pct": 25.8,
-        "lack_social_support_pct": 16.8
+        "binge_drinking_pct": 18.2
       }
     },
     {
@@ -2066,11 +1934,11 @@ const _dashData = {
           "access_structural": 0.135,
           "access_geo": 0.058,
           "access_service": -0.349,
-          "need_socioeconomic": 85.2,
+          "need_socioeconomic": 82.6,
           "need_demographics": 55.6,
           "need_health_outcomes": 80.5,
           "need_preventable_gaps": 71.4,
-          "need_lifestyle": 58.1
+          "need_lifestyle": 78.5
         }
       },
       "variables": {
@@ -2083,11 +1951,7 @@ const _dashData = {
         "poverty_pct": 18.9,
         "no_vehicle_pct": 5.78,
         "broadband_pct": 87.0,
-        "food_insecurity_pct": 22.8,
-        "housing_insecurity_pct": 18.5,
-        "utility_shutoff_pct": 6.2,
         "uninsured_pct": 12.7,
-        "transportation_barriers_pct": 13.4,
         "pct_over_65": 16.67,
         "pct_poc": 40.28,
         "diabetes_pct": 12.5,
@@ -2123,9 +1987,7 @@ const _dashData = {
         "smoking_pct": 16.4,
         "physical_inactivity_pct": 27.7,
         "short_sleep_pct": 36.0,
-        "binge_drinking_pct": 16.8,
-        "loneliness_pct": 25.3,
-        "lack_social_support_pct": 16.5
+        "binge_drinking_pct": 16.8
       }
     },
     {
@@ -2172,16 +2034,16 @@ const _dashData = {
       "scores": {
         "access": 72,
         "access_raw_z": 0.474,
-        "need": 47,
+        "need": 50,
         "sections": {
           "access_structural": 0.449,
           "access_geo": 0.377,
           "access_service": 0.697,
-          "need_socioeconomic": 62.5,
+          "need_socioeconomic": 64.2,
           "need_demographics": 50.7,
           "need_health_outcomes": 52.2,
           "need_preventable_gaps": 41.8,
-          "need_lifestyle": 37.0
+          "need_lifestyle": 50.0
         }
       },
       "variables": {
@@ -2194,11 +2056,7 @@ const _dashData = {
         "poverty_pct": 12.99,
         "no_vehicle_pct": 6.18,
         "broadband_pct": 91.0,
-        "food_insecurity_pct": 16.3,
-        "housing_insecurity_pct": 13.2,
-        "utility_shutoff_pct": 4.4,
         "uninsured_pct": 13.2,
-        "transportation_barriers_pct": 14.1,
         "pct_over_65": 16.15,
         "pct_poc": 37.33,
         "diabetes_pct": 11.3,
@@ -2234,9 +2092,7 @@ const _dashData = {
         "smoking_pct": 12.7,
         "physical_inactivity_pct": 21.8,
         "short_sleep_pct": 34.9,
-        "binge_drinking_pct": 16.9,
-        "loneliness_pct": 25.2,
-        "lack_social_support_pct": 16.4
+        "binge_drinking_pct": 16.9
       }
     },
     {
@@ -2264,11 +2120,11 @@ const _dashData = {
           "access_structural": -0.751,
           "access_geo": 0.377,
           "access_service": -0.349,
-          "need_socioeconomic": 66.0,
+          "need_socioeconomic": 64.6,
           "need_demographics": 55.5,
           "need_health_outcomes": 84.0,
           "need_preventable_gaps": 76.7,
-          "need_lifestyle": 52.1
+          "need_lifestyle": 72.6
         }
       },
       "variables": {
@@ -2281,11 +2137,7 @@ const _dashData = {
         "poverty_pct": 16.7,
         "no_vehicle_pct": 1.52,
         "broadband_pct": 87.0,
-        "food_insecurity_pct": 20.4,
-        "housing_insecurity_pct": 16.5,
-        "utility_shutoff_pct": 5.5,
         "uninsured_pct": 12.6,
-        "transportation_barriers_pct": 5.7,
         "pct_over_65": 16.07,
         "pct_poc": 43.08,
         "diabetes_pct": 12.7,
@@ -2321,9 +2173,7 @@ const _dashData = {
         "smoking_pct": 16.3,
         "physical_inactivity_pct": 27.3,
         "short_sleep_pct": 35.8,
-        "binge_drinking_pct": 15.6,
-        "loneliness_pct": 25.2,
-        "lack_social_support_pct": 16.4
+        "binge_drinking_pct": 15.6
       }
     },
     {
@@ -2434,16 +2284,16 @@ const _dashData = {
       "scores": {
         "access": 100,
         "access_raw_z": 1.452,
-        "need": 14,
+        "need": 11,
         "sections": {
           "access_structural": 1.695,
           "access_geo": 0.377,
           "access_service": 2.789,
-          "need_socioeconomic": 49.8,
+          "need_socioeconomic": 40.6,
           "need_demographics": 43.1,
           "need_health_outcomes": 18.2,
           "need_preventable_gaps": 30.9,
-          "need_lifestyle": 14.1
+          "need_lifestyle": 19.1
         }
       },
       "variables": {
@@ -2456,11 +2306,7 @@ const _dashData = {
         "poverty_pct": 12.2,
         "no_vehicle_pct": 12.53,
         "broadband_pct": 93.0,
-        "food_insecurity_pct": 15.4,
-        "housing_insecurity_pct": 12.5,
-        "utility_shutoff_pct": 4.2,
         "uninsured_pct": 7.0,
-        "transportation_barriers_pct": 25.6,
         "pct_over_65": 14.13,
         "pct_poc": 32.58,
         "diabetes_pct": 9.1,
@@ -2496,9 +2342,7 @@ const _dashData = {
         "smoking_pct": 11.7,
         "physical_inactivity_pct": 17.5,
         "short_sleep_pct": 28.6,
-        "binge_drinking_pct": 17.3,
-        "loneliness_pct": 24.8,
-        "lack_social_support_pct": 16.1
+        "binge_drinking_pct": 17.3
       }
     },
     {
@@ -2521,16 +2365,16 @@ const _dashData = {
       "scores": {
         "access": 46,
         "access_raw_z": -0.472,
-        "need": 28,
+        "need": 25,
         "sections": {
           "access_structural": -1.188,
           "access_geo": 0.377,
           "access_service": -0.349,
-          "need_socioeconomic": 39.4,
+          "need_socioeconomic": 38.5,
           "need_demographics": 48.6,
           "need_health_outcomes": 30.5,
           "need_preventable_gaps": 39.0,
-          "need_lifestyle": 33.1
+          "need_lifestyle": 35.1
         }
       },
       "variables": {
@@ -2543,11 +2387,7 @@ const _dashData = {
         "poverty_pct": 11.86,
         "no_vehicle_pct": 5.14,
         "broadband_pct": 90.0,
-        "food_insecurity_pct": 15.0,
-        "housing_insecurity_pct": 12.2,
-        "utility_shutoff_pct": 4.1,
         "uninsured_pct": 7.5,
-        "transportation_barriers_pct": 12.3,
         "pct_over_65": 18.5,
         "pct_poc": 24.39,
         "diabetes_pct": 9.6,
@@ -2583,9 +2423,7 @@ const _dashData = {
         "smoking_pct": 12.6,
         "physical_inactivity_pct": 19.6,
         "short_sleep_pct": 34.6,
-        "binge_drinking_pct": 16.1,
-        "loneliness_pct": 25.7,
-        "lack_social_support_pct": 16.8
+        "binge_drinking_pct": 16.1
       }
     },
     {
@@ -2599,16 +2437,16 @@ const _dashData = {
       "scores": {
         "access": 35,
         "access_raw_z": -0.841,
-        "need": 72,
+        "need": 69,
         "sections": {
           "access_structural": -1.543,
           "access_geo": 0.377,
           "access_service": -1.394,
-          "need_socioeconomic": 72.4,
+          "need_socioeconomic": 67.0,
           "need_demographics": 36.1,
           "need_health_outcomes": 72.1,
           "need_preventable_gaps": 46.0,
-          "need_lifestyle": 59.7
+          "need_lifestyle": 60.1
         }
       },
       "variables": {
@@ -2621,11 +2459,7 @@ const _dashData = {
         "poverty_pct": 15.54,
         "no_vehicle_pct": 7.4,
         "broadband_pct": 83.0,
-        "food_insecurity_pct": 19.1,
-        "housing_insecurity_pct": 15.5,
-        "utility_shutoff_pct": 5.2,
         "uninsured_pct": 7.3,
-        "transportation_barriers_pct": 16.3,
         "pct_over_65": 23.21,
         "pct_poc": 12.89,
         "diabetes_pct": 10.4,
@@ -2661,9 +2495,7 @@ const _dashData = {
         "smoking_pct": 15.9,
         "physical_inactivity_pct": 22.3,
         "short_sleep_pct": 31.9,
-        "binge_drinking_pct": 17.4,
-        "loneliness_pct": 26.6,
-        "lack_social_support_pct": 17.5
+        "binge_drinking_pct": 17.4
       }
     },
     {
@@ -2691,11 +2523,11 @@ const _dashData = {
           "access_structural": -0.248,
           "access_geo": 0.377,
           "access_service": -0.349,
-          "need_socioeconomic": 47.7,
+          "need_socioeconomic": 50.7,
           "need_demographics": 62.5,
           "need_health_outcomes": 38.8,
           "need_preventable_gaps": 48.1,
-          "need_lifestyle": 57.7
+          "need_lifestyle": 46.9
         }
       },
       "variables": {
@@ -2708,11 +2540,7 @@ const _dashData = {
         "poverty_pct": 12.5,
         "no_vehicle_pct": 4.86,
         "broadband_pct": 89.0,
-        "food_insecurity_pct": 15.8,
-        "housing_insecurity_pct": 12.8,
-        "utility_shutoff_pct": 4.2,
         "uninsured_pct": 9.1,
-        "transportation_barriers_pct": 11.7,
         "pct_over_65": 26.75,
         "pct_poc": 17.48,
         "diabetes_pct": 9.7,
@@ -2748,9 +2576,7 @@ const _dashData = {
         "smoking_pct": 13.7,
         "physical_inactivity_pct": 20.0,
         "short_sleep_pct": 31.2,
-        "binge_drinking_pct": 18.1,
-        "loneliness_pct": 27.4,
-        "lack_social_support_pct": 18.0
+        "binge_drinking_pct": 18.1
       }
     },
     {
@@ -2781,16 +2607,16 @@ const _dashData = {
       "scores": {
         "access": 59,
         "access_raw_z": 0.012,
-        "need": 53,
+        "need": 64,
         "sections": {
           "access_structural": -0.355,
           "access_geo": 0.091,
           "access_service": 0.697,
-          "need_socioeconomic": 51.7,
+          "need_socioeconomic": 64.9,
           "need_demographics": 45.8,
           "need_health_outcomes": 65.0,
           "need_preventable_gaps": 51.9,
-          "need_lifestyle": 48.2
+          "need_lifestyle": 66.7
         }
       },
       "variables": {
@@ -2803,11 +2629,7 @@ const _dashData = {
         "poverty_pct": 11.7,
         "no_vehicle_pct": 5.47,
         "broadband_pct": 85.0,
-        "food_insecurity_pct": 14.9,
-        "housing_insecurity_pct": 12.0,
-        "utility_shutoff_pct": 4.0,
         "uninsured_pct": 11.7,
-        "transportation_barriers_pct": 12.8,
         "pct_over_65": 16.05,
         "pct_poc": 36.81,
         "diabetes_pct": 11.4,
@@ -2843,9 +2665,7 @@ const _dashData = {
         "smoking_pct": 14.9,
         "physical_inactivity_pct": 24.5,
         "short_sleep_pct": 33.9,
-        "binge_drinking_pct": 17.4,
-        "loneliness_pct": 25.2,
-        "lack_social_support_pct": 16.4
+        "binge_drinking_pct": 17.4
       }
     },
     {
@@ -2868,16 +2688,16 @@ const _dashData = {
       "scores": {
         "access": 60,
         "access_raw_z": 0.043,
-        "need": 64,
+        "need": 58,
         "sections": {
           "access_structural": -0.042,
           "access_geo": 0.377,
           "access_service": -0.349,
-          "need_socioeconomic": 73.4,
+          "need_socioeconomic": 71.2,
           "need_demographics": 30.6,
           "need_health_outcomes": 61.8,
           "need_preventable_gaps": 48.3,
-          "need_lifestyle": 56.9
+          "need_lifestyle": 61.1
         }
       },
       "variables": {
@@ -2890,11 +2710,7 @@ const _dashData = {
         "poverty_pct": 15.24,
         "no_vehicle_pct": 7.4,
         "broadband_pct": 83.0,
-        "food_insecurity_pct": 18.8,
-        "housing_insecurity_pct": 15.2,
-        "utility_shutoff_pct": 5.1,
         "uninsured_pct": 8.3,
-        "transportation_barriers_pct": 16.3,
         "pct_over_65": 20.86,
         "pct_poc": 12.49,
         "diabetes_pct": 10.1,
@@ -2930,9 +2746,7 @@ const _dashData = {
         "smoking_pct": 14.7,
         "physical_inactivity_pct": 20.7,
         "short_sleep_pct": 33.2,
-        "binge_drinking_pct": 18.1,
-        "loneliness_pct": 26.2,
-        "lack_social_support_pct": 17.1
+        "binge_drinking_pct": 18.1
       }
     },
     {
@@ -2955,16 +2769,16 @@ const _dashData = {
       "scores": {
         "access": 78,
         "access_raw_z": 0.67,
-        "need": 17,
+        "need": 22,
         "sections": {
           "access_structural": 1.351,
           "access_geo": 0.377,
           "access_service": -0.349,
-          "need_socioeconomic": 39.4,
+          "need_socioeconomic": 54.2,
           "need_demographics": 44.4,
           "need_health_outcomes": 23.1,
           "need_preventable_gaps": 29.5,
-          "need_lifestyle": 56.0
+          "need_lifestyle": 41.0
         }
       },
       "variables": {
@@ -2977,11 +2791,7 @@ const _dashData = {
         "poverty_pct": 9.2,
         "no_vehicle_pct": 4.95,
         "broadband_pct": 82.0,
-        "food_insecurity_pct": 12.1,
-        "housing_insecurity_pct": 9.8,
-        "utility_shutoff_pct": 3.3,
         "uninsured_pct": 9.1,
-        "transportation_barriers_pct": 11.9,
         "pct_over_65": 28.9,
         "pct_poc": 10.04,
         "diabetes_pct": 8.7,
@@ -3017,9 +2827,7 @@ const _dashData = {
         "smoking_pct": 12.3,
         "physical_inactivity_pct": 18.0,
         "short_sleep_pct": 31.9,
-        "binge_drinking_pct": 18.9,
-        "loneliness_pct": 27.8,
-        "lack_social_support_pct": 18.3
+        "binge_drinking_pct": 18.9
       }
     },
     {
@@ -3042,16 +2850,16 @@ const _dashData = {
       "scores": {
         "access": 70,
         "access_raw_z": 0.379,
-        "need": 61,
+        "need": 67,
         "sections": {
           "access_structural": 0.24,
           "access_geo": 0.377,
           "access_service": 0.697,
-          "need_socioeconomic": 53.6,
+          "need_socioeconomic": 63.9,
           "need_demographics": 62.5,
           "need_health_outcomes": 61.3,
           "need_preventable_gaps": 57.2,
-          "need_lifestyle": 52.3
+          "need_lifestyle": 55.2
         }
       },
       "variables": {
@@ -3064,11 +2872,7 @@ const _dashData = {
         "poverty_pct": 11.69,
         "no_vehicle_pct": 6.55,
         "broadband_pct": 88.0,
-        "food_insecurity_pct": 14.9,
-        "housing_insecurity_pct": 12.0,
-        "utility_shutoff_pct": 4.0,
         "uninsured_pct": 10.8,
-        "transportation_barriers_pct": 14.8,
         "pct_over_65": 20.65,
         "pct_poc": 27.85,
         "diabetes_pct": 10.9,
@@ -3104,9 +2908,7 @@ const _dashData = {
         "smoking_pct": 14.8,
         "physical_inactivity_pct": 22.3,
         "short_sleep_pct": 31.0,
-        "binge_drinking_pct": 17.6,
-        "loneliness_pct": 26.1,
-        "lack_social_support_pct": 17.1
+        "binge_drinking_pct": 17.6
       }
     },
     {
@@ -3158,11 +2960,11 @@ const _dashData = {
           "access_structural": 0.792,
           "access_geo": 0.377,
           "access_service": -1.394,
-          "need_socioeconomic": 23.1,
+          "need_socioeconomic": 22.2,
           "need_demographics": 45.1,
           "need_health_outcomes": 6.8,
           "need_preventable_gaps": 21.0,
-          "need_lifestyle": 5.6
+          "need_lifestyle": 6.3
         }
       },
       "variables": {
@@ -3175,11 +2977,7 @@ const _dashData = {
         "poverty_pct": 8.16,
         "no_vehicle_pct": 5.64,
         "broadband_pct": 95.0,
-        "food_insecurity_pct": 11.0,
-        "housing_insecurity_pct": 8.8,
-        "utility_shutoff_pct": 2.9,
         "uninsured_pct": 7.1,
-        "transportation_barriers_pct": 13.2,
         "pct_over_65": 14.0,
         "pct_poc": 37.33,
         "diabetes_pct": 9.2,
@@ -3215,9 +3013,7 @@ const _dashData = {
         "smoking_pct": 9.6,
         "physical_inactivity_pct": 17.4,
         "short_sleep_pct": 29.3,
-        "binge_drinking_pct": 15.1,
-        "loneliness_pct": 24.8,
-        "lack_social_support_pct": 16.1
+        "binge_drinking_pct": 15.1
       }
     },
     {
@@ -3231,16 +3027,16 @@ const _dashData = {
       "scores": {
         "access": 35,
         "access_raw_z": -0.845,
-        "need": 56,
+        "need": 61,
         "sections": {
           "access_structural": -1.551,
           "access_geo": 0.377,
           "access_service": -1.394,
-          "need_socioeconomic": 29.3,
+          "need_socioeconomic": 40.6,
           "need_demographics": 59.7,
           "need_health_outcomes": 75.1,
           "need_preventable_gaps": 52.6,
-          "need_lifestyle": 74.8
+          "need_lifestyle": 62.2
         }
       },
       "variables": {
@@ -3253,11 +3049,7 @@ const _dashData = {
         "poverty_pct": 9.86,
         "no_vehicle_pct": 3.21,
         "broadband_pct": 80.0,
-        "food_insecurity_pct": 12.8,
-        "housing_insecurity_pct": 10.4,
-        "utility_shutoff_pct": 3.5,
         "uninsured_pct": 8.3,
-        "transportation_barriers_pct": 8.8,
         "pct_over_65": 35.25,
         "pct_poc": 13.79,
         "diabetes_pct": 10.6,
@@ -3293,9 +3085,7 @@ const _dashData = {
         "smoking_pct": 15.5,
         "physical_inactivity_pct": 22.2,
         "short_sleep_pct": 34.1,
-        "binge_drinking_pct": 17.3,
-        "loneliness_pct": 29.0,
-        "lack_social_support_pct": 19.3
+        "binge_drinking_pct": 17.3
       }
     },
     {
@@ -3331,11 +3121,11 @@ const _dashData = {
           "access_structural": -0.171,
           "access_geo": 0.377,
           "access_service": -0.349,
-          "need_socioeconomic": 37.5,
+          "need_socioeconomic": 38.9,
           "need_demographics": 50.0,
           "need_health_outcomes": 29.1,
           "need_preventable_gaps": 43.8,
-          "need_lifestyle": 33.8
+          "need_lifestyle": 38.2
         }
       },
       "variables": {
@@ -3348,11 +3138,7 @@ const _dashData = {
         "poverty_pct": 11.35,
         "no_vehicle_pct": 5.52,
         "broadband_pct": 92.0,
-        "food_insecurity_pct": 14.5,
-        "housing_insecurity_pct": 11.7,
-        "utility_shutoff_pct": 3.9,
         "uninsured_pct": 8.5,
-        "transportation_barriers_pct": 12.9,
         "pct_over_65": 17.99,
         "pct_poc": 25.19,
         "diabetes_pct": 9.7,
@@ -3388,9 +3174,7 @@ const _dashData = {
         "smoking_pct": 12.2,
         "physical_inactivity_pct": 20.1,
         "short_sleep_pct": 34.2,
-        "binge_drinking_pct": 16.9,
-        "loneliness_pct": 25.6,
-        "lack_social_support_pct": 16.7
+        "binge_drinking_pct": 16.9
       }
     }
   ],
@@ -3404,11 +3188,7 @@ const _dashData = {
     "poverty_pct": 12.59,
     "no_vehicle_pct": 5.26,
     "broadband_pct": 89.0,
-    "food_insecurity_pct": 15.85,
-    "housing_insecurity_pct": 12.85,
-    "utility_shutoff_pct": 4.25,
     "uninsured_pct": 8.7,
-    "transportation_barriers_pct": 12.5,
     "pct_over_65": 21.16,
     "pct_poc": 17.8,
     "diabetes_pct": 10.05,
@@ -3444,9 +3224,7 @@ const _dashData = {
     "smoking_pct": 14.45,
     "physical_inactivity_pct": 20.85,
     "short_sleep_pct": 33.25,
-    "binge_drinking_pct": 17.4,
-    "loneliness_pct": 26.25,
-    "lack_social_support_pct": 17.15
+    "binge_drinking_pct": 17.4
   }
 };
 const countyData = _dashData.counties;
