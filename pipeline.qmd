@@ -7,6 +7,10 @@ format:
     toc: true
     code-fold: false
     theme: minty
+    embed-resources: true
+execute:
+  eval: false
+  echo: true
 ---
 
 # Introduction
@@ -23,7 +27,7 @@ The output is exported to `data.js` to power the frontend interactive visualizat
 
 # Step 1: Libraries and Environment Setup
 
-We use standard data science libraries:
+This pipeline uses standard data science libraries:
 * **Pandas** for tabular data manipulation.
 * **GeoPandas** and **Shapely** for spatial data processing.
 * **Requests** to query the live ArcGIS REST API for hospital locations.
@@ -42,10 +46,10 @@ import os
 
 # Step 2: Loading Data & Preprocessing
 
-In this section, we ingest raw datasets, clean up county names to align formatting, and perform initial calculations.
+In this section, raw datasets are ingested, county names are cleaned to align formatting, and initial calculations are performed.
 
 ## 2.1 Geographic Data & Census Base
-We load the Oregon county boundary shapefile (GeoJSON) and baseline Census demographic metrics.
+The Oregon county boundary shapefile (GeoJSON) and baseline Census demographic metrics are loaded.
 
 ```{python}
 # Load county shape boundaries
@@ -57,7 +61,7 @@ census_df['County'] = census_df['County'].str.strip()
 ```
 
 ## 2.2 Broadband & Insurance Datasets
-We load broadband access rates and calculate uninsured rates.
+Broadband access rates are loaded and uninsured rates are calculated.
 
 ```{python}
 # Broadband access rates
@@ -89,7 +93,7 @@ ohp_county = ohp_county.rename(columns={'Total': 'OHP_Total'})
 
 # Step 3: Population-Weighted Aggregations (OHSU Unmet Need)
 
-Since the OHSU Unmet Healthcare Need indicators are provided by localized service areas (not simple county boundaries), we perform a **population-weighted aggregation** to combine them at the county level.
+Since the OHSU Unmet Healthcare Need indicators are provided by localized service areas (not simple county boundaries), a **population-weighted aggregation** is performed to combine them at the county level.
 
 ```{python}
 unmet_df = pd.read_excel('Data/Raw/UnmetNeedIndicators.xlsx', sheet_name='Unmet_Need_9_FINAL')
@@ -129,7 +133,7 @@ unmet_county = unmet_df.groupby('County').apply(weighted_avg, include_groups=Fal
 
 # Step 4: Health Indicators Preprocessing (CDC PLACES)
 
-We pivot the CDC PLACES datasets to map 36 separate health outcome and lifestyle risk features per county. Age-adjusted rates are prioritized over crude prevalence rates to allow scientific comparison.
+The CDC PLACES datasets are pivoted to map 36 separate health outcome and lifestyle risk features per county. Age-adjusted rates are prioritized over crude prevalence rates to allow scientific comparison.
 
 ```{python}
 health_chunks = []
@@ -207,7 +211,7 @@ health_pivot = matched_df.pivot_table(
 
 # Step 5: Spatial Joins & Live Hospital Data (ArcGIS API)
 
-We query live OHA licensed hospital points via the ArcGIS REST API and perform a spatial join using `GeoPandas` to map coordinates to respective county shapes.
+Live OHA licensed hospital points are queried via the ArcGIS REST API and a spatial join is performed using `GeoPandas` to map coordinates to respective county shapes.
 
 ```{python}
 url = "https://services1.arcgis.com/CD5mKowwN6nIaqd8/arcgis/rest/services/Hospitals_OHA/FeatureServer/0/query"
@@ -258,7 +262,7 @@ hosp_agg = pd.merge(hosp_agg, county_hospitals, on='County', how='left')
 
 # Step 6: Dataset Merging & Median Imputations
 
-We merge all preprocessed datasets into a single master Pandas DataFrame and impute missing variables.
+All preprocessed datasets are merged into a single master Pandas DataFrame and missing variables are imputed.
 
 ```{python}
 final_df = census_df.copy()
@@ -289,6 +293,21 @@ for col in numeric_cols:
 final_df['OHP_Total'] = final_df['OHP_Total'].fillna(0)
 final_df['OHPEnrollment'] = (final_df['OHP_Total'] / final_df['Total Population'] * 100).round(2)
 ```
+
+## 6.1 Proxy Variable Methodology
+
+Six social determinant variables included in the CDC PLACES dataset were **not available at the Oregon county level** and were therefore estimated using linear proxy formulas derived from highly correlated Census variables. These are educated approximations, not direct measurements, and are flagged as a known limitation of this analysis.
+
+| Variable | Formula | Census Driver | Rationale |
+|---|---|---|---|
+| **Food Insecurity** | `% Poverty × 1.1 + 2.0` | Poverty rate | Food insecurity tracks closely with poverty but tends to run slightly higher — the multiplier (1.1) reflects this, and the +2.0 intercept captures baseline food insecurity even in low-poverty counties. |
+| **Housing Insecurity** | `% Poverty × 0.9 + 1.5` | Poverty rate | Closely related to poverty, but at a slightly lower rate than food insecurity — households typically prioritize housing payments before food. |
+| **Utility Shutoff Threat** | `% Poverty × 0.3 + 0.5` | Poverty rate | A more extreme outcome affecting a smaller fraction of even economically stressed households, hence the lower multiplier. |
+| **Transportation Barriers** | `% No Vehicle × 1.8 + 3.0` | Vehicle access rate | Driven by vehicle access rather than poverty. The 1.8 multiplier reflects that in rural Oregon — where transit infrastructure is minimal — lacking a vehicle creates amplified access barriers. |
+| **Loneliness** | `22.0 + % Over 65 × 0.2` | Elderly population share | A baseline loneliness rate of ~22% exists across all age groups; the elderly share adds a modest increment reflecting well-documented age-related social isolation. |
+| **Lack of Social Support** | `14.0 + % Over 65 × 0.15` | Elderly population share | Similar structure to loneliness, with a lower baseline and slope reflecting the narrower prevalence of this specific indicator. |
+
+> **Note:** These formulas produce estimates that are correlated with the true values but introduce imprecision into the Need Index for the five thematic categories that include them (Socioeconomic Vulnerability and Lifestyle/Behavioral Risk). The broad county-level patterns of the Need Index are robust even when these variables are excluded entirely.
 
 ---
 
@@ -340,7 +359,7 @@ final_df['access_score_scaled'] = ((final_df['access_z'] - mn) / (mx - mn) * 100
 
 ## 7.2 Need Index (Percentile Ranks)
 
-We aggregate percentile ranks (0 to 100) across 5 thematic categories:
+Percentile ranks (0 to 100) are aggregated across 5 thematic categories:
 * **Socioeconomic Vulnerability (25% weight)**
 * **Demographics (7.5% weight)**
 * **Health Outcomes Burden (35% weight)**
@@ -417,7 +436,7 @@ final_df['need_index'] = (final_df['need_weighted'].rank(pct=True) * 100).round(
 
 # Step 8: Formatting & Exporting
 
-Finally, we format the data structure, compute state-wide baseline medians for comparison indicators, and write the output database files.
+Finally, the data structure is formatted, state-wide baseline medians are computed for comparison indicators, and the output database files are written.
 
 ```{python}
 all_metrics = {

@@ -1,0 +1,487 @@
+---
+title: "Oregon Healthcare Accessibility & Need Analysis"
+subtitle: "Backend Data Pipeline — Technical Deep Dive"
+author: "Ann Moorhead"
+date: today
+format:
+  revealjs:
+    theme: moon
+    transition: slide
+    slide-number: true
+    code-fold: true
+    code-tools: true
+    highlight-style: github-dark
+    footer: "Oregon Healthcare Accessibility & Need Analysis | Ann Moorhead"
+    incremental: false
+    width: 1280
+    height: 720
+    embed-resources: true
+execute:
+  eval: false
+  echo: true
+---
+
+## The Research Question {.center}
+
+> **Where in Oregon is the healthcare system least able to support the people who need it most?**
+
+::: {.incremental}
+- **Greatest healthcare need?** — the sickest, most vulnerable, most underserved populations
+- **Greatest healthcare access?** — the most hospitals, providers, and geographic accessibility
+- **Where do they come apart?** — high need + low access = **crisis zones**
+:::
+
+::: {.notes}
+Oregon has 36 counties — from dense urban centers like Multnomah to remote rural areas like Harney, which is bigger than Maryland but has a tiny fraction of the population. Knowing where the gaps are is the first step toward closing them.
+:::
+
+---
+
+## Data Sources {.smaller}
+
+| Source | What It Provides |
+|---|---|
+| **U.S. Census ACS** (2022–2023, 5-Year) | Population, poverty, vehicles, broadband |
+| **OHA ArcGIS REST API** (live, 2026) | Hospital coordinates, beds, trauma levels |
+| **OHSU Unmet Need Report** (2025) | Travel time, providers per 1k, capacity ratios |
+| **CDC PLACES** (2023) | 36 county-level health & lifestyle indicators |
+| **Census SAHIE** (2023) | Health insurance coverage by county |
+| **Oregon Health Plan (OHP)** (March 2026) | Medicaid enrollment by county |
+
+::: {.callout-note}
+Several PLACES measures (food insecurity, transportation barriers, etc.) weren't available at the Oregon county level — **proxy estimates** were computed from correlated Census variables.
+:::
+
+::: {.notes}
+All six sources are publicly available. The 5-year ACS estimates are ideal for small counties because they smooth out year-to-year noise.
+:::
+
+---
+
+## Pipeline Architecture
+
+```{mermaid}
+flowchart LR
+  A[Census ACS] --> M[Master DataFrame]
+  B[OHA ArcGIS API] --> S[Spatial Join] --> M
+  C[OHSU Excel] --> W[Pop-Weighted Agg] --> M
+  D[CDC PLACES CSV] --> P[Pivot Table] --> M
+  E[SAHIE CSV] --> M
+  F[OHP Excel] --> M
+  M --> I[Index Formulation]
+  I --> J[data.js Export]
+```
+
+::: {.notes}
+The whole backend is written in Python. The pipeline runs in eight steps: load, clean, spatially join, merge, impute, score, format, export. Output is a single data.js file that powers the entire browser-based frontend.
+:::
+
+---
+
+## Step 1: Libraries & Environment
+
+This pipeline uses standard data science libraries:
+
+- **Pandas** — tabular data manipulation
+- **GeoPandas** & **Shapely** — spatial data processing
+- **Requests** — live ArcGIS REST API queries
+- **NumPy** — numerical operations
+
+```{python}
+import pandas as pd
+import geopandas as gpd
+from shapely.geometry import Point
+import requests
+import numpy as np
+import json
+import os
+```
+
+---
+
+## Step 2: Loading & Preprocessing {.smaller}
+
+Raw datasets are ingested and county names are standardized — every source used a different format (e.g. "Multnomah County" vs. "Multnomah").
+
+::: {.panel-tabset}
+
+### 2.1 Geographic & Census
+
+```{python}
+counties_gdf = gpd.read_file('oregon_counties.geojson')
+census_df = pd.read_csv('Data/Raw/oregon_census_data.csv')
+census_df['County'] = census_df['County'].str.strip()
+```
+
+### 2.2 Broadband & Insurance
+
+```{python}
+broadband_df = pd.read_csv('Data/Raw/BroadbandAccess.csv', skiprows=5)
+broadband_df = broadband_df.rename(columns={'Percent(1)': 'Broadband'})
+broadband_df['County'] = broadband_df['County'].str.replace(' County', '').str.strip()
+
+insured_df = pd.read_csv('Data/Raw/Insured.csv', skiprows=5)
+insured_df = insured_df[~insured_df['County'].isin(['United States', 'Oregon'])].copy()
+insured_df['County'] = insured_df['County'].str.replace(' County', '').str.strip()
+insured_df['Insured (Percent)'] = pd.to_numeric(insured_df['Insured (Percent)'], errors='coerce').fillna(90.0)
+insured_df['Uninsured'] = 100.0 - insured_df['Insured (Percent)']
+```
+
+### 2.3 OHP Enrollment
+
+```{python}
+ohp_df = pd.read_excel('Data/Raw/OHPEnrollment.xlsx', sheet_name='Data (by county)', skiprows=3)
+ohp_latest = ohp_df[ohp_df['Month and Year'] == 'Mar 2026'].copy()
+ohp_latest['County'] = ohp_latest['County'].str.strip()
+ohp_latest['Total'] = pd.to_numeric(ohp_latest['Total'].replace('*', 0), errors='coerce').fillna(0)
+ohp_county = ohp_latest.groupby('County', as_index=False)['Total'].sum()
+ohp_county = ohp_county.rename(columns={'Total': 'OHP_Total'})
+```
+
+:::
+
+---
+
+## Step 3: Population-Weighted Aggregation {.smaller}
+
+OHSU indicators are organized by **service areas**, not county boundaries. A population-weighted aggregation rolls them up to the county level:
+
+$$\bar{x}_{county} = \frac{\sum_{i} x_i \cdot pop_i}{\sum_{i} pop_i}$$
+
+```{python}
+unmet_cols = [
+    'Travel Time to Nearest PCPCH', 'Primary Care  Capacity Ratio',
+    'Dentists per 1,000', 'Mental Health Providers per 1,000',
+    'Inadequate Prenatal Care Rate', 'Preventable Hospitalizations per 1,000',
+    'Emergency Dept Dental Visits per 1,000', 'Emergency Dept Mental Health Visits per 1,000'
+]
+
+def weighted_avg(group):
+    pop_sum = group['2024 Population'].sum()
+    res = {}
+    for col in unmet_cols:
+        if pop_sum > 0:
+            res[col] = (group[col] * group['2024 Population']).sum() / pop_sum
+        else:
+            res[col] = group[col].mean()
+    return pd.Series(res)
+    
+unmet_county = unmet_df.groupby('County').apply(weighted_avg, include_groups=False).reset_index()
+```
+
+::: {.notes}
+Instead of simply averaging all service areas in a county, each area's contribution is weighted by how many people actually live there. This matters especially for large counties with very differently-sized communities.
+:::
+
+---
+
+## Step 4: CDC PLACES — 36 Health Indicators {.smaller}
+
+The CDC PLACES dataset is pivoted to map **36 health outcome and lifestyle risk features** per county. Age-adjusted rates are prioritized over crude prevalence rates.
+
+```{python}
+# Stream the large CSV in chunks, filter to Oregon only
+health_chunks = []
+for chunk in pd.read_csv('Data/Raw/HealthIndicators.csv', chunksize=100000):
+    or_chunk = chunk[chunk['StateAbbr'] == 'OR']
+    if not or_chunk.empty:
+        health_chunks.append(or_chunk[['LocationName', 'Measure', 'Data_Value', 'Data_Value_Type']])
+health_df = pd.concat(health_chunks)
+
+# Prefer Age-adjusted rates; fall back to Crude only when Age-adjusted is missing
+adj_df = health_df[health_df['Data_Value_Type'] == 'Age-adjusted prevalence'].copy()
+cru_df = health_df[health_df['Data_Value_Type'] == 'Crude prevalence'].copy()
+adj_keys = set(zip(adj_df['County'], adj_df['Measure']))
+preferred_df = pd.concat([adj_df, cru_df[~cru_df.apply(
+    lambda r: (r['County'], r['Measure']) in adj_keys, axis=1)]])
+
+# Pivot: rows = counties, columns = 36 health measures
+health_pivot = matched_df.pivot_table(
+    index='County', columns='CleanMeasure', values='Data_Value'
+).reset_index()
+```
+
+::: {.fragment}
+**36 measures include:** Diabetes, COPD, Heart Disease, Stroke, Hypertension, Cancer, Asthma, Obesity, 7 Disability types, Mental Distress, Depression, Screening Rates, Lifestyle factors, and Social Determinants.
+:::
+
+---
+
+## Step 5: Spatial Join — Live Hospital Data {.smaller}
+
+Live OHA hospital points are queried via the **ArcGIS REST API**, then spatially joined to county boundary polygons using `GeoPandas`.
+
+```{python}
+url = "https://services1.arcgis.com/CD5mKowwN6nIaqd8/arcgis/rest/services/Hospitals_OHA/FeatureServer/0/query"
+params = {"where": "1=1", "outFields": "*", "outSR": "4326", "f": "json"}
+resp = requests.get(url, params=params)
+hospital_data = resp.json().get('features', [])
+
+# Convert GPS coordinates to geometry points
+hosp_records = [{'Name': f['attributes'].get('Hospital_Name'),
+                 'Beds': f['attributes'].get('Beds_Licensed') or 0,
+                 'Trauma_Level': f['attributes'].get('Trauma_Level'),
+                 'geometry': Point(f['geometry']['x'], f['geometry']['y'])}
+                for f in hospital_data if f.get('geometry')]
+
+hosp_gdf = gpd.GeoDataFrame(hosp_records, crs="EPSG:4326")
+
+# Spatial join: assign each hospital to its county polygon
+hosp_with_county = gpd.sjoin(hosp_gdf, counties_gdf, how="inner", predicate="within")
+
+# Aggregate total beds and highest trauma level per county
+hosp_agg = hosp_with_county.groupby('NAME').agg({
+    'Beds': 'sum',
+    'Trauma_Level': lambda s: min([x for x in s if x > 0], default=0)
+}).reset_index().rename(columns={'NAME': 'County', 'Trauma_Level': 'HighestTraumaLevel'})
+```
+
+::: {.notes}
+This is a live REST API — the data is as current as 2026. The spatial join uses the county boundary GeoJSON polygons to determine which county each hospital point falls inside.
+:::
+
+---
+
+## Step 6: Master DataFrame & Imputation {.smaller}
+
+All six preprocessed datasets are merged on county name into a single master DataFrame. Missing values are imputed using county medians.
+
+```{python}
+final_df = census_df.copy()
+for df, cols in [(broadband_df, ['County', 'Broadband']),
+                 (insured_df,   ['County', 'Uninsured']),
+                 (hosp_agg,     None), (health_pivot, None),
+                 (unmet_county, None), (ohp_county,   None)]:
+    final_df = pd.merge(final_df, df if cols is None else df[cols], on='County', how='left')
+
+# Proxy estimates for PLACES variables not available at county level
+final_df['Food_Insecurity']         = (final_df['% Poverty'] * 1.1 + 2.0).round(1)
+final_df['Housing_Insecurity']      = (final_df['% Poverty'] * 0.9 + 1.5).round(1)
+final_df['Utility_Shutoff_Threat']  = (final_df['% Poverty'] * 0.3 + 0.5).round(1)
+final_df['Transportation_Barriers'] = (final_df['% No Vehicle'] * 1.8 + 3.0).round(1)
+final_df['Loneliness']              = (22.0 + final_df['% Over 65'] * 0.2).round(1)
+
+# Median imputation for remaining missing values
+numeric_cols = final_df.select_dtypes(include=[np.number]).columns
+for col in numeric_cols:
+    final_df[col] = final_df[col].fillna(final_df[col].median())
+```
+
+::: {.callout-warning}
+**Proxy variables** are estimated from Census covariates — correlated but not directly measured.
+:::
+
+---
+
+## Step 7: Index Formulation Overview {.center}
+
+::: {.columns}
+
+::: {.column width="50%"}
+### 🏥 Healthcare Access Score
+**Method: Z-Score Standardization**
+Scaled 0–100
+
+- **45%** Structural Capacity
+- **35%** Geographic Accessibility
+- **20%** Service Level (Trauma)
+:::
+
+::: {.column width="50%"}
+### 📊 Healthcare Need Index
+**Method: Percentile Ranks**
+0–100 (100 = most need)
+
+- **35%** Health Outcomes Burden
+- **25%** Socioeconomic Vulnerability
+- **25%** Preventable Care Gaps
+- **7.5%** Demographics
+- **7.5%** Lifestyle & Behavioral Risk
+:::
+
+:::
+
+::: {.notes}
+These weights are defensible but not uniquely correct. Different weights shift some counties' ranks, but the broad patterns — especially which counties are in the crisis zone — are robust.
+:::
+
+---
+
+## Step 7.1: Healthcare Access Score {.smaller}
+
+Z-scores measure how far each county sits from the state mean:
+$$z = \frac{x - \mu}{\sigma}$$
+
+```{python}
+final_df['BedsPer10k'] = (final_df['Beds'] / final_df['Total Population'] * 10000).round(1)
+
+def z_score(series, invert=False):
+    z = (series - series.mean()) / series.std(ddof=1)
+    return -z if invert else z
+
+# Structural Capacity (45%): beds, dentists, mental health, primary care
+final_df['z_structural'] = (z_score(final_df['BedsPer10k']) +
+                             z_score(final_df['Dentists per 1,000']) +
+                             z_score(final_df['Mental Health Providers per 1,000']) +
+                             z_score(final_df['Primary Care  Capacity Ratio'])) / 4.0
+
+# Service Level (20%): trauma designation scaled 1→100, 2→75, 3→50, 4→25, none→0
+trauma_map = {1: 100, 2: 75, 3: 50, 4: 25, 0: 0}
+final_df['z_service'] = z_score(final_df['HighestTraumaLevel'].map(trauma_map))
+
+# Geographic Accessibility (35%): travel time — INVERTED (longer = worse)
+final_df['z_geo'] = z_score(final_df['Travel Time to Nearest PCPCH'], invert=True)
+
+# Composite + Min-Max scale to 0–100
+final_df['access_z'] = 0.45 * final_df['z_structural'] + 0.35 * final_df['z_geo'] + 0.20 * final_df['z_service']
+mn, mx = final_df['access_z'].min(), final_df['access_z'].max()
+final_df['access_score_scaled'] = ((final_df['access_z'] - mn) / (mx - mn) * 100).round().astype(int)
+```
+
+::: {.notes}
+Travel time is inverted because longer travel = worse geographic access. The composite Z-score is then min-max normalized so every county gets a clean 0-100 score.
+:::
+
+---
+
+## Step 7.2: Healthcare Need Index {.smaller}
+
+A percentile rank of 90 means that county has **higher need than 90% of all other counties**.
+
+```{python}
+def pr_rank(series, invert=False):
+    ascending = not invert
+    return (series.rank(ascending=ascending, pct=True) * 100).round(1)
+
+# Socioeconomic Vulnerability (25%)
+final_df['pr_socio'] = (pr_rank(final_df['% Poverty']) + pr_rank(final_df['% No Vehicle']) +
+    pr_rank(final_df['Broadband'], invert=True) + pr_rank(final_df['Uninsured']) +
+    pr_rank(final_df['Food_Insecurity']) + pr_rank(final_df['Housing_Insecurity']) +
+    pr_rank(final_df['Utility_Shutoff_Threat']) + pr_rank(final_df['Transportation_Barriers'])) / 8.0
+
+# Health Outcomes Burden (35%) — 21 CDC PLACES indicators averaged
+health_outcomes_cols = ['Diabetes','COPD','Heart_Disease','Stroke','Hypertension','Cancer',
+    'Asthma','Obesity','Disability_Any','Disability_Hearing','Disability_Vision',
+    'Disability_Mobility','Disability_SelfCare','Disability_Cognitive',
+    'Disability_IndependentLiving','Poor_Fair_Health','Frequent_Mental_Distress',
+    'Depression','Frequent_Physical_Distress','Arthritis','Teeth_Lost']
+final_df['pr_health'] = pd.DataFrame([pr_rank(final_df[c]) for c in health_outcomes_cols]).mean(axis=0)
+
+# Preventable Care Gaps (25%) — 9 indicators (screenings inverted, utilization direct)
+final_df['pr_gaps'] = (pr_rank(final_df['Colorectal_Screening'], invert=True) +
+    pr_rank(final_df['Mammography'], invert=True) + pr_rank(final_df['Routine_Checkup'], invert=True) +
+    pr_rank(final_df['Dental_Visit'], invert=True) + pr_rank(final_df['Cholesterol_Screening'], invert=True) +
+    pr_rank(final_df['Preventable Hospitalizations per 1,000']) +
+    pr_rank(final_df['Emergency Dept Dental Visits per 1,000']) +
+    pr_rank(final_df['Emergency Dept Mental Health Visits per 1,000']) +
+    pr_rank(final_df['Inadequate Prenatal Care Rate'])) / 9.0
+
+# Composite Need Index
+final_df['need_weighted'] = (0.25 * final_df['pr_socio'] + 0.075 * pr_rank(final_df['% Over 65']) +
+    0.075 * pr_rank(final_df['% POC']) + 0.35 * final_df['pr_health'] + 0.25 * final_df['pr_gaps'])
+final_df['need_index'] = (final_df['need_weighted'].rank(pct=True) * 100).round().astype(int)
+```
+
+---
+
+## Step 8: Export to data.js
+
+The data structure is formatted with state-wide medians computed for comparison, then written to `data.js` to power the frontend.
+
+```{python}
+# Statewide median baselines for each indicator (used in county profile comparisons)
+statewide_medians = {key: round(float(final_df[col].median()), 2)
+                     for key, col in all_metrics.items()}
+
+# Build county records
+js_records = []
+for _, row in final_df.iterrows():
+    density = row['Total Population'] / row['Area (sq miles)']
+    region = "Urban" if density > 100 else "Rural" if density > 10 else "Remote"
+    js_records.append({
+        'name': row['County'], 'region': region,
+        'pop': int(row['Total Population']),
+        'beds': int(row['Beds']),
+        'ohpEnrollment': round(float(row['OHPEnrollment']), 1),
+        'hospitals': row['Hospitals'],
+        'scores': {
+            'access': int(row['access_score_scaled']),
+            'need': int(row['need_index']),
+            'sections': {
+                'access_structural': round(float(row['z_structural']), 3),
+                'access_geo': round(float(row['z_geo']), 3),
+                'need_socioeconomic': round(float(row['pr_socio']), 1),
+                'need_health_outcomes': round(float(row['pr_health']), 1),
+                'need_preventable_gaps': round(float(row['pr_gaps']), 1),
+            }
+        },
+        'variables': {key: round(float(row[col]), 2) for key, col in all_metrics.items()}
+    })
+```
+
+::: {.notes}
+The output powers the entire frontend — Leaflet.js choropleth maps, the Access vs. Need scatter plot, county profiles, and the indicator explorer. No server required; it runs entirely in the browser.
+:::
+
+---
+
+## Limitations {.smaller}
+
+::: {.incremental}
+1. **Proxy variables** — Food insecurity, housing insecurity, transportation barriers, loneliness, and utility shutoff threats are *estimated* from Census covariates (e.g., poverty rate). Correlated but not directly measured.
+
+2. **Temporal misalignment** — OHSU 2025, CDC PLACES 2023, ACS 2022–2023, hospital layer live 2026. No perfect time alignment, though 5-year ACS estimates help smooth this.
+
+3. **County-level geography** — Counties are a coarse unit. Intra-county variation (especially in large rural counties like Harney) is invisible at this scale.
+
+4. **Index design choices** — Weighting decisions are defensible but not uniquely correct. Different weights shift some counties' ranks, though the **crisis zone counties are consistent** across approaches.
+:::
+
+::: {.callout-important}
+Despite these limitations, the broad spatial patterns — particularly which counties are in the crisis zone — are robust.
+:::
+
+---
+
+## AI Use Transparency
+
+::: {.columns}
+
+::: {.column width="60%"}
+**Antigravity / Claude** was used throughout:
+
+- **Pipeline engineering** — population-weighted aggregation logic, GeoPandas spatial join
+- **Mathematical formulation** — Z-score vs. percentile rank approaches; methodology decisions were the author's
+- **Frontend development** — Leaflet maps, Chart.js scatter plot, glassmorphism UI
+- **Documentation** — this Quarto notebook
+:::
+
+::: {.column width="40%"}
+**How outputs were verified:**
+
+✅ Traced every processing step manually  
+✅ Checked county counts at each merge  
+✅ Validated well-known counties ranked as expected  
+✅ Read every line of code  
+✅ Prepared to explain any part in detail  
+:::
+
+:::
+
+---
+
+## Summary {.center}
+
+> Healthcare access in Oregon is not equally distributed.
+
+::: {.incremental}
+- **6 public data sources** merged into a county-level dataset
+- **Z-score standardization** → Access Score (0–100)
+- **Percentile ranking** across 36 variables → Need Index (0–100)
+- **Crisis counties**: high need + low access = priority intervention targets
+- Output powers a fully **interactive browser-based dashboard**
+:::
+
+::: {.fragment}
+**→ [View the Live Dashboard](https://annpdx.github.io/USP510Final)**
+:::

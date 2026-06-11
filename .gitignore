@@ -17,3 +17,9 @@ desktop.ini
 # IDE local configuration (excluding launch.json which is already tracked)
 .vscode/settings.json
 .vscode/tasks.json
+
+# Quarto caches and helper directories
+.quarto/
+*_files/
+*.quarto_ipynb*
+*.quarto_ipynb_1*
